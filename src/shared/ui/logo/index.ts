@@ -1,1 +1,1 @@
-export { LogoUI } from './logo'
+export { Logo } from './logo'
