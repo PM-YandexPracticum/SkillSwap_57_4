@@ -5,13 +5,10 @@ export interface City {
 }
 
 // ─── Skill ───────────────────────────────────────────────
+export type SkillType = 'teach' | 'learn'
+
 export type SkillCategoryId =
-  | 'business'
-  | 'creativity'
-  | 'languages'
-  | 'education'
-  | 'health'
-  | 'home'
+  'business' | 'creativity' | 'languages' | 'education' | 'health' | 'home'
 
 export interface SkillSubcategory {
   id: string
