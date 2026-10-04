@@ -1,0 +1,82 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent; /* Прозрачная рамка, чтобы кнопка не дергалась при смене состояний */
+
+  /* Шрифты из макета */
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.02em;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; /* Из макета Фигмы */
+  height: 24px;
+}
+
+/* === PRIMARY === */
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.primary:hover {
+  background-color: var(--color-accent-light);
+}
+
+.primary:active {
+  background-color: var(--color-link);
+  color: var(--color-surface);
+}
+
+.primary:disabled {
+  background-color: var(--color-disabled);
+  color: var(--color-text-caption);
+  cursor: not-allowed;
+}
+
+/* === SECONDARY === */
+.secondary {
+  background-color: var(--color-surface);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.secondary:hover {
+  border-color: var(--color-accent-light);
+  color: var(--color-text-caption);
+}
+
+.secondary:active {
+  border-color: var(--color-link);
+  color: var(--color-text);
+}
+
+.secondary:disabled {
+  border-color: var(--color-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* === TERTIARY === */
+.tertiary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
