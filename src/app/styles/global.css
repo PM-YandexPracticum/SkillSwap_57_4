@@ -82,11 +82,11 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-base);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
   color: var(--color-text);
-  background-color: var(--color-bg);
-  line-height: 1.5;
+  background-color: var(--color-background);
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
 }
 
