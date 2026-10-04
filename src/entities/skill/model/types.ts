@@ -1,2 +1,7 @@
-// Переэкспортируем типы из shared — используй именно этот импорт внутри entities/skill
-export type { Skill, SkillType } from '@/shared/types'
+export type {
+  Skill,
+  SkillType,
+  SkillCategory,
+  SkillCategoryId,
+  SkillSubcategory,
+} from '@/shared/types'
