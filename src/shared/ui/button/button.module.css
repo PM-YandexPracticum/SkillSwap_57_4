@@ -5,7 +5,16 @@
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-xl);
   border-radius: var(--radius-sm);
-  border: 1px solid transparent; /* Прозрачная рамка, чтобы кнопка не дергалась при смене состояний */
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
 
   /* Шрифты из макета */
   font-family: var(--font-body);
