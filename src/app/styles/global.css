@@ -1,49 +1,93 @@
-/* ─── CSS Custom Properties ─────────────────────────────── */
 :root {
   /* Colors */
-  --color-primary: #6366f1;
-  --color-primary-hover: #4f46e5;
-  --color-bg: #fff;
-  --color-bg-secondary: #f9fafb;
-  --color-text: #111827;
-  --color-text-secondary: #6b7280;
-  --color-border: #e5e7eb;
-  --color-error: #ef4444;
-  --color-success: #22c55e;
+  --primary: #508826;
+  --primary-hover: #deebc5;
+  --accent: #abd27a;
+  --alarm: #e0796e;
+  --error: #bf3920;
+  --surface: #fff;
+  --background: #f9faf7;
+  --disabled: #e4e8df;
+
+  /* Colors text */
+  --text: #253017;
+  --text-caption: #69735d;
+  --text-disabled: #9ca197;
+
+  /* Colors tags */
+  --tag-bg-business: #eee7f7;
+  --tag-bg-art: #f7e7f2;
+  --tag-bg-foreign-languages: #ebe5c5;
+  --tag-bg-education: #e7f2f6;
+  --tag-bg-home: #f7ebe5;
+  --tag-bg-health: #e9f7e7;
+  --tag-bg-more: #e8ecf7;
+
+  /* Typography font families */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-heading: 'Jost', var(--font-sans);
+  --font-body: 'Roboto', var(--font-sans);
+
+  /* Typography font weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  /* Typography size */
+  --text-h1-size: 32px;
+  --text-h2-size: 24px;
+  --text-h3-size: 20px;
+  --text-h4-size: 16px;
+  --text-caption-size: 12px;
+  --text-body-size: 16px;
+
+  /* Typography line-height */
+  --text-h1-lh: 40px;
+  --text-h2-lh: 32px;
+  --text-h3-lh: 24px;
+  --text-h4-lh: 24px;
+  --text-body-lh: 24px;
+  --text-caption-lh: 16px;
 
   /* Spacing */
-  --space-xs: 4px;
-  --space-sm: 8px;
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
   --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-
-  /* Typography */
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 40px;
 
   /* Borders */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
-  --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 100px;
 }
 
-/* Тёмная тема — добавить поддержку через data-theme="dark" */
 [data-theme='dark'] {
-  --color-bg: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
+  /* Colors */
+  --primary: #8fc45f;
+  --primary-hover: #2f4a1c;
+  --accent: #abd27a;
+  --alarm: #ff8a7d;
+  --error: #ff6a55;
+  --surface: #1b2016;
+  --background: #12160f;
+  --disabled: #2a2f25;
+
+  /* Colors text */
+  --text: #eef2e8;
+  --text-caption: #a4ad97;
+  --text-disabled: #6b7362;
+
+  /* Colors tags  */
+  --tag-bg-business: #2a2233;
+  --tag-bg-art: #331f2d;
+  --tag-bg-foreign-languages: #322c17;
+  --tag-bg-education: #1b2b31;
+  --tag-bg-home: #33241d;
+  --tag-bg-health: #1d2f1b;
+  --tag-bg-more: #1f2533;
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
