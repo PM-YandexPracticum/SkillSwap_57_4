@@ -1,0 +1,45 @@
+import { describe, expect, it } from 'vitest';
+import { formatAge, getAge, pluralize } from './helpers';
+
+describe('helpers', () => {
+  describe('pluralize', () => {
+    const ageForms: [string, string, string] = ['год', 'года', 'лет'];
+
+    it('корректно выбирает форму слова для всех контрольных чисел', () => {
+      expect(pluralize(1, ageForms)).toBe('год');
+      expect(pluralize(2, ageForms)).toBe('года');
+      expect(pluralize(5, ageForms)).toBe('лет');
+      expect(pluralize(11, ageForms)).toBe('лет');
+      expect(pluralize(12, ageForms)).toBe('лет');
+      expect(pluralize(14, ageForms)).toBe('лет');
+      expect(pluralize(21, ageForms)).toBe('год');
+      expect(pluralize(22, ageForms)).toBe('года');
+      expect(pluralize(25, ageForms)).toBe('лет');
+      expect(pluralize(111, ageForms)).toBe('лет');
+    });
+  });
+
+  describe('getAge', () => {
+    const fixedNow = new Date('2026-10-04T12:00:00');
+
+    it('день рождения в этом году уже был', () => {
+      expect(getAge('2000-05-15', fixedNow)).toBe(26);
+    });
+
+    it('день рождения сегодня', () => {
+      expect(getAge('2000-10-04', fixedNow)).toBe(26);
+    });
+
+    it('день рождения ещё не наступил', () => {
+      expect(getAge('2000-12-20', fixedNow)).toBe(25);
+    });
+  });
+
+  describe('formatAge', () => {
+    it('корректно форматирует возраст с числом', () => {
+      expect(formatAge(21)).toBe('21 год');
+      expect(formatAge(34)).toBe('34 года');
+      expect(formatAge(25)).toBe('25 лет');
+    });
+  });
+});
