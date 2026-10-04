@@ -1,52 +1,52 @@
 :root {
   /* Colors */
-  --primary: #508826;
-  --primary-hover: #deebc5;
-  --accent: #abd27a;
-  --alarm: #e0796e;
-  --error: #bf3920;
-  --surface: #fff;
-  --background: #f9faf7;
-  --disabled: #e4e8df;
+  --color-link: #508826;
+  --color-accent: #abd27a;
+  --color-accent-light: #deebc5;
+  --color-alarm: #e0796e;
+  --color-error: #bf3920;
+  --color-surface: #fff;
+  --color-background: #f9faf7;
+  --color-disabled: #e4e8df;
+  --color-toggle: #b2b9a9;
 
   /* Colors text */
-  --text: #253017;
-  --text-caption: #69735d;
-  --text-disabled: #9ca197;
+  --color-text: #253017;
+  --color-text-caption: #69735d;
+  --color-text-disabled: #9ca197;
 
   /* Colors tags */
-  --tag-bg-business: #eee7f7;
-  --tag-bg-art: #f7e7f2;
-  --tag-bg-foreign-languages: #ebe5c5;
-  --tag-bg-education: #e7f2f6;
-  --tag-bg-home: #f7ebe5;
-  --tag-bg-health: #e9f7e7;
-  --tag-bg-more: #e8ecf7;
+  --color-tag-business: #eee7f7;
+  --color-tag-art: #f7e7f2;
+  --color-tag-languages: #ebe5c5;
+  --color-tag-education: #e7f2f6;
+  --color-tag-home: #f7ebe5;
+  --color-tag-health: #e9f7e7;
+  --color-tag-more: #e8ecf7;
 
   /* Typography font families */
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --font-heading: 'Jost', var(--font-sans);
-  --font-body: 'Roboto', var(--font-sans);
+  --font-heading: 'Jost', sans-serif;
+  --font-body: 'Roboto', sans-serif;
 
   /* Typography font weights */
-  --weight-regular: 400;
-  --weight-medium: 500;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
 
   /* Typography size */
-  --text-h1-size: 32px;
-  --text-h2-size: 24px;
-  --text-h3-size: 20px;
-  --text-h4-size: 16px;
-  --text-caption-size: 12px;
-  --text-body-size: 16px;
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-h4: 16px;
+  --font-size-body: 16px;
+  --font-size-caption: 12px;
 
   /* Typography line-height */
-  --text-h1-lh: 40px;
-  --text-h2-lh: 32px;
-  --text-h3-lh: 24px;
-  --text-h4-lh: 24px;
-  --text-body-lh: 24px;
-  --text-caption-lh: 16px;
+  --line-height-h1: 40px;
+  --line-height-h2: 32px;
+  --line-height-h3: 24px;
+  --line-height-h4: 24px;
+  --line-height-body: 24px;
+  --line-height-caption: 16px;
 
   /* Spacing */
   --space-xxs: 4px;
@@ -65,29 +65,11 @@
 }
 
 [data-theme='dark'] {
-  /* Colors */
-  --primary: #8fc45f;
-  --primary-hover: #2f4a1c;
-  --accent: #abd27a;
-  --alarm: #ff8a7d;
-  --error: #ff6a55;
-  --surface: #1b2016;
-  --background: #12160f;
-  --disabled: #2a2f25;
-
-  /* Colors text */
-  --text: #eef2e8;
-  --text-caption: #a4ad97;
-  --text-disabled: #6b7362;
-
-  /* Colors tags  */
-  --tag-bg-business: #2a2233;
-  --tag-bg-art: #331f2d;
-  --tag-bg-foreign-languages: #322c17;
-  --tag-bg-education: #1b2b31;
-  --tag-bg-home: #33241d;
-  --tag-bg-health: #1d2f1b;
-  --tag-bg-more: #1f2533;
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
