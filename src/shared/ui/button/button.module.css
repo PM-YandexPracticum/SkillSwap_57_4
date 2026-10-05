@@ -7,7 +7,11 @@
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   color: var(--color-text);
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  letter-spacing: 0.02em;
+  transition:
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 .button:focus {
@@ -15,9 +19,7 @@
 }
 
 .button:focus-visible {
-  outline: 1px solid var(--color-accent);
-  outline-offset: var(--space-xxs);
-  border-radius: var(--radius-sm);
+  outline: 1px solid var(--color-link);
 }
 
 .button:disabled {
@@ -68,6 +70,7 @@
 
 .secondary:active {
   border-color: var(--color-link);
+  color: var(--color-text);
 }
 
 .secondary:disabled {
