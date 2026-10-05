@@ -1,15 +1,15 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { ButtonProps } from './types';
 import styles from './button.module.css';
 
 export const Button = ({
-  children,
-  className,
   variant = 'primary',
   leftIcon,
   rightIcon,
   fullWidth = false,
+  className,
   type = 'button',
+  children,
   ...props
 }: ButtonProps) => {
   return (
@@ -23,9 +23,17 @@ export const Button = ({
       )}
       {...props}
     >
-      {leftIcon && <span aria-hidden="true" className={styles.icon}>{leftIcon}</span>}
-      <span className={styles.content}>{children}</span>
-      {rightIcon && <span aria-hidden="true" className={styles.icon}>{rightIcon}</span>}
+      {leftIcon && (
+        <span aria-hidden="true" className={styles.icon}>
+          {leftIcon}
+        </span>
+      )}
+      <span>{children}</span>
+      {rightIcon && (
+        <span aria-hidden="true" className={styles.icon}>
+          {rightIcon}
+        </span>
+      )}
     </button>
   );
 };
