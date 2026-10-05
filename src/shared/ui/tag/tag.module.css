@@ -1,0 +1,41 @@
+.tag {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  font-weight: var(--font-weight-regular);
+  max-width: 100%;
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  letter-spacing: 0.02em;
+}
+
+.business {
+  background-color: var(--color-tag-business);
+}
+
+.creativity {
+  background-color: var(--color-tag-creativity);
+}
+
+.languages {
+  background-color: var(--color-tag-languages);
+}
+
+.education {
+  background-color: var(--color-tag-education);
+}
+
+.health {
+  background-color: var(--color-tag-health);
+}
+
+.home {
+  background-color: var(--color-tag-home);
+}
+
+.more {
+  background-color: var(--color-tag-more);
+}
