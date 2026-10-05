@@ -1,0 +1,15 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs); /* Небольшой отступ между числом и иконкой */
+}
+
+.count {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h2); /* На макете цифра 48 довольно крупная, как заголовок */
+  color: var(--color-text);
+}
+
+.liked {
+  color: var(--color-accent); /* Зеленый цвет для заполненного сердечка */
+}
