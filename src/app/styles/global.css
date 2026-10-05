@@ -28,7 +28,7 @@
   --color-overlay-gallery: rgb(255 255 255 / 50%);
   --color-overlay-modal: rgb(142 142 142 / 60%);
   --layout-padding: 36px;
-  --layout-max-width: 1160px; /* ВАЖНО: 1160px — это стандарт. Обязательно проверь в Фигме ширину центрального контейнера контента (без учета отступов) и при необходимости поменяй это число */
+  --layout-max-width: 1160px;
 
   /* Typography font families */
   --font-heading: 'Jost', sans-serif;
@@ -124,9 +124,16 @@ input, textarea, select {
 }
 
 /* ─── Typography ─────────────────────────────────────────── */
-h1, h2, h3, h4 {
+h1, h2, h3 {
   font-family: var(--font-heading);
   font-weight: var(--font-weight-medium);
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
 }
 
 h1 {
@@ -142,9 +149,4 @@ h2 {
 h3 {
   font-size: var(--font-size-h3);
   line-height: var(--line-height-h3);
-}
-
-h4 {
-  font-size: var(--font-size-h4);
-  line-height: var(--line-height-h4);
 }
