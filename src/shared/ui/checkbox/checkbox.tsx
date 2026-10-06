@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { clsx } from 'clsx';
 
@@ -5,10 +6,16 @@ import {
   CheckboxDoneIcon,
   CheckboxEmptyIcon,
   CheckboxRemoveIcon
-} from '../../assets/icons';
+} from '@/shared/assets/icons';
 
 import styles from './checkbox.module.css';
 import type { CheckboxProps } from './types';
+
+const ICONS = {
+  unchecked: CheckboxEmptyIcon,
+  checked: CheckboxDoneIcon,
+  indeterminate: CheckboxRemoveIcon
+};
 
 export const Checkbox = ({
   state,
@@ -21,13 +28,9 @@ export const Checkbox = ({
     if (inputRef.current) {
       inputRef.current.indeterminate = state === 'indeterminate';
     }
-  });
+  }, [state]);
 
-  const Icon = {
-    unchecked: CheckboxEmptyIcon,
-    checked: CheckboxDoneIcon,
-    indeterminate: CheckboxRemoveIcon
-  }[state];
+  const Icon = ICONS[state];
 
   return (
     <span className={clsx(styles.checkbox, className)}>
@@ -39,9 +42,13 @@ export const Checkbox = ({
         className={styles.input}
       />
 
-      <span className={styles.icon} aria-hidden="true">
-        <Icon />
-      </span>
+      <Icon
+        className={clsx(
+          styles.icon,
+          state !== 'unchecked' && styles.active
+        )}
+        aria-hidden="true"
+      />
     </span>
   );
 };
