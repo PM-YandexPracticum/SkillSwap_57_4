@@ -3,13 +3,13 @@ import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
-const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
-const SkillPage = lazy(() => import('@/pages/SkillPage'))
-const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
-const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
-const CreateSkillPage = lazy(() => import('@/pages/CreateSkillPage'))
-const LoginPage = lazy(() => import('@/pages/LoginPage'))
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
+const CatalogPage = lazy(() => import('@/pages/catalog-page'))
+const SkillPage = lazy(() => import('@/pages/skill-page'))
+const ProfilePage = lazy(() => import('@/pages/profile-page'))
+const FavoritesPage = lazy(() => import('@/pages/favorites-page'))
+const CreateSkillPage = lazy(() => import('@/pages/create-skill-page'))
+const LoginPage = lazy(() => import('@/pages/login-page'))
+const NotFoundPage = lazy(() => import('@/pages/not-found-page'))
 
 export function AppRouter() {
   return (
