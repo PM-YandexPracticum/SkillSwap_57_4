@@ -1,11 +1,10 @@
-import type { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react'
 
-export type CheckboxState = 'unchecked' | 'checked' | 'indeterminate';
+export type CheckboxState = 'unchecked' | 'checked' | 'indeterminate'
 
-export interface CheckboxProps
-  extends Omit<
-    ComponentPropsWithoutRef<'input'>,
-    'type' | 'checked' | 'defaultChecked' | 'children'
-  > {
-  state: CheckboxState;
+export interface CheckboxProps extends Omit<
+  ComponentPropsWithoutRef<'input'>,
+  'type' | 'checked' | 'defaultChecked' | 'children'
+> {
+  state: CheckboxState
 }
