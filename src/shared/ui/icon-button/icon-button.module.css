@@ -4,10 +4,10 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  width: var(--space-xl);
-  height: var(--space-xl);
+  width: var(--size-icon);
+  height: var(--size-icon);
   color: var(--color-text);
-  transition: color 0.2s ease-in-out;
+  transition: color var(--transition-base);
 }
 
 .button:hover:not(:disabled) {
@@ -23,8 +23,8 @@
 }
 
 .button:focus-visible {
-  outline: 1px solid var(--color-link);
-  outline-offset: 1px;
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
   border-radius: var(--radius-sm);
 }
 

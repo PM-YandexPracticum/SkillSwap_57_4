@@ -68,6 +68,24 @@
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 100px;
+  --radius-circle: 50%;
+
+  /* Sizes */
+  --size-icon: 24px;
+  --size-icon-lg: 40px;
+  --size-avatar-s: 48px;
+  --size-avatar-m: 100px;
+  --size-avatar-l: 244px;
+  --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
+  --size-dot: 8px; /* точка у уведомлений */
+  --size-sidebar: 324px;
+
+  /* Focus */
+  --focus-outline: 1px solid var(--color-link);
+  --focus-offset: 1px;
+
+  /* Motion */
+  --transition-base: 0.2s ease-in-out;
 }
 
 [data-theme='dark'] {
