@@ -1,6 +1,6 @@
-import { clsx } from 'clsx';
-import { ButtonProps } from './types';
-import styles from './button.module.css';
+import { clsx } from 'clsx'
+import { ButtonProps } from './types'
+import styles from './button.module.css'
 
 export const Button = ({
   variant = 'primary',
@@ -15,12 +15,7 @@ export const Button = ({
   return (
     <button
       type={type}
-      className={clsx(
-        styles.button,
-        styles[variant],
-        fullWidth && styles.fullWidth,
-        className
-      )}
+      className={clsx(styles.button, styles[variant], fullWidth && styles.fullWidth, className)}
       {...props}
     >
       {leftIcon && (
@@ -35,5 +30,5 @@ export const Button = ({
         </span>
       )}
     </button>
-  );
-};
+  )
+}
