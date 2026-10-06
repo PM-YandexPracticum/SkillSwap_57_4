@@ -1,0 +1,34 @@
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  flex-shrink: 0;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  color: var(--color-text);
+}
+
+.active {
+  color: var(--color-accent);
+}
+
+.input:focus-visible + .icon {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-sm);
+}
