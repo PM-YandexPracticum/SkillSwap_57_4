@@ -1,0 +1,15 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xxs);
+}
+
+.count {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-caption);
+}
+
+.liked {
+  color: var(--color-accent);
+}
