@@ -6,7 +6,6 @@
   border-radius: var(--radius-circle);
   flex-shrink: 0;
   background-color: var(--color-disabled);
-  color: var(--color-text-caption);
 }
 
 .image {
