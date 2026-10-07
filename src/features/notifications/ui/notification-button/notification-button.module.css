@@ -1,7 +1,7 @@
 .dot {
   position: absolute;
-  top: calc(var(--size-dot) / -4);
-  right: calc(var(--size-dot) / -4);
+  top: 0;
+  right: 0;
   width: var(--size-dot);
   height: var(--size-dot);
   border-radius: var(--radius-circle);
