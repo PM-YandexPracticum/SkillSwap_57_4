@@ -9,7 +9,7 @@ function createRef() {
   return { current: element }
 }
 
-function mousedDown(target: Element) {
+function mouseDown(target: Element) {
   target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
 }
 
@@ -27,7 +27,7 @@ describe('[useDismiss]', () => {
     const onDismiss = vi.fn()
 
     renderHook(() => useDismiss({ ref, onDismiss, isActive: true }))
-    mousedDown(document.body)
+    mouseDown(document.body)
 
     expect(onDismiss).toHaveBeenCalledTimes(1)
   })
@@ -39,7 +39,7 @@ describe('[useDismiss]', () => {
     ref.current.appendChild(childButton)
 
     renderHook(() => useDismiss({ ref, onDismiss, isActive: true }))
-    mousedDown(childButton)
+    mouseDown(childButton)
 
     expect(onDismiss).not.toHaveBeenCalled()
   })
@@ -59,7 +59,7 @@ describe('[useDismiss]', () => {
     const onDismiss = vi.fn()
 
     renderHook(() => useDismiss({ ref, onDismiss, isActive: false }))
-    mousedDown(document.body)
+    mouseDown(document.body)
     pressEscape()
 
     expect(onDismiss).not.toHaveBeenCalled()
@@ -69,9 +69,9 @@ describe('[useDismiss]', () => {
     const ref = createRef()
     const onDismiss = vi.fn()
 
-    const { unmount } = renderHook(() => useDismiss({ ref, onDismiss, isActive: false }))
+    const { unmount } = renderHook(() => useDismiss({ ref, onDismiss, isActive: true }))
     unmount()
-    mousedDown(document.body)
+    mouseDown(document.body)
     pressEscape()
 
     expect(onDismiss).not.toHaveBeenCalled()
