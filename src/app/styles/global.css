@@ -77,7 +77,7 @@
   --size-avatar-m: 100px;
   --size-avatar-l: 244px;
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
-  --size-dot: 8px; /* точка у уведомлений */
+  --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
 
   /* Focus */
