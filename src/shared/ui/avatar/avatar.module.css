@@ -1,0 +1,24 @@
+.avatar {
+  object-fit: cover;
+  border-radius: var(--radius-circle);
+  flex-shrink: 0;
+}
+
+.s {
+  width: var(--size-avatar-s);
+  height: var(--size-avatar-s);
+}
+
+.m {
+  width: var(--size-avatar-m);
+  height: var(--size-avatar-m);
+}
+
+.l {
+  width: var(--size-avatar-l);
+  height: var(--size-avatar-l);
+}
+
+.fallback {
+  color: var(--color-disabled);
+}
