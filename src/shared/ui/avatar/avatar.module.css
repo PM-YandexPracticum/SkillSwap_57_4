@@ -1,7 +1,18 @@
 .avatar {
-  object-fit: cover;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   border-radius: var(--radius-circle);
   flex-shrink: 0;
+  background-color: var(--color-disabled);
+  color: var(--color-text-caption);
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .s {
@@ -17,8 +28,4 @@
 .l {
   width: var(--size-avatar-l);
   height: var(--size-avatar-l);
-}
-
-.fallback {
-  color: var(--color-disabled);
 }

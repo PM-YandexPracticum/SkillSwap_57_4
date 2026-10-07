@@ -1,31 +1,36 @@
-import { useState } from 'react'
-import clsx from 'clsx'
-import { UserCircleIcon } from '@/shared/assets/icons'
-import { AvatarProps } from './types'
-import styles from './avatar.module.css'
+import { useState } from 'react';
+import clsx from 'clsx';
+import { UserCircleIcon } from '@/shared/assets/icons';
+import type { AvatarProps } from './types';
+import styles from './avatar.module.css';
 
-export const Avatar = ({ src, alt, size = 'm', className }: AvatarProps) => {
-  const [hasError, setHasError] = useState(false)
+export const Avatar = ({
+  src,
+  alt,
+  size = 'm',
+  className,
+}: AvatarProps) => {
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
 
-  const showFallback = !src || hasError
-
-  if (showFallback) {
-    return (
-      <UserCircleIcon
-        className={clsx(styles.avatar, styles[size], styles.fallback, className)}
-        role={alt ? 'img' : undefined}
-        aria-label={alt ? alt : undefined}
-        aria-hidden={!alt ? true : undefined}
-      />
-    )
-  }
+  // Приводим к Boolean и проверяем, что ссылка не в списке битых
+  const showImage = Boolean(src) && src !== failedSrc;
 
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={clsx(styles.avatar, styles[size], className)}
-      onError={() => setHasError(true)}
-    />
-  )
-}
+    <span className={clsx(styles.avatar, styles[size], className)}>
+      {showImage ? (
+        <img
+          src={src ?? undefined}
+          alt={alt}
+          className={styles.image}
+          onError={() => setFailedSrc(src ?? null)}
+        />
+      ) : (
+        <UserCircleIcon
+          role={alt ? 'img' : undefined}
+          aria-label={alt || undefined}
+          aria-hidden={!alt ? 'true' : undefined}
+        />
+      )}
+    </span>
+  );
+};
