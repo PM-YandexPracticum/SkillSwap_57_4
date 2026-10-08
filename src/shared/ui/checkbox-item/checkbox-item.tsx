@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Checkbox } from '../checkbox/checkbox'
+import { Checkbox } from '@/shared/ui/checkbox'
 import type { CheckboxItemProps } from './types'
 
 import styles from './checkbox-item.module.css'

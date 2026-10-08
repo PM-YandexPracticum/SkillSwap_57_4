@@ -1,10 +1,11 @@
-export type CategoryItemState = 'unchecked' | 'checked' | 'indeterminate'
+import { ChangeEvent } from 'react'
+import type { CheckboxState } from '@/shared/ui/checkbox'
 
 export interface CategoryItemProps {
   label: string
-  state: CategoryItemState
+  state: CheckboxState
   opened: boolean
-  onChange: () => void
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onToggle: () => void
   className?: string
 }

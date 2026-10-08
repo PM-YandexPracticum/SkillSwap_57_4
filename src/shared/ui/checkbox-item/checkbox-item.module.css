@@ -1,6 +1,6 @@
 .item {
-  display: flex;
-  padding: var(--space-xxs) 0 var(--space-xxs) var(--space-sm);
+  display: inline-flex;
+  align-items: center;
   gap: var(--space-xs);
   cursor: pointer;
   user-select: none;

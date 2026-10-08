@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Checkbox } from '../checkbox/checkbox'
+import { Checkbox } from '@/shared/ui/checkbox'
 import { ChevronDownIcon, ChevronUpIcon } from '@/shared/assets/icons'
 
 import type { CategoryItemProps } from './types'
