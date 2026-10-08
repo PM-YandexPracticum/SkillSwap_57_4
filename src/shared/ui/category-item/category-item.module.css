@@ -1,0 +1,23 @@
+.item {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.toggle {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  text-align: left;
+}
+
+.chevron {
+  flex-shrink: 0;
+  visibility: hidden;
+}
+
+.toggle:hover .chevron,
+.toggle:focus-visible .chevron,
+.opened {
+  visibility: visible;
+}
