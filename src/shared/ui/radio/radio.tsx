@@ -11,15 +11,13 @@ const ICONS = {
 }
 
 export const Radio = ({ state, className, ...inputProps }: RadioProps) => {
+  const isChecked = state === 'checked'
   const Icon = ICONS[state]
 
   return (
     <span className={clsx(styles.radio, className)}>
-      <input {...inputProps} type="radio" checked={state === 'checked'} className={styles.input} />
-      <Icon
-        className={clsx(styles.icon, state === 'checked' && styles.active)}
-        aria-hidden="true"
-      />
+      <input {...inputProps} type="radio" checked={isChecked} className={styles.input} />
+      <Icon className={clsx(styles.icon, isChecked && styles.active)} aria-hidden="true" />
     </span>
   )
 }
