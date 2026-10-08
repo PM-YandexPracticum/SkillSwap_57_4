@@ -187,3 +187,19 @@ h3 {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+fieldset {
+  min-width: 0;
+  border: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: none;
+}

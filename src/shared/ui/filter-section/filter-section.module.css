@@ -1,0 +1,15 @@
+.section {
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h4);
+  color: var(--color-text);
+}
+
+.content {
+  margin-top: var(--space-lg);
+}
