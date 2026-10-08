@@ -1,10 +1,9 @@
-import { ChangeEvent, useRef } from 'react';
-import clsx from 'clsx';
-import { IconButton } from '@/shared/ui/icon-button';
-import SearchIcon from '@/shared/assets/icons/search.svg?react';
-import CrossIcon from '@/shared/assets/icons/cross.svg?react';
-import { SearchInputProps } from './types';
-import styles from './search-input.module.css';
+import clsx from 'clsx'
+import { ChangeEvent, useRef } from 'react'
+import { IconButton } from '@/shared/ui/icon-button'
+import { CrossIcon, SearchIcon } from '@/shared/assets/icons'
+import { SearchInputProps } from './types'
+import styles from './search-input.module.css'
 
 export const SearchInput = ({
   value,
@@ -12,16 +11,16 @@ export const SearchInput = ({
   placeholder = 'Искать навык',
   className,
 }: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
+    onChange(event.target.value)
+  }
 
   const handleClear = () => {
-    onChange('');
-    inputRef.current?.focus();
-  };
+    onChange('')
+    inputRef.current?.focus()
+  }
 
   return (
     <div className={clsx(styles.wrapper, className)} role="search">
@@ -29,6 +28,7 @@ export const SearchInput = ({
       <input
         ref={inputRef}
         type="search"
+        name="search"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
@@ -36,12 +36,8 @@ export const SearchInput = ({
         className={styles.input}
       />
       {value && (
-        <IconButton
-          icon={<CrossIcon />}
-          aria-label="Очистить поиск"
-          onClick={handleClear}
-        />
+        <IconButton icon={<CrossIcon />} aria-label="Очистить поиск" onClick={handleClear} />
       )}
     </div>
-  );
-};
+  )
+}
