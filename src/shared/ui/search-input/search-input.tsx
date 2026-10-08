@@ -1,4 +1,5 @@
 import { ChangeEvent, useRef } from 'react';
+import clsx from 'clsx';
 import { IconButton } from '@/shared/ui/icon-button';
 import SearchIcon from '@/shared/assets/icons/search.svg?react';
 import CrossIcon from '@/shared/assets/icons/cross.svg?react';
@@ -8,7 +9,7 @@ import styles from './search-input.module.css';
 export const SearchInput = ({
   value,
   onChange,
-  placeholder = 'Поиск навыка',
+  placeholder = 'Искать навык',
   className,
 }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,13 +23,9 @@ export const SearchInput = ({
     inputRef.current?.focus();
   };
 
-  const containerClassName = className
-    ? `${styles.wrapper} ${className}`
-    : styles.wrapper;
-
   return (
-    <div className={containerClassName} role="search">
-      <SearchIcon className={styles.searchIcon} aria-hidden="true" />
+    <div className={clsx(styles.wrapper, className)} role="search">
+      <SearchIcon className={styles.icon} aria-hidden="true" />
       <input
         ref={inputRef}
         type="search"
@@ -40,10 +37,9 @@ export const SearchInput = ({
       />
       {value && (
         <IconButton
-          icon={<CrossIcon aria-hidden="true" />}
+          icon={<CrossIcon />}
           aria-label="Очистить поиск"
           onClick={handleClear}
-          className={styles.clearButton}
         />
       )}
     </div>
