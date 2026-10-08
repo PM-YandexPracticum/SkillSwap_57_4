@@ -1,0 +1,33 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.toggle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  min-width: 0;
+  text-align: left;
+}
+
+.toggle:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  visibility: hidden;
+}
+
+.toggle:hover .chevron,
+.toggle:focus-visible .chevron,
+.opened {
+  visibility: visible;
+}
