@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
   BookIcon,
   BriefcaseIcon,
@@ -6,9 +7,10 @@ import {
   LifestyleIcon,
   PaletteIcon,
 } from '@/shared/assets/icons'
+import type { SkillCategoryId } from '@/shared/types'
+import type { SkillCategoryIcons, SkillsMenuColumnProps, SkillsMenuProps } from './types'
 
-import type { SkillCategoryIcons, SkillsMenuProps } from './types'
-import clsx from 'clsx'
+import styles from './skills-menu.module.css'
 
 const CATEGORY_ICONS: SkillCategoryIcons = {
   business: BriefcaseIcon,
@@ -19,29 +21,53 @@ const CATEGORY_ICONS: SkillCategoryIcons = {
   home: HomeIcon,
 }
 
-export const SkillsMenu = ({ categories, onSelect, id, className }: SkillsMenuProps) => (
-  <div id={id} className={clsx(className)}>
+const LEFT_COLUMN_CATEGORY_IDS: SkillCategoryId[] = ['business', 'languages', 'home']
+const RIGHT_COLUMN_CATEGORY_IDS: SkillCategoryId[] = ['creativity', 'education', 'health']
+
+const SkillsMenuColumn = ({ categories, onSelect }: SkillsMenuColumnProps) => (
+  <div className={styles.column}>
     {categories.map((category) => {
       const Icon = CATEGORY_ICONS[category.id]
 
       return (
-        <div key={category.id}>
-          <div className={clsx()}>
-            <span className={clsx()}>
-              <Icon aria-hidden="true" />
-            </span>
-            <h2 className={clsx()}>{category.name}</h2>
-          </div>
+        <div key={category.id} className={styles.category}>
+          <span className={clsx(styles.icon, styles[category.id])}>
+            <Icon aria-hidden="true" />
+          </span>
 
-          <ul className={clsx()}>
-            {category.subcategories.map((subcategory) => (
-              <li key={subcategory.id}>
-                <button onClick={() => onSelect(category.id)}>{subcategory.name}</button>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.content}>
+            <h2 className={styles.title}>{category.name}</h2>
+
+            <ul className={styles.list}>
+              {category.subcategories.map((subcategory) => (
+                <li key={subcategory.id}>
+                  <button
+                    className={styles.item}
+                    type="button"
+                    onClick={() => onSelect(subcategory.id)}
+                  >
+                    {subcategory.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )
     })}
   </div>
 )
+
+export const SkillsMenu = ({ categories, onSelect, id, className }: SkillsMenuProps) => {
+  const leftCategories = categories.filter(({ id }) => LEFT_COLUMN_CATEGORY_IDS.includes(id))
+  const rightCategories = categories.filter(({ id }) => RIGHT_COLUMN_CATEGORY_IDS.includes(id))
+
+  return (
+    <div id={id} className={clsx(styles.menu, className)}>
+      <div className={styles.layout}>
+        <SkillsMenuColumn categories={leftCategories} onSelect={onSelect} />
+        <SkillsMenuColumn categories={rightCategories} onSelect={onSelect} />
+      </div>
+    </div>
+  )
+}

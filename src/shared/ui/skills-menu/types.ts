@@ -8,4 +8,9 @@ export interface SkillsMenuProps {
   className?: string
 }
 
+export interface SkillsMenuColumnProps {
+  categories: SkillCategory[]
+  onSelect: SkillsMenuProps['onSelect']
+}
+
 export type SkillCategoryIcons = Record<SkillCategoryId, ComponentType<SVGProps<SVGSVGElement>>>
