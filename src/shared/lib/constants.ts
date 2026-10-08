@@ -8,6 +8,14 @@ export const ROUTES = {
   REGISTER: '/register',
 } as const
 
+export const STUB_ROUTES = {
+  ABOUT: '/about',
+  CONTACTS: '/contacts',
+  BLOG: '/blog',
+  PRIVACY: '/privacy',
+  TERMS: '/terms',
+} as const
+
 export const SKILL_CATEGORIES = [
   'Программирование',
   'Дизайн',
