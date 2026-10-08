@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  position: relative;
+  width: 100%;
+}
+
+.label {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-caption);
+  line-height: var(--line-height-caption);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--size-control);
+  padding: 0 var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-disabled);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-base);
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  text-align: left;
+}
+
+.control:focus,
+.control:focus-within {
+  border-color: var(--color-link);
+  outline: none;
+}
+
+.controlError {
+  border-color: var(--color-error);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+.input::placeholder,
+.placeholder {
+  color: var(--color-text-disabled);
+}
+
+.icon {
+  width: var(--size-icon);
+  height: var(--size-icon);
+  color: var(--color-text-caption);
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.iconOpen {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-xxs));
+  left: 0;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-disabled);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xs) 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-xxs) var(--space-lg);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  text-align: left;
+  transition: background-color var(--transition-base);
+}
+
+.option:hover,
+.option:focus {
+  background-color: var(--color-disabled);
+  outline: none;
+}
+
+.optionSelected {
+  color: var(--color-link);
+}
+
+.empty {
+  padding: var(--space-xxs) var(--space-lg);
+  color: var(--color-text-disabled);
+  text-align: center;
+  font-size: var(--font-size-body);
+}
+
+.errorText {
+  font-size: var(--font-size-caption);
+  color: var(--color-error);
+}
