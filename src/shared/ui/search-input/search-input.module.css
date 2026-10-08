@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  height: var(--size-control);
+  padding: var(--space-sm);
+  background-color: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-base);
+}
+
+.wrapper:focus-within {
+  border-color: var(--color-accent);
+}
+
+.icon {
+  width: var(--size-icon);
+  height: var(--size-icon);
+  color: var(--color-text-caption);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.input::placeholder {
+  color: var(--color-text-caption);
+}
+
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
