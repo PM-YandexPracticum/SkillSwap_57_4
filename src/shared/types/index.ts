@@ -69,3 +69,6 @@ export interface AuthUser {
   email: string
   token: string
 }
+
+// ─── Loading ─────────────────────────────────────────────
+export type LoadingStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
