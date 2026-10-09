@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: -0.011em; /* возможно уже стоит вынести в глобалы */
+}
+
+.action {
+  flex-shrink: 0;
+}
+
+.grid {
+  margin-top: var(--space-2xl);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-card-min-width), 1fr));
+  gap: var(--space-xl);
+}
