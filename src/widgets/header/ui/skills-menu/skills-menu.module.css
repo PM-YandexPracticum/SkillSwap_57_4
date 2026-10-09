@@ -30,13 +30,8 @@
   border-radius: var(--radius-circle);
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
 .title {
+  margin-bottom: var(--space-sm);
   letter-spacing: -0.011em;
   line-height: 28px;
 }

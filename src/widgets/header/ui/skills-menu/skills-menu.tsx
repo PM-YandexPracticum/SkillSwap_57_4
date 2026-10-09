@@ -37,7 +37,7 @@ const SkillsMenuColumn = ({ categories, onSelect }: SkillsMenuColumnProps) => (
             <Icon aria-hidden="true" />
           </span>
 
-          <div className={styles.content}>
+          <div>
             <h2 className={styles.title}>{category.name}</h2>
 
             <ul className={styles.list}>
