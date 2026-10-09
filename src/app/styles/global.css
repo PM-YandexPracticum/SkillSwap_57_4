@@ -110,6 +110,7 @@
 body {
   font-family: var(--font-body);
   font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
   color: var(--color-text);
   background-color: var(--color-background);
   line-height: var(--line-height-body);
@@ -144,6 +145,11 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+fieldset {
+  min-width: 0;
+  border: none;
 }
 
 /* ─── Typography ─────────────────────────────────────────── */
