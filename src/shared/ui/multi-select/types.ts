@@ -1,4 +1,4 @@
-import { SelectOption } from '../select/types'
+import type { SelectOption } from '@/shared/ui/select'
 
 export interface MultiSelectProps {
   label: string

@@ -1,9 +1,15 @@
-import { useState, useRef, ChangeEvent, KeyboardEvent, useId, useEffect } from 'react'
+import {
+  useState,
+  useRef,
+  type ChangeEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  useId,
+} from 'react'
 import { clsx } from 'clsx'
-import { SelectProps } from './types'
+import type { SelectProps } from './types'
 import { IconButton } from '@/shared/ui/icon-button'
-import ChevronDownIcon from '@/shared/assets/icons/chevron-down.svg?react'
-import CrossIcon from '@/shared/assets/icons/cross.svg?react'
+import { ChevronDownIcon, CrossIcon } from '@/shared/assets/icons'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import styles from './select.module.css'
 
@@ -18,152 +24,155 @@ export const Select = ({
   className,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [query, setQuery] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const controlRef = useRef<HTMLButtonElement | HTMLInputElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const uniqueId = useId()
+  const fieldId = `field-${uniqueId}`
   const labelId = `label-${uniqueId}`
   const valueId = `value-${uniqueId}`
   const listboxId = `listbox-${uniqueId}`
   const errorId = `error-${uniqueId}`
 
   const selectedOption = options.find((opt) => opt.value === value)
+  const searchText = query ?? selectedOption?.label ?? ''
+  const filteredOptions = query
+    ? options.filter((opt) => opt.label.toLowerCase().includes(query.toLowerCase()))
+    : options
 
-  useEffect(() => {
-    if (!isOpen) {
-      setSearchValue(selectedOption ? selectedOption.label : '')
-    }
-  }, [isOpen, selectedOption])
+  const controlClassName = clsx(
+    styles.control,
+    isOpen && styles.controlOpen,
+    error && styles.controlError,
+  )
+  const iconClassName = clsx(styles.icon, isOpen && styles.iconOpen)
+  const focusField = () => (searchable ? inputRef : buttonRef).current?.focus()
 
   const closeDropdown = () => {
     setIsOpen(false)
-    controlRef.current?.focus()
+    setQuery(null)
   }
 
- useDismiss({
-    ref: containerRef,
-    onDismiss: closeDropdown,
-    isActive: isOpen,
-  });
+  useDismiss({ ref: containerRef, onDismiss: closeDropdown, isActive: isOpen })
 
-  const handleToggle = () => {
-    if (!isOpen) setIsOpen(true)
-    else closeDropdown()
+  const handleToggle = () => setIsOpen((open) => !open)
+
+  const handleBoxClick = (e: MouseEvent<HTMLDivElement>) => {
+    inputRef.current?.focus()
+    if (isOpen && e.target !== inputRef.current) closeDropdown()
+    else setIsOpen(true)
   }
 
   const handleSelect = (optionValue: string) => {
     onChange(optionValue)
     closeDropdown()
+    focusField()
   }
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value)
-    if (!isOpen) setIsOpen(true)
+    setQuery(e.target.value)
+    setIsOpen(true)
   }
 
-  const handleClearSearch = (e: React.MouseEvent) => {
+  const handleClearSearch = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     onChange('')
-    setSearchValue('')
-    controlRef.current?.focus()
+    setQuery(null)
+    inputRef.current?.focus()
   }
 
-  const filteredOptions = searchable
-    ? options.filter((opt) => opt.label.toLowerCase().includes(searchValue.toLowerCase()))
-    : options
+  const handleContainerKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && isOpen) focusField()
+  }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      if (isOpen && filteredOptions.length > 0) {
-        handleSelect(filteredOptions[0].value)
-      } else {
-        setIsOpen(true)
-      }
-    }
+    if (e.key !== 'Enter') return
+    e.preventDefault()
+    if (isOpen && filteredOptions.length > 0) handleSelect(filteredOptions[0].value)
+    else setIsOpen(true)
   }
 
   return (
-    <div ref={containerRef} className={clsx(styles.container, className)}>
-      <span id={labelId} className={styles.label}>
+    <div
+      ref={containerRef}
+      className={clsx(styles.container, className)}
+      onKeyDown={handleContainerKeyDown}
+    >
+      <label id={labelId} htmlFor={fieldId}>
         {label}
-      </span>
+      </label>
 
-      {searchable ? (
-        <div
-          className={clsx(styles.control, error && styles.controlError)}
-          onClick={() => setIsOpen(true)}
-        >
-          <input
-            ref={controlRef as React.RefObject<HTMLInputElement>}
-            type="text"
-            role="combobox"
-            aria-autocomplete="list"
+      <div className={styles.anchor}>
+        {searchable ? (
+          <div className={controlClassName} onClick={handleBoxClick}>
+            <input
+              ref={inputRef}
+              id={fieldId}
+              type="text"
+              role="combobox"
+              autoComplete="off"
+              aria-autocomplete="list"
+              aria-expanded={isOpen}
+              aria-controls={listboxId}
+              aria-describedby={error ? errorId : undefined}
+              className={styles.input}
+              value={searchText}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
+              placeholder={placeholder}
+            />
+            {query ? (
+              <IconButton
+                icon={<CrossIcon />}
+                aria-label="Очистить поле"
+                onClick={handleClearSearch}
+              />
+            ) : (
+              <ChevronDownIcon className={iconClassName} aria-hidden="true" />
+            )}
+          </div>
+        ) : (
+          <button
+            ref={buttonRef}
+            id={fieldId}
+            type="button"
             aria-expanded={isOpen}
             aria-controls={listboxId}
+            aria-labelledby={`${labelId} ${valueId}`}
             aria-describedby={error ? errorId : undefined}
-            className={styles.input}
-            value={searchValue}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-          />
-          {searchValue ? (
-            <IconButton
-              icon={<CrossIcon />}
-              aria-label="Очистить поле"
-              onClick={handleClearSearch}
-            />
-          ) : (
-            <ChevronDownIcon
-              className={clsx(styles.icon, isOpen && styles.iconOpen)}
-              aria-hidden="true"
-            />
-          )}
-        </div>
-      ) : (
-        <button
-          ref={controlRef as React.RefObject<HTMLButtonElement>}
-          type="button"
-          aria-expanded={isOpen}
-          aria-controls={listboxId}
-          aria-labelledby={`${labelId} ${valueId}`}
-          aria-describedby={error ? errorId : undefined}
-          className={clsx(styles.control, error && styles.controlError)}
-          onClick={handleToggle}
-        >
-          <span id={valueId} className={clsx(!selectedOption && styles.placeholder)}>
-            {selectedOption ? selectedOption.label : placeholder}
-          </span>
-          <ChevronDownIcon
-            className={clsx(styles.icon, isOpen && styles.iconOpen)}
-            aria-hidden="true"
-          />
-        </button>
-      )}
+            className={controlClassName}
+            onClick={handleToggle}
+          >
+            <span
+              id={valueId}
+              className={clsx(styles.value, !selectedOption && styles.placeholder)}
+            >
+              {selectedOption?.label ?? placeholder}
+            </span>
+            <ChevronDownIcon className={iconClassName} aria-hidden="true" />
+          </button>
+        )}
 
-      {isOpen && (
-        <div id={listboxId} role="listbox" className={styles.dropdown}>
-          {filteredOptions.length > 0 ? (
-            filteredOptions.map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                role="option"
-                aria-current={opt.value === value ? 'true' : undefined}
-                aria-selected={opt.value === value}
-                className={clsx(styles.option, opt.value === value && styles.optionSelected)}
-                onClick={() => handleSelect(opt.value)}
-              >
-                {opt.label}
-              </button>
-            ))
-          ) : (
-            <div className={styles.empty}>Ничего не найдено</div>
-          )}
-        </div>
-      )}
+        {isOpen && (
+          <ul id={listboxId} className={clsx(styles.dropdown, error && styles.dropdownError)}>
+            {filteredOptions.map((opt) => (
+              <li key={opt.value}>
+                <button
+                  type="button"
+                  aria-current={opt.value === value ? 'true' : undefined}
+                  className={clsx(styles.option, opt.value === value && styles.optionSelected)}
+                  onClick={() => handleSelect(opt.value)}
+                >
+                  {opt.label}
+                </button>
+              </li>
+            ))}
+            {filteredOptions.length === 0 && <li className={styles.empty}>Ничего не найдено</li>}
+          </ul>
+        )}
+      </div>
 
       {error && (
         <span id={errorId} className={styles.errorText}>
