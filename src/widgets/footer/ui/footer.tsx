@@ -1,12 +1,18 @@
 import { NavLink } from 'react-router-dom'
-import { STUB_ROUTES } from '@/shared/lib/constants'
+import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
 import styles from './footer.module.css'
+import { Logo } from '@/shared/ui/logo'
 
-const FOOTER_LINKS = [
+interface FooterLink {
+  text: string
+  to: string
+}
+
+const FOOTER_LINKS: FooterLink[] = [
   { text: 'О проекте', to: STUB_ROUTES.ABOUT },
   { text: 'Контакты', to: STUB_ROUTES.CONTACTS },
   { text: 'Политика конфиденциальности', to: STUB_ROUTES.PRIVACY },
-  { text: 'Все навыки', to: '/' },
+  { text: 'Все навыки', to: ROUTES.HOME },
   { text: 'Блог', to: STUB_ROUTES.BLOG },
   { text: 'Пользовательское соглашение', to: STUB_ROUTES.TERMS },
 ]
@@ -16,12 +22,8 @@ export const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.top}>
-        {/* Временная заглушка логотипа */}
-        <div style={{ fontWeight: 'bold', fontSize: '24px', color: 'var(--color-primary)' }}>
-          SkillSwap
-        </div>
-
+      <div className={styles.inner}>
+        <Logo />
         <nav aria-label="Нижнее меню" className={styles.nav}>
           <ul className={styles.list}>
             {FOOTER_LINKS.map((link) => (
@@ -33,9 +35,6 @@ export const Footer = () => {
             ))}
           </ul>
         </nav>
-      </div>
-
-      <div className={styles.bottom}>
         <span className={styles.copyright}>SkillSwap - {currentYear}</span>
       </div>
     </footer>

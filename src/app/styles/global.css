@@ -79,6 +79,7 @@
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
   --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
+  --size-footer-column: 324px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
