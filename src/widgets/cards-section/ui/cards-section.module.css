@@ -7,11 +7,6 @@
 .title {
   font-size: var(--font-size-h1);
   line-height: var(--line-height-h1);
-  letter-spacing: -0.011em; /* возможно уже стоит вынести в глобалы */
-}
-
-.action {
-  flex-shrink: 0;
 }
 
 .grid {

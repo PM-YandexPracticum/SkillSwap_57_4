@@ -12,7 +12,7 @@ export const CardsSection = ({ title, action, children, className }: CardsSectio
         <h2 className={styles.title} id={titleId}>
           {title}
         </h2>
-        {action ? <div className={styles.action}>{action}</div> : null}
+        {action}
       </div>
       <div className={styles.grid}>{children}</div>
     </section>
