@@ -1,0 +1,82 @@
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-3xl);
+  padding: var(--space-4xl);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  border-radius: var(--radius-circle);
+}
+
+.title {
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.011em;
+  line-height: 28px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.item {
+  letter-spacing: 0.02em;
+  text-align: left;
+  transition: color var(--transition-base);
+}
+
+.item:hover {
+  color: var(--color-text-caption);
+}
+
+.item:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}
+
+.business {
+  background-color: var(--color-tag-business);
+}
+
+.creativity {
+  background-color: var(--color-tag-creativity);
+}
+
+.languages {
+  background-color: var(--color-tag-languages);
+}
+
+.education {
+  background-color: var(--color-tag-education);
+}
+
+.health {
+  background-color: var(--color-tag-health);
+}
+
+.home {
+  background-color: var(--color-tag-home);
+}
