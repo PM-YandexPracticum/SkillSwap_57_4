@@ -108,6 +108,7 @@
 body {
   font-family: var(--font-body);
   font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
   color: var(--color-text);
   background-color: var(--color-background);
   line-height: var(--line-height-body);
@@ -142,6 +143,11 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+fieldset {
+  min-width: 0;
+  border: none;
 }
 
 /* ─── Typography ─────────────────────────────────────────── */
@@ -186,20 +192,4 @@ h3 {
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
-}
-
-fieldset {
-  min-width: 0;
-  border: none;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: none;
 }

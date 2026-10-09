@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 
 export type FilterSectionProps = {
-  title: string;
-  hideTitle?: boolean;
-  children: ReactNode;
-};
+  title: string
+  hideTitle?: boolean
+  children: ReactNode
+}

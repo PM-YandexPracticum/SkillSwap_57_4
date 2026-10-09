@@ -1,5 +1,5 @@
 export type ExpandButtonProps = {
-  label: string;
-  opened: boolean;
-  onToggle: () => void;
-};
+  label: string
+  opened: boolean
+  onToggle: () => void
+}
