@@ -87,6 +87,7 @@
   --size-sidebar: 324px;
   --size-footer-column: 324px;
   --size-card-min-width: 324px;
+  --size-dropdown-max-height: 240px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
