@@ -1,9 +1,11 @@
 // Импортируй свои slice'ы здесь по мере их создания:
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { usersReducer } from '@/entities/user'
+import { citiesReducer } from '@/entities/city'
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  cities: citiesReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
