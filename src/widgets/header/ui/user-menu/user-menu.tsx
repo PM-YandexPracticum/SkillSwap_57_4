@@ -4,6 +4,8 @@ import { useDismiss } from '@/shared/hooks/useDismiss'
 import { LogoutIcon } from '@/shared/assets/icons'
 import { UserMenuProps } from './types'
 
+import styles from './user-menu.module.css'
+
 export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -24,8 +26,9 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
   useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen })
 
   return (
-    <div ref={wrapperRef} style={{ backgroundColor: 'red' }}>
+    <div className={styles.container} ref={wrapperRef}>
       <button
+        className={styles.trigger}
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
@@ -41,17 +44,19 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
       </button>
 
       {isOpen && (
-        <ul id={menuId}>
+        // элемент в целом выглядит как отдельный компонент - дропдаун
+        // но используется он только здесь и для показа уведомлений
+        <ul className={styles.menu} id={menuId}>
           <li>
-            <button type="button" onClick={handleProfileClick}>
-              Личный кабинет
+            <button className={styles.item} type="button" onClick={handleProfileClick}>
+              <h4>Личный кабинет</h4>
             </button>
           </li>
           <li>
-            <button type="button" onClick={handleLogout}>
-              Выйти из аккаунта
+            <button className={styles.item} type="button" onClick={handleLogout}>
+              <h4>Выйти из аккаунта</h4>
+              <LogoutIcon className={styles.icon} aria-hidden="true" />
             </button>
-            <LogoutIcon aria-hidden="true" />
           </li>
         </ul>
       )}
