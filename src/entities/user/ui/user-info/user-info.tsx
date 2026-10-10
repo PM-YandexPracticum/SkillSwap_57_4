@@ -28,7 +28,7 @@ export const UserInfo = ({
       )}
     >
       <Avatar src={avatarUrl} size={avatarSize} alt="" />
-      <Wrapper className={clsx(styles.text)}>
+      <Wrapper className={styles.text}>
         <NameTag className={clsx(styles.name, isH2 && styles.nameH2)}>{name}</NameTag>
         {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
       </Wrapper>
