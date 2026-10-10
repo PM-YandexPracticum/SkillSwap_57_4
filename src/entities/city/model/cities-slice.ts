@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchCities } from '@/api/cities'
 
 import type { LoadingStatus, City } from '@/shared/types'
-import { createTypedAsyncThunk } from '@/shared/lib/create-typed-async-thunk'
+import { createTypedAsyncThunk } from '@/store/helpers'
 
 export type CitiesState = {
   items: City[]

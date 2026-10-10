@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchSkillCategories } from '@/api/skills'
 
 import type { LoadingStatus, SkillCategory } from '@/shared/types'
-import { createTypedAsyncThunk } from '@/shared/lib/create-typed-async-thunk'
+import { createTypedAsyncThunk } from '@/store/helpers'
 
-export type SkillCategoryState = {
+export type SkillCategoriesState = {
   items: SkillCategory[]
   status: LoadingStatus
   error: string | null
 }
 
-const initialState: SkillCategoryState = {
+const initialState: SkillCategoriesState = {
   items: [],
   status: 'idle',
   error: null,

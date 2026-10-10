@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchUsers } from '@/api/users'
 
 import type { LoadingStatus, User } from '@/shared/types'
-import { createTypedAsyncThunk } from '@/shared/lib/create-typed-async-thunk'
+import { createTypedAsyncThunk } from '@/store/helpers'
 
 export type UsersState = {
   items: User[]
