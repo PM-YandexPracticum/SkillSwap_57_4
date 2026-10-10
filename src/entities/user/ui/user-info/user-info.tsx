@@ -3,24 +3,34 @@ import { Avatar } from '@/shared/ui/avatar'
 
 import { UserInfoProps } from './types'
 
+import styles from './user-info.module.css'
+
 export const UserInfo = ({
   name,
   avatarUrl,
   subtitle,
   avatarSize = 'm',
   avatarPosition = 'left',
-  nameAs = 'h3',
+  nameAs: NameTag = 'h3',
   className,
 }: UserInfoProps) => {
-  const NameTag = nameAs
   const Wrapper = NameTag === 'span' ? 'span' : 'div'
+  const isH2 = NameTag === 'h2'
+  const isCompact = avatarSize === 's' && NameTag === 'span'
 
   return (
-    <Wrapper className={clsx(avatarPosition === 'right' && 'root', className)}>
-      <Avatar src={avatarUrl} size={avatarSize} alt={`${name} - фотография профиля`} />
-      <Wrapper className={clsx()}>
-        <NameTag className={clsx()}>{name}</NameTag>
-        {subtitle && <span className={clsx()}>{subtitle}</span>}
+    <Wrapper
+      className={clsx(
+        styles.container,
+        isCompact && styles.containerCompact,
+        avatarPosition === 'right' && styles.avatarRight,
+        className,
+      )}
+    >
+      <Avatar src={avatarUrl} size={avatarSize} alt="" />
+      <Wrapper className={clsx(styles.text)}>
+        <NameTag className={clsx(styles.name, isH2 && styles.nameH2)}>{name}</NameTag>
+        {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
       </Wrapper>
     </Wrapper>
   )
