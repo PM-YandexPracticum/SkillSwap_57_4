@@ -38,6 +38,7 @@
   /* Typography font weights */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
+  --font-weight-semibold: 600;
 
   /* Typography size */
   --font-size-h1: 32px;
@@ -54,6 +55,7 @@
   --line-height-h4: 24px;
   --line-height-body: 24px;
   --line-height-caption: 16px;
+  --line-height-logo: 32px;
 
   /* Typography letter-spacing */
   --letter-spacing-heading: -0.011em;
