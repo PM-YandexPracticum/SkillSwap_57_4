@@ -1,6 +1,6 @@
-export interface LikeButtonProps {
-  isLiked: boolean
-  count: number
-  onClick?: () => void
-  className?: string
+import type { ComponentPropsWithoutRef } from 'react'
+
+export interface LikeButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'children'> {
+  isLiked?: boolean
+  count?: number
 }

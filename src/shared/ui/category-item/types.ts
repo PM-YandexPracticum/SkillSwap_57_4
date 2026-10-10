@@ -1,11 +1,7 @@
-import { ChangeEvent } from 'react'
-import type { CheckboxState } from '@/shared/ui/checkbox'
+import type { CheckboxProps } from '@/shared/ui/checkbox'
 
-export interface CategoryItemProps {
+export interface CategoryItemProps extends CheckboxProps {
   label: string
-  state: CheckboxState
-  opened: boolean
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  opened?: boolean
   onToggle: () => void
-  className?: string
 }

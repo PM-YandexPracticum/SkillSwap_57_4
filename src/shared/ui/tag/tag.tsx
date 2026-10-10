@@ -1,5 +1,5 @@
-import { TagCategory, TagProps } from './types'
 import clsx from 'clsx'
+import type { TagCategory, TagProps } from './types'
 import styles from './tag.module.css'
 
 const CATEGORY_STYLES: Record<TagCategory, string> = {

@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { CardsSectionProps } from './types'
+import type { CardsSectionProps } from './types'
 
 import styles from './cards-section.module.css'
 

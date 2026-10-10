@@ -1,20 +1,16 @@
-import { useState, useRef, type KeyboardEvent, useId } from 'react'
+import { forwardRef, useState, useRef, useId, type KeyboardEvent } from 'react'
 import { clsx } from 'clsx'
+import { mergeRefs } from 'react-merge-refs'
 import type { MultiSelectProps } from './types'
 import { CheckboxItem } from '@/shared/ui/checkbox-item'
 import { ChevronDownIcon } from '@/shared/assets/icons'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import styles from './multi-select.module.css'
 
-export const MultiSelect = ({
-  label,
-  options,
-  value,
-  onChange,
-  placeholder = 'Выберите...',
-  error,
-  className,
-}: MultiSelectProps) => {
+export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(function MultiSelect(
+  { label, options, value, onChange, placeholder = 'Выберите...', error, className },
+  ref,
+) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -66,8 +62,8 @@ export const MultiSelect = ({
 
       <div className={styles.anchor}>
         <button
-          ref={buttonRef}
           id={fieldId}
+          ref={mergeRefs([buttonRef, ref])}
           type="button"
           aria-expanded={isOpen}
           aria-controls={listboxId}
@@ -110,4 +106,4 @@ export const MultiSelect = ({
       )}
     </div>
   )
-}
+})

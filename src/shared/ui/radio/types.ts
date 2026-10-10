@@ -6,5 +6,5 @@ export interface RadioProps extends Omit<
   ComponentPropsWithoutRef<'input'>,
   'type' | 'checked' | 'defaultChecked' | 'children'
 > {
-  state: RadioState
+  state?: RadioState
 }

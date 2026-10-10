@@ -13,3 +13,7 @@ export interface SelectProps {
   searchable?: boolean
   className?: string
 }
+
+export interface SelectHandle {
+  focus: () => void
+}

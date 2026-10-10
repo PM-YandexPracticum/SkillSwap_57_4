@@ -1,8 +1,8 @@
-import { ComponentProps, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
 
-export interface ButtonProps extends ComponentProps<'button'> {
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   variant?: ButtonVariant
   leftIcon?: ReactNode
   rightIcon?: ReactNode

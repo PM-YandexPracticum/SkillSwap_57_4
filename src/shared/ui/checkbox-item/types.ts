@@ -1,10 +1,6 @@
-import { ChangeEvent } from 'react'
-import { CheckboxState } from '@/shared/ui/checkbox'
+import type { CheckboxProps, CheckboxState } from '@/shared/ui/checkbox'
 
-export interface CheckboxItemProps {
+export interface CheckboxItemProps extends Omit<CheckboxProps, 'state'> {
   label: string
-  state: Exclude<CheckboxState, 'indeterminate'>
-  name?: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-  className?: string
+  state?: Exclude<CheckboxState, 'indeterminate'>
 }
