@@ -1,7 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { fetchUsers } from '@/api/users'
 
 import type { LoadingStatus, User } from '@/shared/types'
+import { createTypedAsyncThunk } from '@/shared/lib/create-typed-async-thunk'
 
 export type UsersState = {
   items: User[]
@@ -15,16 +16,12 @@ const initialState: UsersState = {
   error: null,
 }
 
-export const loadUsers = createAsyncThunk<User[], void, { state: { users: UsersState } }>(
-  'users/load',
-  () => fetchUsers(),
-  {
-    condition: (_, { getState }) => {
-      const { status } = getState().users
-      return status === 'idle' || status === 'failed'
-    },
+export const loadUsers = createTypedAsyncThunk('users/load', () => fetchUsers(), {
+  condition: (_, { getState }) => {
+    const { status } = getState().users
+    return status === 'idle' || status === 'failed'
   },
-)
+})
 
 const usersSlice = createSlice({
   name: 'users',

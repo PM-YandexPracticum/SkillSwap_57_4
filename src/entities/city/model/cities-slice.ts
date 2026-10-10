@@ -1,7 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { fetchCities } from '@/api/cities'
 
 import type { LoadingStatus, City } from '@/shared/types'
+import { createTypedAsyncThunk } from '@/shared/lib/create-typed-async-thunk'
 
 export type CitiesState = {
   items: City[]
@@ -15,16 +16,12 @@ const initialState: CitiesState = {
   error: null,
 }
 
-export const loadCities = createAsyncThunk<City[], void, { state: { cities: CitiesState } }>(
-  'cities/load',
-  () => fetchCities(),
-  {
-    condition: (_, { getState }) => {
-      const { status } = getState().cities
-      return status === 'idle' || status === 'failed'
-    },
+export const loadCities = createTypedAsyncThunk('cities/load', () => fetchCities(), {
+  condition: (_, { getState }) => {
+    const { status } = getState().cities
+    return status === 'idle' || status === 'failed'
   },
-)
+})
 
 const citiesSlice = createSlice({
   name: 'cities',
