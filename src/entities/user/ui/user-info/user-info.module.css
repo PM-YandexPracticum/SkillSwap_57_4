@@ -12,8 +12,6 @@
   flex-direction: row-reverse;
 }
 
-/* для правильной работы усечения вместо flex
-можно было бы просто сделать имя и подзаголовок блочными элементами */
 .text {
   display: flex;
   flex-direction: column;
@@ -32,8 +30,4 @@
 .subtitle {
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
-}
-
-.nameH2 {
-  line-height: 28px; /* не знаю под каким именем добавить в глобалы */
 }

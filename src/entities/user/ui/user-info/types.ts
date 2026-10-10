@@ -1,12 +1,13 @@
-type UserInfoAvatarSize = 's' | 'm' | 'l'
+import type { AvatarSize } from '@/shared/ui/avatar'
+
 type UserInfoAvatarPosition = 'left' | 'right'
 type UserInfoNameTag = 'h2' | 'h3' | 'span'
 
 export interface UserInfoProps {
   name: string
-  avatarUrl: string | null
+  avatarUrl?: string | null
   subtitle?: string
-  avatarSize?: UserInfoAvatarSize
+  avatarSize?: AvatarSize
   avatarPosition?: UserInfoAvatarPosition
   nameAs?: UserInfoNameTag
   className?: string
