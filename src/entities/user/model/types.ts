@@ -1,9 +1,10 @@
+import type { SkillCategoryId } from '@/shared/types'
 export type { AuthUser, Gender, User } from '@/shared/types'
 
 export interface CardTag {
   id: string
   label: string
-  category: string | 'more'
+  category: SkillCategoryId | 'more'
 }
 
 export interface UserCardData {

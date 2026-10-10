@@ -1,22 +1,18 @@
 import { getAge, formatAge } from '@/shared/lib/helpers'
-import { findSubcategory, SkillCategory } from '@/shared/lib/skills'
-import { User, UserCardData, CardTag } from '../model/types'
-
-export interface City {
-  id: string
-  name: string
-}
+import { findSubcategory } from '@/shared/lib/skills'
+import type { City, SkillCategory, User } from '@/shared/types'
+import type { UserCardData, CardTag } from '../model/types'
 
 export const toUserCardData = (
   user: User,
   categories: SkillCategory[],
   cities: City[],
-  currentDate: Date,
+  currentDate: Date = new Date(),
 ): UserCardData => {
-  const cityName = cities.find((c) => c.id === user.cityId)?.name
+  const cityName = cities.find((city) => city.id === user.cityId)?.name
 
-  const age = user.birthDate ? getAge(user.birthDate, currentDate) : null
-  const ageStr = age !== null ? formatAge(age) : null
+  const age = getAge(user.birthDate, currentDate)
+  const ageStr = age !== null ? formatAge(age) : undefined
 
   const subtitle = [cityName, ageStr].filter(Boolean).join(', ')
 
@@ -32,18 +28,20 @@ export const toUserCardData = (
     return acc
   }, [])
 
+  const { teachSkill } = user
+
   return {
     id: user.id,
-    skillId: user.teachSkill.id,
+    skillId: teachSkill.id,
     name: user.name,
     avatarUrl: user.avatarUrl,
     subtitle,
     about: user.about,
     likesCount: user.likesCount,
     teachTag: {
-      id: user.teachSkill.id,
-      label: user.teachSkill.title,
-      category: user.teachSkill.categoryId,
+      id: teachSkill.id,
+      label: teachSkill.title,
+      category: teachSkill.categoryId,
     },
     learnTags,
   }
