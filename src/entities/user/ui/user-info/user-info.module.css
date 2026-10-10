@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.containerCompact {
+  gap: var(--space-xs);
+}
+
+.avatarRight {
+  flex-direction: row-reverse;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--space-xxs);
+}
+
+.name,
+.subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.subtitle {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
