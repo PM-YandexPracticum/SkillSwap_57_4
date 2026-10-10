@@ -1,5 +1,5 @@
 // ─── Model ───────────────────────────────────────────────
-export type * from './model/types'
+export * from './model/types'
 export { loadUsers, usersReducer } from './model/users-slice'
 export type { UsersState } from './model/users-slice'
 export {
@@ -11,6 +11,9 @@ export {
   selectPopularUsers,
   selectNewestUsers,
 } from './model/selectors'
+
+// ─── Lib ─────────────────────────────────────────────────
+export { toUserCardData } from './lib/to-user-card-data'
 
 // ─── UI ──────────────────────────────────────────────────
 export { UserInfo } from './ui/user-info/user-info'
