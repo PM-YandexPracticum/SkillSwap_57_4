@@ -1,4 +1,3 @@
-// Импортируй свои slice'ы здесь по мере их создания:
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import { usersReducer } from '@/entities/user'

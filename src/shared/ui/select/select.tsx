@@ -1,28 +1,33 @@
 import {
+  forwardRef,
   useState,
   useRef,
+  useId,
+  useImperativeHandle,
   type ChangeEvent,
   type KeyboardEvent,
   type MouseEvent,
-  useId,
 } from 'react'
 import { clsx } from 'clsx'
-import type { SelectProps } from './types'
+import type { SelectHandle, SelectProps } from './types'
 import { IconButton } from '@/shared/ui/icon-button'
 import { ChevronDownIcon, CrossIcon } from '@/shared/assets/icons'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import styles from './select.module.css'
 
-export const Select = ({
-  label,
-  options,
-  value,
-  onChange,
-  placeholder = 'Выберите...',
-  error,
-  searchable = false,
-  className,
-}: SelectProps) => {
+export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
+  {
+    label,
+    options,
+    value,
+    onChange,
+    placeholder = 'Выберите...',
+    error,
+    searchable = false,
+    className,
+  },
+  ref,
+) {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -49,6 +54,8 @@ export const Select = ({
   )
   const iconClassName = clsx(styles.icon, isOpen && styles.iconOpen)
   const focusField = () => (searchable ? inputRef : buttonRef).current?.focus()
+
+  useImperativeHandle(ref, () => ({ focus: focusField }))
 
   const closeDropdown = () => {
     setIsOpen(false)
@@ -181,4 +188,4 @@ export const Select = ({
       )}
     </div>
   )
-}
+})

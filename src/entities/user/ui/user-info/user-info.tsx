@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Avatar } from '@/shared/ui/avatar'
-import { UserInfoProps } from './types'
+import type { UserInfoProps } from './types'
 import styles from './user-info.module.css'
 
 export const UserInfo = ({

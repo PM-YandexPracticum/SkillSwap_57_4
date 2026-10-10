@@ -6,5 +6,5 @@ export interface CheckboxProps extends Omit<
   ComponentPropsWithoutRef<'input'>,
   'type' | 'checked' | 'defaultChecked' | 'children'
 > {
-  state: CheckboxState
+  state?: CheckboxState
 }

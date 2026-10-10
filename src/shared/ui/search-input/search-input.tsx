@@ -1,16 +1,15 @@
 import clsx from 'clsx'
-import { ChangeEvent, useRef } from 'react'
+import { forwardRef, useRef, type ChangeEvent } from 'react'
+import { mergeRefs } from 'react-merge-refs'
 import { IconButton } from '@/shared/ui/icon-button'
 import { CrossIcon, SearchIcon } from '@/shared/assets/icons'
-import { SearchInputProps } from './types'
+import type { SearchInputProps } from './types'
 import styles from './search-input.module.css'
 
-export const SearchInput = ({
-  value,
-  onChange,
-  placeholder = 'Искать навык',
-  className,
-}: SearchInputProps) => {
+export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(function SearchInput(
+  { value, onChange, placeholder = 'Искать навык', name = 'search', className, ...inputProps },
+  ref,
+) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +25,10 @@ export const SearchInput = ({
     <div className={clsx(styles.wrapper, className)} role="search">
       <SearchIcon className={styles.icon} aria-hidden="true" />
       <input
-        ref={inputRef}
+        {...inputProps}
+        ref={mergeRefs([inputRef, ref])}
         type="search"
-        name="search"
+        name={name}
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
@@ -40,4 +40,4 @@ export const SearchInput = ({
       )}
     </div>
   )
-}
+})

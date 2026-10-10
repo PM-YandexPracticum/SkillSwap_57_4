@@ -1,22 +1,27 @@
+import { forwardRef } from 'react'
 import { clsx } from 'clsx'
-import { ButtonProps } from './types'
+import type { ButtonProps } from './types'
 import styles from './button.module.css'
 
-export const Button = ({
-  variant = 'primary',
-  leftIcon,
-  rightIcon,
-  fullWidth = false,
-  className,
-  type = 'button',
-  children,
-  ...props
-}: ButtonProps) => {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    variant = 'primary',
+    leftIcon,
+    rightIcon,
+    fullWidth = false,
+    className,
+    type = 'button',
+    children,
+    ...props
+  },
+  ref,
+) {
   return (
     <button
+      {...props}
+      ref={ref}
       type={type}
       className={clsx(styles.button, styles[variant], fullWidth && styles.fullWidth, className)}
-      {...props}
     >
       {leftIcon && (
         <span aria-hidden="true" className={styles.icon}>
@@ -31,4 +36,4 @@ export const Button = ({
       )}
     </button>
   )
-}
+})
