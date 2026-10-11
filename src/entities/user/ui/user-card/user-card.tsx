@@ -6,11 +6,13 @@ import { UserInfo } from '../user-info/user-info'
 import type { UserCardProps } from './types'
 import styles from './user-card.module.css'
 
+const VISIBLE_TAGS_LIMIT = 2
+
 export const UserCard = ({
   data,
   variant = 'catalog',
   titleAs = 'h3',
-  isLiked,
+  isLiked = false,
   onLikeToggle,
   onDetailsClick,
   className,
@@ -18,8 +20,9 @@ export const UserCard = ({
   const isCatalog = variant === 'catalog'
   const isAuthor = variant === 'author'
 
-  const visibleLearnTags = isCatalog ? data.learnTags.slice(0, 2) : data.learnTags
-  const hiddenCount = isCatalog ? Math.max(0, data.learnTags.length - 2) : 0
+  const visibleLearnTags = isCatalog ? data.learnTags.slice(0, VISIBLE_TAGS_LIMIT) : data.learnTags
+
+  const hiddenCount = data.learnTags.length - visibleLearnTags.length
 
   return (
     <article className={clsx(styles.card, styles[variant], className)}>
@@ -30,34 +33,41 @@ export const UserCard = ({
           subtitle={data.subtitle}
           nameAs={titleAs}
         />
-        {isCatalog && <LikeButton isLiked={isLiked} onClick={onLikeToggle} />}
+        {isCatalog && (
+          <LikeButton
+            className={styles['like-button']}
+            isLiked={isLiked}
+            likesCount={data.likesCount}
+            onClick={onLikeToggle}
+          />
+        )}
       </div>
 
       {isAuthor && data.about && <p className={styles.about}>{data.about}</p>}
 
-      <dl className={styles.skillsList}>
-        <div className={styles.skillGroup}>
-          <dt className={styles.skillTitle}>Может научить:</dt>
-          <dd className={styles.teachTag}>
+      <dl className={styles['skills-list']}>
+        <div className={styles['skill-group']}>
+          <dt className={styles['skill-title']}>Может научить:</dt>
+          <dd className={styles['teach-tag']}>
             <Tag category={data.teachTag.category} label={data.teachTag.label} />
           </dd>
         </div>
 
         {data.learnTags.length > 0 && (
-          <div className={styles.skillGroup}>
-            <dt className={styles.skillTitle}>Хочет научиться:</dt>
-            <div className={styles.learnTags}>
+          <div className={styles['skill-group']}>
+            <dt className={styles['skill-title']}>Хочет научиться:</dt>
+            <dd
+              className={clsx(styles.tags, styles['learn-tags'], isCatalog && styles['one-line'])}
+            >
               {visibleLearnTags.map((tag) => (
-                <dd key={tag.id}>
-                  <Tag category={tag.category} label={tag.label} />
-                </dd>
+                <Tag key={tag.id} category={tag.category} label={tag.label} />
               ))}
               {hiddenCount > 0 && (
-                <span>
+                <span className={styles.more}>
                   <Tag category="more" label={`+${hiddenCount}`} />
                 </span>
               )}
-            </div>
+            </dd>
           </div>
         )}
       </dl>
