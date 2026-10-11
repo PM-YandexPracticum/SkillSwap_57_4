@@ -1,17 +1,18 @@
-import { useId, useRef, useState } from 'react'
+import { useId, useRef, useState, type KeyboardEvent } from 'react'
 import { UserInfo } from '@/entities/user'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import { LogoutIcon } from '@/shared/assets/icons'
-import { UserMenuProps } from './types'
-
+import type { UserMenuProps } from './types'
 import styles from './user-menu.module.css'
 
 export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const menuId = useId()
 
   const close = () => setIsOpen(false)
+  const handleToggle = () => setIsOpen((open) => !open)
 
   const handleProfileClick = () => {
     close()
@@ -23,14 +24,19 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
     onLogout()
   }
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && isOpen) triggerRef.current?.focus()
+  }
+
   useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen })
 
   return (
-    <div className={styles.container} ref={wrapperRef}>
+    <div className={styles.container} ref={wrapperRef} onKeyDown={handleKeyDown}>
       <button
+        ref={triggerRef}
         className={styles.trigger}
         type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleToggle}
         aria-expanded={isOpen}
         aria-controls={menuId}
       >
@@ -44,17 +50,15 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
       </button>
 
       {isOpen && (
-        // элемент в целом выглядит как отдельный компонент - дропдаун
-        // но используется он только здесь и для показа уведомлений
         <ul className={styles.menu} id={menuId}>
           <li>
             <button className={styles.item} type="button" onClick={handleProfileClick}>
-              <h4>Личный кабинет</h4>
+              Личный кабинет
             </button>
           </li>
           <li>
             <button className={styles.item} type="button" onClick={handleLogout}>
-              <h4>Выйти из аккаунта</h4>
+              Выйти из аккаунта
               <LogoutIcon className={styles.icon} aria-hidden="true" />
             </button>
           </li>
