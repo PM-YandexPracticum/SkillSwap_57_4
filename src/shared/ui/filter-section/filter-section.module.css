@@ -1,6 +1,7 @@
 .title {
   margin-bottom: var(--space-lg);
-  font-size: var(--font-size-h4);
+  font-size: var(--font-size-h3);
   font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-h4);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-heading);
 }
