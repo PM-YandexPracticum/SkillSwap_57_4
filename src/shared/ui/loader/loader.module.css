@@ -1,0 +1,10 @@
+.loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullPage {
+  position: fixed;
+  inset: 0;
+}
