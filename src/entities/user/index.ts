@@ -18,3 +18,5 @@ export { toUserCardData } from './lib/to-user-card-data'
 // ─── UI ──────────────────────────────────────────────────
 export { UserInfo } from './ui/user-info/user-info'
 export type { UserInfoProps } from './ui/user-info/types'
+export { UserCard } from './ui/user-card/user-card'
+export type { UserCardProps } from './ui/user-card/types'
