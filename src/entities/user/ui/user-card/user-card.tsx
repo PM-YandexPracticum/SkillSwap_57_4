@@ -30,13 +30,7 @@ export const UserCard = ({
           subtitle={data.subtitle}
           nameAs={titleAs}
         />
-        {isCatalog && (
-          <LikeButton
-            isLiked={isLiked}
-            onClick={onLikeToggle}
-          />
-        )}
-        )}
+        {isCatalog && <LikeButton isLiked={isLiked} onClick={onLikeToggle} />}
       </div>
 
       {isAuthor && data.about && <p className={styles.about}>{data.about}</p>}
