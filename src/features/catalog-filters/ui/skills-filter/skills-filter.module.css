@@ -1,0 +1,18 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.subcategories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  padding-left: var(--space-sm);
+}
