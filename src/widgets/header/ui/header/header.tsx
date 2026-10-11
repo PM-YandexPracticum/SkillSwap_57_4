@@ -1,109 +1,124 @@
-import { useEffect, useId, useState } from 'react'
+import { KeyboardEvent, useEffect, useId, useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import clsx from 'clsx'
 
 import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
 import { ChevronDownIcon, ChevronUpIcon } from '@/shared/assets/icons'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadSkillCategories, selectSkillCategories } from '@/entities/skill'
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useDismiss } from '@/shared/hooks/useDismiss'
 
 import { Logo } from '@/shared/ui/logo'
 import { Button } from '@/shared/ui/button'
 import { SearchInput } from '@/shared/ui/search-input'
-
 import { NotificationButton } from '@/features/notifications'
 import { ThemeToggleButton } from '@/features/theme-toggle'
-
 import { SkillsMenu } from '@/widgets/header/ui/skills-menu'
 import { UserMenu } from '@/widgets/header/ui/user-menu'
 import { FavoritesButton } from '@/widgets/header/ui/favorites-button'
 
 import { HeaderProps } from './types'
 
+import styles from './header.module.css'
+
 export const Header = ({ user, onLogout }: HeaderProps) => {
-  const [isSkillsMenuOpen, setisSkillsMenuOpen] = useState(false)
+  const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const categories = useAppSelector(selectSkillCategories)
 
+  const skillsRef = useRef<HTMLLIElement>(null)
+  const skillsTriggerRef = useRef<HTMLButtonElement>(null)
   const skillsMenuId = useId()
 
   useEffect(() => {
     dispatch(loadSkillCategories())
   }, [dispatch])
 
-  const toggleSkillsMenu = () => setisSkillsMenuOpen((prev) => !prev)
-  const closeSkillsMenu = () => setisSkillsMenuOpen(false)
+  const toggleSkillsMenu = () => setIsSkillsMenuOpen((prev) => !prev)
+  const closeSkillsMenu = () => setIsSkillsMenuOpen(false)
+
+  // возвращает фокус на кнопку все навыки при закрытии меню с помощью escape
+  const handleSkillsKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isSkillsMenuOpen) skillsTriggerRef.current?.focus()
+  }
+
+  useDismiss({ ref: skillsRef, isActive: isSkillsMenuOpen, onDismiss: closeSkillsMenu })
 
   const SkillsArrowIcon = isSkillsMenuOpen ? ChevronUpIcon : ChevronDownIcon
 
   return (
-    <header>
-      <div>
-        <div style={{ display: 'flex' }}>
-          {/* логотип - 1 */}
-          <Logo />
+    <header className={styles.header}>
+      <Logo />
 
-          {/* две кнопки навигации - 2 */}
-          <nav>
-            <ul style={{ display: 'flex' }}>
-              <li>
-                <NavLink to={STUB_ROUTES.ABOUT}>О проекте</NavLink>
-              </li>
-              <li>
-                <button type="button" onClick={toggleSkillsMenu}>
-                  Все навыки
-                  <SkillsArrowIcon />
-                </button>
+      <nav aria-label="Основное меню">
+        <ul className={styles.list}>
+          <li>
+            <NavLink to={STUB_ROUTES.ABOUT} className={styles.link}>
+              О проекте
+            </NavLink>
+          </li>
+          <li ref={skillsRef} onKeyDown={handleSkillsKeyDown}>
+            <button
+              type="button"
+              className={clsx(styles.link, styles.skillsButton)}
+              ref={skillsTriggerRef}
+              aria-expanded={isSkillsMenuOpen}
+              aria-controls={skillsMenuId}
+              onClick={toggleSkillsMenu}
+            >
+              Все навыки
+              <SkillsArrowIcon aria-hidden="true" />
+            </button>
 
-                {isSkillsMenuOpen && (
-                  <SkillsMenu
-                    id={skillsMenuId}
-                    categories={categories}
-                    onSelect={closeSkillsMenu}
-                  />
-                )}
-              </li>
-            </ul>
-          </nav>
-
-          {/* строка поиска - 3 */}
-          <SearchInput value={searchValue} onChange={setSearchValue} />
-
-          {user ? (
-            // блок с ионками и меню юзера - 4
-            <div style={{ display: 'flex' }}>
-              <ThemeToggleButton />
-              <NotificationButton />
-              <NavLink to={ROUTES.FAVORITES}>
-                <FavoritesButton />
-              </NavLink>
-              <UserMenu
-                name={user.name}
-                avatarUrl={user.avatarUrl}
-                onProfileClick={() => navigate(ROUTES.PROFILE)}
-                onLogout={onLogout}
+            {isSkillsMenuOpen && (
+              <SkillsMenu
+                id={skillsMenuId}
+                className={styles.skillsMenu}
+                categories={categories}
+                onSelect={closeSkillsMenu}
               />
-            </div>
-          ) : (
-            <>
-              {/* тоггл темы - 4 */}
-              <ThemeToggleButton />
+            )}
+          </li>
+        </ul>
+      </nav>
 
-              {/* блок с кнопками входа и регистр - 5 */}
-              <div style={{ display: 'flex' }}>
-                <NavLink to={ROUTES.LOGIN}>
-                  <Button variant="secondary">Войти</Button>
-                </NavLink>
-                <NavLink to={ROUTES.REGISTER}>
-                  <Button variant="primary">Зарегистрироваться</Button>
-                </NavLink>
-              </div>
-            </>
-          )}
+      <SearchInput value={searchValue} onChange={setSearchValue} />
+
+      {user ? (
+        <div className={styles.actions}>
+          <div className={styles.icons}>
+            <ThemeToggleButton />
+            <NotificationButton />
+            {/* внутри ссылки лежит <button>, с помощью tabIndex={-1}
+            фокус оставляем на нём, чтобы не было двух остановок при навигации табом */}
+            <NavLink to={ROUTES.FAVORITES} className={styles.action} tabIndex={-1}>
+              <FavoritesButton />
+            </NavLink>
+          </div>
+          <UserMenu
+            name={user.name}
+            avatarUrl={user.avatarUrl}
+            onProfileClick={() => navigate(ROUTES.PROFILE)}
+            onLogout={onLogout}
+          />
         </div>
-      </div>
+      ) : (
+        <div className={clsx(styles.actions, styles.actionsGuest)}>
+          <ThemeToggleButton />
+          <div className={styles.buttons}>
+            <NavLink to={ROUTES.LOGIN} className={styles.action} tabIndex={-1}>
+              <Button variant="secondary">Войти</Button>
+            </NavLink>
+            <NavLink to={ROUTES.REGISTER} className={styles.action} tabIndex={-1}>
+              <Button>Зарегистрироваться</Button>
+            </NavLink>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
