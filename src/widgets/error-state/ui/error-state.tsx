@@ -35,22 +35,20 @@ export const ErrorState = ({ code, onReport }: ErrorStateProps) => {
   }
 
   return (
-    <main className={styles.root}>
-      <div className={styles.content}>
-        <ErrorImage className={styles.image} aria-hidden="true" focusable="false" />
-        <div className={styles.text}>
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.description}>{description}</p>
-        </div>
-        <div className={styles.actions}>
-          <Button variant="secondary" fullWidth onClick={onReport}>
-            Сообщить об ошибке
-          </Button>
-          <Button fullWidth onClick={handleHomeClick}>
-            На главную
-          </Button>
-        </div>
+    <section className={styles.content}>
+      <ErrorImage className={styles.image} aria-hidden="true" />
+      <div className={styles.text}>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.description}>{description}</p>
       </div>
-    </main>
+      <div className={styles.actions}>
+        <Button fullWidth variant="secondary" onClick={onReport}>
+          Сообщить об ошибке
+        </Button>
+        <Button fullWidth onClick={handleHomeClick}>
+          На главную
+        </Button>
+      </div>
+    </section>
   )
 }

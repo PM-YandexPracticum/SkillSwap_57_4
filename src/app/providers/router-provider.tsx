@@ -22,12 +22,12 @@ export function AppRouter() {
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<LoginPage />} />
-          <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
 
           {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
 
+          <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
