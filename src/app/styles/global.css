@@ -90,10 +90,14 @@
   --size-footer-column: 324px;
   --size-card-min-width: 324px;
   --size-dropdown-max-height: 240px;
+  --size-skills-menu: 1136px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
   --focus-offset: 1px;
+
+  /* Layering */
+  --z-header: 100;
 
   /* Motion */
   --transition-base: 0.2s ease-in-out;
