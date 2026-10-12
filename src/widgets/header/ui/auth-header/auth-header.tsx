@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-
 import { ROUTES } from '@/shared/lib/constants'
 import { CrossIcon } from '@/shared/assets/icons'
 import { Logo } from '@/shared/ui/logo'
@@ -23,8 +22,7 @@ export const AuthHeader = () => {
   return (
     <header className={styles.header}>
       <Logo />
-
-      <Button type="button" variant="tertiary" rightIcon={<CrossIcon />} onClick={handleClose}>
+      <Button variant="tertiary" rightIcon={<CrossIcon />} onClick={handleClose}>
         Закрыть
       </Button>
     </header>
