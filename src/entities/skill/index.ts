@@ -1,7 +1,10 @@
 export type * from './model/types'
-export { loadSkillCategories, skillCategoriesReducer } from './model/skill-categories-slice'
 export {
+  loadSkillCategories,
   selectSkillCategories,
   selectSkillCategoriesStatus,
-  selectSkillCategoriesError,
+  selectSkillCategoriesError
 } from './model/selectors'
+
+export { SkillDetails } from './ui/skill-details/skill-details'
+export type { SkillDetailsProps } from './ui/skill-details/types'
