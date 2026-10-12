@@ -1,0 +1,28 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl);
+  text-align: center;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.illustration {
+  width: var(--size-illustration-panel-image);
+  height: var(--size-illustration-panel-image);
+}
+
+.illustration > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  margin-top: var(--space-3xl);
+}
+
+.text {
+  margin-top: var(--space-sm);
+}

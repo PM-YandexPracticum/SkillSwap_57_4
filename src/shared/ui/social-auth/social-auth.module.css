@@ -1,0 +1,28 @@
+.socialAuth {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.buttons > button {
+  border-color: var(--color-border);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--color-disabled);
+}
