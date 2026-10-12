@@ -44,7 +44,9 @@ export const SkillDetails = ({
                     <img src={src} alt="" className={styles.thumbnail} />
                     {showOverlay && (
                       <div className={styles.overlay}>
-                        <span className={styles['overlay-text']}>+{extraImagesCount}</span>
+                        <span className={styles['overlay-text']}>
+                          +{extraImagesCount}
+                        </span>
                       </div>
                     )}
                   </div>
