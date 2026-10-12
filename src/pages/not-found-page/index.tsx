@@ -1,10 +1,5 @@
-// TODO: реализовать страницу NotFoundPage
+import { ErrorState } from '@/widgets/error-state'
 
 export default function NotFoundPage() {
-  return (
-    <main>
-      <h1>NotFoundPage</h1>
-      <p>Страница в разработке</p>
-    </main>
-  )
+  return <ErrorState code={404} />
 }

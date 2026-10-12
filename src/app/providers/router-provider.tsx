@@ -10,6 +10,7 @@ const FavoritesPage = lazy(() => import('@/pages/favorites-page'))
 const CreateSkillPage = lazy(() => import('@/pages/create-skill-page'))
 const LoginPage = lazy(() => import('@/pages/login-page'))
 const NotFoundPage = lazy(() => import('@/pages/not-found-page'))
+const ServerErrorPage = lazy(() => import('@/pages/server-error-page'))
 
 export function AppRouter() {
   return (
@@ -21,6 +22,7 @@ export function AppRouter() {
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<LoginPage />} />
+          <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
 
           {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
