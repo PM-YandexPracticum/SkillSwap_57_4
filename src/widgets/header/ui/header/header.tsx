@@ -22,7 +22,7 @@ import type { HeaderProps } from './types'
 
 import styles from './header.module.css'
 
-export const Header = ({ user = null, onLogout }: HeaderProps) => {
+export const Header = ({ user, onLogout }: HeaderProps) => {
   const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 

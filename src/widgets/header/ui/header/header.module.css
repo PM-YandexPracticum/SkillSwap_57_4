@@ -5,10 +5,6 @@
   align-items: center;
   max-width: var(--layout-max-width);
   margin: 0 auto;
-
-  /* в макете лого шире из-за пустого пространства (на ~4пкс) -
-  поэтому правильный гап визуально будет немного
-  отличаться от того что на макете */
   gap: var(--space-2xl);
   padding: var(--layout-padding);
   padding-bottom: var(--space-lg);
@@ -36,15 +32,15 @@
   border-radius: var(--radius-sm);
 }
 
-.skills-button {
+.skillsButton {
   display: flex;
   align-items: center;
   gap: var(--space-xxs);
 }
 
-.skills-menu {
+.skillsMenu {
   position: absolute;
-  top: calc(100%);
+  top: 100%;
   left: var(--layout-padding);
   width: min(var(--size-skills-menu), 100% - 2 * var(--layout-padding));
 }
@@ -63,7 +59,7 @@
   gap: var(--space-lg);
 }
 
-.actions-guest {
+.actionsGuest {
   gap: var(--space-2xl);
 }
 
