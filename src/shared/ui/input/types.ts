@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 export interface InputProps extends ComponentPropsWithoutRef<'input'> {
   label: string

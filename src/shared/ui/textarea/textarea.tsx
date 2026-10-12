@@ -1,48 +1,49 @@
-import { forwardRef, useId, useState, ChangeEvent } from 'react'
+import { forwardRef, useEffect, useId, useRef, useState, type ChangeEvent } from 'react'
 import { clsx } from 'clsx'
-import { TextareaProps } from './types'
+import { mergeRefs } from 'react-merge-refs'
+import type { TextareaProps } from './types'
 import styles from './textarea.module.css'
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, hint, error, className, id, maxLength, onChange, defaultValue, ...props }, ref) => {
+  (
+    { label, hint, error, endAdornment, className, id, maxLength, value, onChange, ...props },
+    ref,
+  ) => {
     const uniqueId = useId()
     const textareaId = id || `textarea-${uniqueId}`
     const descriptionId = `desc-${uniqueId}`
 
-    const [charCount, setCharCount] = useState(() => {
-      if (typeof defaultValue === 'string') return defaultValue.length
-      return 0
-    })
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const [charCount, setCharCount] = useState(0)
+
+    useEffect(() => {
+      setCharCount(textareaRef.current?.value.length ?? 0)
+    }, [value])
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      if (maxLength) {
-        setCharCount(e.target.value.length)
-      }
-      if (onChange) {
-        onChange(e)
-      }
+      setCharCount(e.target.value.length)
+      onChange?.(e)
     }
 
     const hasDescription = Boolean(hint || error)
 
     return (
       <div className={clsx(styles.container, className)}>
-        <label htmlFor={textareaId} className={styles.label}>
-          {label}
-        </label>
+        <label htmlFor={textareaId}>{label}</label>
 
         <div className={clsx(styles.inputWrapper, error && styles.inputWrapperError)}>
           <textarea
-            ref={ref}
+            {...props}
+            ref={mergeRefs([textareaRef, ref])}
             id={textareaId}
             className={styles.textarea}
+            value={value}
             aria-invalid={Boolean(error)}
             aria-describedby={hasDescription ? descriptionId : undefined}
             maxLength={maxLength}
             onChange={handleChange}
-            defaultValue={defaultValue}
-            {...props}
           />
+          {endAdornment}
         </div>
 
         {(hasDescription || maxLength) && (

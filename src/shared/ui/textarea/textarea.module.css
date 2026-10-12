@@ -2,50 +2,40 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xxs);
-  width: 100%;
-}
-
-.label {
-  font-size: var(--font-size-caption);
-  color: var(--color-text-caption);
-  line-height: var(--line-height-caption);
 }
 
 .inputWrapper {
   display: flex;
-  width: 100%;
-  padding: var(--space-sm) var(--space-lg);
+  align-items: center;
+  gap: var(--space-xs);
+  padding: calc(var(--space-sm) - 1px) var(--space-lg);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-disabled);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   transition: border-color var(--transition-base);
-  box-sizing: border-box;
 }
 
 .inputWrapper:focus-within {
-  border-color: var(--color-link);
+  border-color: var(--color-accent);
 }
 
-.inputWrapperError {
+.inputWrapperError,
+.inputWrapperError:focus-within {
   border-color: var(--color-error);
 }
 
 .textarea {
   flex: 1;
   min-width: 0;
-  min-height: 80px;
   border: none;
   outline: none;
   background: transparent;
-  font-family: inherit;
-  font-size: var(--font-size-body);
-  color: var(--color-text);
-  padding: 0;
-  resize: vertical;
+  caret-color: var(--color-link);
+  resize: none;
 }
 
 .textarea::placeholder {
-  color: var(--color-text-disabled);
+  color: var(--color-text-caption);
 }
 
 .footer {
@@ -56,10 +46,10 @@
 }
 
 .bottomText {
+  flex: 1;
   font-size: var(--font-size-caption);
   color: var(--color-text-caption);
-  margin: 0;
-  flex: 1;
+  line-height: var(--line-height-caption);
 }
 
 .errorText {
@@ -69,6 +59,6 @@
 .counter {
   font-size: var(--font-size-caption);
   color: var(--color-text-caption);
-  margin: 0;
+  line-height: var(--line-height-caption);
   white-space: nowrap;
 }
