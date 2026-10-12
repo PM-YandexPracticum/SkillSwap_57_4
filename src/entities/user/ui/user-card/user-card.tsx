@@ -34,26 +34,28 @@ export const UserCard = ({
           nameAs={titleAs}
         />
         {isCatalog && (
-          <LikeButton className={styles['like-button']} isLiked={isLiked} onClick={onLikeToggle} />
+          <LikeButton
+            className={styles.like}
+            isLiked={isLiked}
+            count={data.likesCount}
+            onClick={onLikeToggle}
+          />
         )}
+        {isAuthor && data.about && <p>{data.about}</p>}
       </div>
 
-      {isAuthor && data.about && <p className={styles.about}>{data.about}</p>}
-
-      <dl className={styles['skills-list']}>
-        <div className={styles['skill-group']}>
-          <dt className={styles['skill-title']}>Может научить:</dt>
-          <dd className={styles['teach-tag']}>
+      <dl className={styles.skills}>
+        <div className={styles.block}>
+          <dt className={styles.label}>Может научить:</dt>
+          <dd className={styles.tags}>
             <Tag category={data.teachTag.category} label={data.teachTag.label} />
           </dd>
         </div>
 
         {data.learnTags.length > 0 && (
-          <div className={styles['skill-group']}>
-            <dt className={styles['skill-title']}>Хочет научиться:</dt>
-            <dd
-              className={clsx(styles.tags, styles['learn-tags'], isCatalog && styles['one-line'])}
-            >
+          <div className={styles.block}>
+            <dt className={styles.label}>Хочет научиться:</dt>
+            <dd className={clsx(styles.tags, styles.learnTags, isCatalog && styles.oneLine)}>
               {visibleLearnTags.map((tag) => (
                 <Tag key={tag.id} category={tag.category} label={tag.label} />
               ))}
@@ -68,7 +70,7 @@ export const UserCard = ({
       </dl>
 
       {isCatalog && (
-        <Button fullWidth onClick={onDetailsClick}>
+        <Button className={styles.details} fullWidth onClick={onDetailsClick}>
           Подробнее
         </Button>
       )}
