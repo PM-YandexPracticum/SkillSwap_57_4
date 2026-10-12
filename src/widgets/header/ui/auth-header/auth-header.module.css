@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: var(--layout-padding) var(--layout-padding) 0;
+}
