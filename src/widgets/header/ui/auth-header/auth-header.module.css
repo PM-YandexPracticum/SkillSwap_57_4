@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  position: relative;
+  z-index: var(--z-header);
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  gap: var(--space-2xl);
+  padding: var(--layout-padding);
+  padding-bottom: var(--space-lg);
+}
