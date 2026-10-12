@@ -36,13 +36,13 @@
   border-radius: var(--radius-sm);
 }
 
-.skillsButton {
+.skills-button {
   display: flex;
   align-items: center;
   gap: var(--space-xxs);
 }
 
-.skillsMenu {
+.skills-menu {
   position: absolute;
   top: calc(100%);
   left: var(--layout-padding);
@@ -63,7 +63,7 @@
   gap: var(--space-lg);
 }
 
-.actionsGuest {
+.actions-guest {
   gap: var(--space-2xl);
 }
 
