@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { RootState } from '@/store'
 
 export const selectSkillCategories = (state: RootState) => state.skillCategories.items
