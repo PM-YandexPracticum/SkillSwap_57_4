@@ -23,7 +23,7 @@
 
 .link {
   transition: color var(--transition-base);
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .link:hover {
@@ -44,11 +44,9 @@
 
 .skillsMenu {
   position: absolute;
-  top: calc(100% - 10px); /* в макете меню в открытом виде немного заезжает на хедер */
+  top: calc(100%);
   left: var(--layout-padding);
   width: min(var(--size-skills-menu), 100% - 2 * var(--layout-padding));
-  max-height: calc(100vh - 100px); /* временное решение - skils-menu слишком большой */
-  overflow: auto;
 }
 
 /* Блок с иконками и меню пользователя */
@@ -72,14 +70,4 @@
 .buttons {
   display: flex;
   gap: var(--space-xs);
-}
-
-.action {
-  display: flex;
-  border-radius: var(--radius-sm);
-}
-
-.action:focus-visible {
-  outline: var(--focus-outline);
-  outline-offset: var(--focus-offset);
 }

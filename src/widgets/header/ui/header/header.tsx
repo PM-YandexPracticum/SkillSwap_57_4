@@ -1,5 +1,5 @@
-import { KeyboardEvent, useEffect, useId, useRef, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { type KeyboardEvent, useEffect, useId, useRef, useState } from 'react'
+import { NavLink, useMatch, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
 import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
@@ -14,15 +14,15 @@ import { Button } from '@/shared/ui/button'
 import { SearchInput } from '@/shared/ui/search-input'
 import { NotificationButton } from '@/features/notifications'
 import { ThemeToggleButton } from '@/features/theme-toggle'
-import { SkillsMenu } from '@/widgets/header/ui/skills-menu'
-import { UserMenu } from '@/widgets/header/ui/user-menu'
-import { FavoritesButton } from '@/widgets/header/ui/favorites-button'
+import { SkillsMenu } from '../skills-menu'
+import { FavoritesButton } from '../favorites-button'
+import { UserMenu } from '../user-menu'
 
-import { HeaderProps } from './types'
+import type { HeaderProps } from './types'
 
 import styles from './header.module.css'
 
-export const Header = ({ user, onLogout }: HeaderProps) => {
+export const Header = ({ user = null, onLogout }: HeaderProps) => {
   const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 
@@ -41,13 +41,18 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
   const toggleSkillsMenu = () => setIsSkillsMenuOpen((prev) => !prev)
   const closeSkillsMenu = () => setIsSkillsMenuOpen(false)
 
-  // возвращает фокус на кнопку все навыки при закрытии меню с помощью escape
+  useDismiss({ ref: skillsRef, isActive: isSkillsMenuOpen, onDismiss: closeSkillsMenu })
+
   const handleSkillsKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape' && isSkillsMenuOpen) skillsTriggerRef.current?.focus()
   }
 
-  useDismiss({ ref: skillsRef, isActive: isSkillsMenuOpen, onDismiss: closeSkillsMenu })
+  const handleFavoritesClick = () => navigate(ROUTES.FAVORITES)
+  const handleProfileClick = () => navigate(ROUTES.PROFILE)
+  const handleLoginClick = () => navigate(ROUTES.LOGIN)
+  const handleRegisterClick = () => navigate(ROUTES.REGISTER)
 
+  const isFavoritesActive = Boolean(useMatch(ROUTES.FAVORITES))
   const SkillsArrowIcon = isSkillsMenuOpen ? ChevronUpIcon : ChevronDownIcon
 
   return (
@@ -93,16 +98,12 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
           <div className={styles.icons}>
             <ThemeToggleButton />
             <NotificationButton />
-            {/* внутри ссылки лежит <button>, с помощью tabIndex={-1}
-            фокус оставляем на нём, чтобы не было двух остановок при навигации табом */}
-            <NavLink to={ROUTES.FAVORITES} className={styles.action} tabIndex={-1}>
-              <FavoritesButton />
-            </NavLink>
+            <FavoritesButton isActive={isFavoritesActive} onClick={handleFavoritesClick} />
           </div>
           <UserMenu
             name={user.name}
             avatarUrl={user.avatarUrl}
-            onProfileClick={() => navigate(ROUTES.PROFILE)}
+            onProfileClick={handleProfileClick}
             onLogout={onLogout}
           />
         </div>
@@ -110,12 +111,10 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
         <div className={clsx(styles.actions, styles.actionsGuest)}>
           <ThemeToggleButton />
           <div className={styles.buttons}>
-            <NavLink to={ROUTES.LOGIN} className={styles.action} tabIndex={-1}>
-              <Button variant="secondary">Войти</Button>
-            </NavLink>
-            <NavLink to={ROUTES.REGISTER} className={styles.action} tabIndex={-1}>
-              <Button>Зарегистрироваться</Button>
-            </NavLink>
+            <Button variant="secondary" onClick={handleLoginClick}>
+              Войти
+            </Button>
+            <Button onClick={handleRegisterClick}>Зарегистрироваться</Button>
           </div>
         </div>
       )}
