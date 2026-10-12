@@ -1,7 +1,7 @@
 .filter {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm); /* или20px? */
+  gap: var(--space-sm);
 }
 
 .list {

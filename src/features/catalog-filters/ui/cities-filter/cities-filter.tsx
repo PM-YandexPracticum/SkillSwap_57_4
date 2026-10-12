@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { CheckboxItem } from '@/shared/ui/checkbox-item';
-import { ExpandButton } from '@/shared/ui/expand-button';
-import type { CitiesFilterProps } from './types';
-import styles from './cities-filter.module.css';
+import { useState } from 'react'
+import { CheckboxItem } from '@/shared/ui/checkbox-item'
+import { ExpandButton } from '@/shared/ui/expand-button'
+import type { CitiesFilterProps } from './types'
+import styles from './cities-filter.module.css'
 
 export const CitiesFilter = ({
   cities,
@@ -10,19 +10,13 @@ export const CitiesFilter = ({
   onChange,
   visibleCount = 5,
 }: CitiesFilterProps) => {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(false)
 
-  const visibleCities = showAll
-    ? cities
-    : cities.slice(0, visibleCount);
+  const visibleCities = showAll ? cities : cities.slice(0, visibleCount)
 
   const toggleCity = (id: string, checked: boolean) => {
-    onChange(
-      checked
-        ? [...selectedIds, id]
-        : selectedIds.filter((item) => item !== id),
-    );
-  };
+    onChange(checked ? [...selectedIds, id] : selectedIds.filter((item) => item !== id))
+  }
 
   return (
     <div className={styles.filter}>
@@ -32,14 +26,8 @@ export const CitiesFilter = ({
             <CheckboxItem
               name="cities"
               label={city.name}
-              state={
-                selectedIds.includes(city.id)
-                  ? 'checked'
-                  : 'unchecked'
-              }
-              onChange={(event) =>
-                toggleCity(city.id, event.currentTarget.checked)
-              }
+              state={selectedIds.includes(city.id) ? 'checked' : 'unchecked'}
+              onChange={(event) => toggleCity(city.id, event.currentTarget.checked)}
             />
           </li>
         ))}
@@ -53,5 +41,5 @@ export const CitiesFilter = ({
         />
       )}
     </div>
-  );
-};
+  )
+}
