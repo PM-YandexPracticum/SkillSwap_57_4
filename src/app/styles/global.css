@@ -90,6 +90,7 @@
   --size-footer-column: 324px;
   --size-card-min-width: 324px;
   --size-dropdown-max-height: 240px;
+  --size-illustration-panel-image: 300px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);

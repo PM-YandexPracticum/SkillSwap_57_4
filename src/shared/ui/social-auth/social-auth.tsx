@@ -8,23 +8,11 @@ export const SocialAuth = ({ className }: SocialAuthProps) => {
   return (
     <div className={clsx(styles.socialAuth, className)}>
       <div className={styles.buttons}>
-        <Button
-          variant="secondary"
-          leftIcon={<GoogleIcon />}
-          fullWidth
-          aria-disabled="true"
-          type="button"
-        >
+        <Button variant="secondary" leftIcon={<GoogleIcon />} fullWidth aria-disabled="true">
           Продолжить с Google
         </Button>
 
-        <Button
-          variant="secondary"
-          leftIcon={<AppleIcon />}
-          fullWidth
-          aria-disabled="true"
-          type="button"
-        >
+        <Button variant="secondary" leftIcon={<AppleIcon />} fullWidth aria-disabled="true">
           Продолжить с Apple
         </Button>
       </div>

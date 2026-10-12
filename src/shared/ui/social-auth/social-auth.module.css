@@ -10,11 +10,14 @@
   gap: var(--space-md);
 }
 
+.buttons > button {
+  border-color: var(--color-border);
+}
+
 .divider {
   display: flex;
   align-items: center;
   gap: var(--space-xxs);
-  color: var(--color-text);
 }
 
 .divider::before,
