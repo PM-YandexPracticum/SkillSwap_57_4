@@ -1,0 +1,11 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm); /* или20px? */
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
