@@ -1,50 +1,44 @@
-import clsx from 'clsx'
-import { ShareIcon, MoreSquareIcon } from '@/shared/assets/icons'
+import { clsx } from 'clsx'
+import { SkillDetails } from '@/entities/skill'
+import { Button } from '@/shared/ui/button'
+import { IconButton } from '@/shared/ui/icon-button'
 import { LikeButton } from '@/shared/ui/like-button'
-import type { SkillOfferProps } from './types'
+import { ShareIcon, MoreSquareIcon } from '@/shared/assets/icons'
 import styles from './skill-offer.module.css'
+import type { SkillOfferProps } from './types'
 
 export const SkillOffer = ({
   title,
   description,
-  category,
-  author,
+  categoryName,
+  subcategoryName,
+  images,
+  likesCount = 0,
   isLiked,
   onLikeToggle,
-  onShareClick,
-  onMoreClick,
-  onRequestClick,
+  onProposeExchange,
   className,
 }: SkillOfferProps) => {
   return (
-    <div className={clsx(styles.card, className)}>
-      <div className={styles.header}>
-        <span className={styles.category}>{category}</span>
-        <div className={styles.actions}>
-          <LikeButton isLiked={isLiked} onClick={onLikeToggle} />
-          <button type="button" onClick={onShareClick} className={styles.iconBtn}>
-            <ShareIcon />
-          </button>
-          <button type="button" onClick={onMoreClick} className={styles.iconBtn}>
-            <MoreSquareIcon />
-          </button>
-        </div>
+    <article className={clsx(styles.skillOffer, className)}>
+      <div className={styles.controls}>
+        <LikeButton count={likesCount} isLiked={isLiked} onClick={onLikeToggle} />
+        <IconButton icon={<ShareIcon />} aria-label="Поделиться" />
+        <IconButton icon={<MoreSquareIcon />} aria-label="Ещё" />
       </div>
 
-      <h2 className={styles.title}>{title}</h2>
-      <p className={styles.description}>{description}</p>
-
-      <div className={styles.footer}>
-        <div className={styles.authorInfo}>
-          {author?.avatarUrl && (
-            <img src={author.avatarUrl} alt={author.name} className={styles.avatar} />
-          )}
-          <span>{author?.name}</span>
-        </div>
-        <button type="button" onClick={onRequestClick} className={styles.requestBtn}>
-          Откликнуться
-        </button>
-      </div>
-    </div>
+      <SkillDetails
+        title={title}
+        categoryName={categoryName}
+        subcategoryName={subcategoryName}
+        description={description}
+        images={images}
+        actions={
+          <Button fullWidth onClick={onProposeExchange}>
+            Предложить обмен
+          </Button>
+        }
+      />
+    </article>
   )
 }

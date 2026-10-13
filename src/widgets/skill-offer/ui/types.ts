@@ -1,15 +1,12 @@
 export interface SkillOfferProps {
   title: string
   description: string
-  category: string
-  author: {
-    name: string
-    avatarUrl?: string | null
-  }
+  categoryName: string
+  subcategoryName: string
+  images: string[]
+  likesCount: number
   isLiked?: boolean
   onLikeToggle?: () => void
-  onShareClick?: () => void
-  onMoreClick?: () => void
-  onRequestClick?: () => void
+  onProposeExchange?: () => void
   className?: string
 }

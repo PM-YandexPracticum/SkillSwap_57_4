@@ -1,88 +1,78 @@
-.wrapper {
+.skillDetails {
   display: flex;
-  gap: var(--space-xl);
   justify-content: space-between;
+  gap: var(--space-xl);
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex-shrink: 0;
+  width: var(--skill-details-info-width, var(--size-skill-offer-info));
 }
 
 .title {
-  margin: 0;
   font-size: var(--font-size-h1);
   line-height: var(--line-height-h1);
 }
 
-.subtitle {
-  margin: var(--space-xs) 0 var(--space-lg);
+.category {
+  margin-top: var(--space-xxs);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
   color: var(--color-text-caption);
 }
 
 .description {
-  margin: 0;
-  color: var(--color-text);
+  margin-top: var(--space-lg);
 }
 
 .actions {
-  margin-top: auto;
   display: flex;
-  gap: var(--space-sm);
-  padding-top: var(--space-lg);
+  gap: var(--space-md);
+  margin-top: auto;
+  padding-top: var(--space-xl);
 }
 
 .gallery {
   display: flex;
-  gap: var(--space-sm);
-  flex-shrink: 0;
+  gap: var(--space-xl);
 }
 
-.main-image-wrapper {
-  width: 320px;
-  height: 320px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-.main-image {
-  width: 100%;
-  height: 100%;
+.mainImage {
+  width: var(--size-gallery-main);
+  height: var(--size-gallery-main);
+  border-radius: var(--radius-sm);
   object-fit: cover;
 }
 
 .thumbnails {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.thumbnail-wrapper {
-  position: relative;
-  width: 98px;
-  height: 98px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+  gap: var(--space-xl);
 }
 
 .thumbnail {
+  position: relative;
+  width: var(--size-gallery-thumb);
+  height: var(--size-gallery-thumb);
+}
+
+.thumbnailImage {
   width: 100%;
   height: 100%;
+  border-radius: var(--radius-sm);
   object-fit: cover;
 }
 
-.overlay {
+.thumbnailMore::after {
+  content: attr(data-count);
   position: absolute;
   inset: 0;
-  background-color: var(--color-overlay-gallery);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.overlay-text {
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-overlay-gallery);
   font-size: var(--font-size-h3);
 }

@@ -1,6 +1,8 @@
-import clsx from 'clsx'
-import type { SkillDetailsProps } from './types'
+import { clsx } from 'clsx'
 import styles from './skill-details.module.css'
+import type { SkillDetailsProps } from './types'
+
+const MAX_THUMBNAILS = 3
 
 export const SkillDetails = ({
   title,
@@ -13,46 +15,42 @@ export const SkillDetails = ({
   className,
 }: SkillDetailsProps) => {
   const Title = titleAs
-  const mainImage = images[0]
-  const thumbnails = images.slice(1, 4)
-  const extraImagesCount = images.length - 4
+  const [mainImage, ...restImages] = images
+  const thumbnails = restImages.slice(0, MAX_THUMBNAILS)
+  const hiddenCount = restImages.length - thumbnails.length
 
   return (
-    <div className={clsx(styles.wrapper, className)}>
+    <div className={clsx(styles.skillDetails, className)}>
       <div className={styles.info}>
         <Title className={styles.title}>{title}</Title>
-        <p className={styles.subtitle}>
+        <p className={styles.category}>
           {categoryName} / {subcategoryName}
         </p>
         <p className={styles.description}>{description}</p>
         {actions && <div className={styles.actions}>{actions}</div>}
       </div>
 
-      {images.length > 0 && (
+      {mainImage && (
         <div className={styles.gallery}>
-          <div className={styles['main-image-wrapper']}>
-            <img src={mainImage} alt={title} className={styles['main-image']} />
-          </div>
+          <img className={styles.mainImage} src={mainImage} alt={title} />
+
           {thumbnails.length > 0 && (
-            <div className={styles.thumbnails}>
+            <ul className={styles.thumbnails}>
               {thumbnails.map((src, index) => {
-                const isLastThumbnail = index === 2
-                const showOverlay = isLastThumbnail && extraImagesCount > 0
+                const isLast = index === thumbnails.length - 1
+                const showCounter = isLast && hiddenCount > 0
 
                 return (
-                  <div key={src} className={styles['thumbnail-wrapper']}>
-                    <img src={src} alt="" className={styles.thumbnail} />
-                    {showOverlay && (
-                      <div className={styles.overlay}>
-                        <span className={styles['overlay-text']}>
-                          +{extraImagesCount}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  <li
+                    key={src}
+                    className={clsx(styles.thumbnail, showCounter && styles.thumbnailMore)}
+                    data-count={showCounter ? `+${hiddenCount}` : undefined}
+                  >
+                    <img className={styles.thumbnailImage} src={src} alt="" />
+                  </li>
                 )
               })}
-            </div>
+            </ul>
           )}
         </div>
       )}
