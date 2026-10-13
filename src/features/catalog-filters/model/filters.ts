@@ -1,5 +1,5 @@
-import { Gender, SkillType } from '@/shared/types'
-import { RadioGroupOption } from '@/shared/ui/radio-group'
+import type { Gender, SkillType } from '@/shared/types'
+import type { RadioGroupOption } from '@/shared/ui/radio-group'
 
 export type FilterMode = SkillType | 'all'
 export type FilterGender = Gender | 'any'

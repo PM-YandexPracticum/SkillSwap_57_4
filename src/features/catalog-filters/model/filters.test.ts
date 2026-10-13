@@ -6,7 +6,7 @@ const withFilters = (added: Partial<CatalogFilters>): CatalogFilters => ({
   ...added,
 })
 
-describe('[countAvtiveFilters]', () => {
+describe('[countActiveFilters]', () => {
   test('по умолчанию возвращает 0', () => {
     expect(countActiveFilters(DEFAULT_FILTERS)).toBe(0)
   })

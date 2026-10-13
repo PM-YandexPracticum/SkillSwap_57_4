@@ -1,4 +1,4 @@
-import { CatalogFilters } from '@/features/catalog-filters'
+import type { CatalogFilters } from '@/features/catalog-filters'
 import type { City, SkillCategory } from '@/shared/types'
 
 export interface FiltersSidebarProps {

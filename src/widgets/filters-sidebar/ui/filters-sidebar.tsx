@@ -37,39 +37,41 @@ export const FiltersSidebar = ({
         )}
       </div>
 
-      <FilterSection title="Тип навыка" hideTitle>
-        <RadioGroup
-          name="mode"
-          value={value.mode}
-          options={FILTER_MODE_OPTIONS}
-          onChange={(mode) => onChange({ ...value, mode })}
-        />
-      </FilterSection>
+      <div className={styles.sections}>
+        <FilterSection title="Тип навыка" hideTitle>
+          <RadioGroup
+            name="mode"
+            value={value.mode}
+            options={FILTER_MODE_OPTIONS}
+            onChange={(mode) => onChange({ ...value, mode })}
+          />
+        </FilterSection>
 
-      <FilterSection title="Навыки">
-        <SkillsFilter
-          categories={categories}
-          selectedIds={value.subcategoryIds}
-          onChange={(subcategoryIds) => onChange({ ...value, subcategoryIds })}
-        />
-      </FilterSection>
+        <FilterSection title="Навыки">
+          <SkillsFilter
+            categories={categories}
+            selectedIds={value.subcategoryIds}
+            onChange={(subcategoryIds) => onChange({ ...value, subcategoryIds })}
+          />
+        </FilterSection>
 
-      <FilterSection title="Пол автора">
-        <RadioGroup
-          name="gender"
-          value={value.gender}
-          options={FILTER_GENDER_OPTIONS}
-          onChange={(gender) => onChange({ ...value, gender })}
-        />
-      </FilterSection>
+        <FilterSection title="Пол автора">
+          <RadioGroup
+            name="gender"
+            value={value.gender}
+            options={FILTER_GENDER_OPTIONS}
+            onChange={(gender) => onChange({ ...value, gender })}
+          />
+        </FilterSection>
 
-      <FilterSection title="Город">
-        <CitiesFilter
-          cities={cities}
-          selectedIds={value.cityIds}
-          onChange={(cityIds) => onChange({ ...value, cityIds })}
-        />
-      </FilterSection>
+        <FilterSection title="Город">
+          <CitiesFilter
+            cities={cities}
+            selectedIds={value.cityIds}
+            onChange={(cityIds) => onChange({ ...value, cityIds })}
+          />
+        </FilterSection>
+      </div>
     </aside>
   )
 }

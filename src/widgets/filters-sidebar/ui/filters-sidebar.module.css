@@ -1,6 +1,5 @@
 .sidebar {
   display: flex;
-  max-width: var(--size-sidebar);
   flex-direction: column;
   gap: var(--space-3xl);
   background-color: var(--color-surface);
@@ -13,6 +12,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
 }
 
 .reset {
