@@ -6,7 +6,6 @@
   justify-content: center;
   width: var(--size-error-content);
   margin: 0 auto;
-  padding-block: var(--space-3xl);
   text-align: center;
 }
 
