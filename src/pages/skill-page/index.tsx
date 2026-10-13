@@ -2,9 +2,9 @@
 
 export default function SkillPage() {
   return (
-    <main>
+    <div>
       <h1>SkillPage</h1>
       <p>Страница в разработке</p>
-    </main>
+    </div>
   )
 }

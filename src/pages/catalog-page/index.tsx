@@ -2,9 +2,9 @@
 
 export default function CatalogPage() {
   return (
-    <main>
+    <div>
       <h1>CatalogPage</h1>
       <p>Страница в разработке</p>
-    </main>
+    </div>
   )
 }
