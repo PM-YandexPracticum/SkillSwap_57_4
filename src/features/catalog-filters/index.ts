@@ -11,3 +11,4 @@ export {
   countActiveFilters,
 } from './model/filters'
 export type { CatalogFilters, FilterMode, FilterGender } from './model/filters'
+export { filterUsers } from './model/filter-users'
