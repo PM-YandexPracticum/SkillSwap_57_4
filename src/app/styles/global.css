@@ -71,6 +71,7 @@
   --space-2xl: 32px;
   --space-3xl: 40px;
   --space-4xl: 60px;
+  --space-modal-icon-bottom: 52px;
 
   /* Borders */
   --radius-sm: 12px;
@@ -94,6 +95,7 @@
   --size-error-image: 344px;
   --size-illustration-panel-image: 300px;
   --size-skills-menu: 1136px;
+  --size-modal-icon: 100px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
