@@ -15,8 +15,9 @@ import {
   selectUsersStatus,
   toUserCardData,
   UserCard,
+  type User,
+  type UserCardData,
 } from '@/entities/user'
-import type { User, UserCardData } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import { DEFAULT_FILTERS } from '@/features/catalog-filters'
@@ -139,9 +140,7 @@ export default function CatalogPage() {
               {newestCards.map(renderCard)}
             </CardsSection>
 
-            <CardsSection title="Рекомендуем" action={<ViewAllButton />}>
-              {recommendedCards.map(renderCard)}
-            </CardsSection>
+            <CardsSection title="Рекомендуем">{recommendedCards.map(renderCard)}</CardsSection>
           </div>
         </div>
       )}
