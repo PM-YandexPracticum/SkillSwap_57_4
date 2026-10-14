@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-2xl) var(--space-lg);
+  border: 2px dashed var(--color-disabled);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background);
+  transition: border-color var(--transition-base);
+  text-align: center;
+}
+
+.dropzoneActive {
+  border-color: var(--color-link);
+}
+
+
+.dropzone * {
+  pointer-events: none;
+}
+
+.selectButton {
+  pointer-events: auto; 
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  color: var(--color-link);
+  font-weight: var(--font-weight-medium);
+}
+
+.buttonIcon {
+  width: var(--size-icon);
+  height: var(--size-icon);
+}
+
+.text {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-caption);
+}
+
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.previewItem {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.removeButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.error {
+  font-size: var(--font-size-caption);
+  color: var(--color-error);
+  margin: 0;
+}

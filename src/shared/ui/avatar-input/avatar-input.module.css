@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.button {
+  position: relative;
+  border-radius: var(--radius-circle);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-base);
+}
+
+.button:hover,
+.button:focus-visible {
+  opacity: 0.8;
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}
+
+.overlayIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-link);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.error {
+  font-size: var(--font-size-caption);
+  color: var(--color-error);
+  text-align: center;
+}
