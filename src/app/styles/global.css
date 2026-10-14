@@ -71,6 +71,7 @@
   --space-2xl: 32px;
   --space-3xl: 40px;
   --space-4xl: 60px;
+  --space-card-inline: 52px;
 
   /* Borders */
   --radius-sm: 12px;
@@ -94,6 +95,10 @@
   --size-error-image: 344px;
   --size-illustration-panel-image: 300px;
   --size-skills-menu: 1136px;
+  --size-gallery-main: 324px;
+  --size-gallery-thumb: 92px;
+  --size-skill-offer-info: 399px; /* левая колонка SkillDetails на странице навыка */
+  --size-skill-check-info: 420px; /* левая колонка SkillDetails в окне проверки при регистрации */
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
