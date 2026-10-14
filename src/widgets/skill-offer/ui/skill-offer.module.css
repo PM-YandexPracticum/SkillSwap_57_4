@@ -1,10 +1,8 @@
 .skillOffer {
-  --skill-details-info-width: var(--size-skill-offer-info);
-
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  padding: var(--space-2xl) var(--space-card-inline);
+  padding: var(--space-2xl) var(--space-card-inline) var(--space-3xl);
   border-radius: var(--radius-sm);
   background-color: var(--color-surface);
 }
@@ -12,5 +10,6 @@
 .controls {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-xl);
+  align-items: center;
+  gap: var(--space-md);
 }

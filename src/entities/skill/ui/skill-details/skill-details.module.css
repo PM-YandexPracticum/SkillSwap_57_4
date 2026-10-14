@@ -7,8 +7,14 @@
 .info {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  width: var(--skill-details-info-width, var(--size-skill-offer-info));
+}
+
+.page .info {
+  width: var(--size-skill-offer-info);
+}
+
+.preview .info {
+  width: var(--size-skill-check-info);
 }
 
 .title {
@@ -29,9 +35,9 @@
 
 .actions {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   margin-top: auto;
-  padding-top: var(--space-xl);
+  padding-top: var(--space-lg);
 }
 
 .gallery {
@@ -74,5 +80,5 @@
   justify-content: center;
   border-radius: var(--radius-sm);
   background-color: var(--color-overlay-gallery);
-  font-size: var(--font-size-h3);
+  letter-spacing: var(--letter-spacing-heading);
 }

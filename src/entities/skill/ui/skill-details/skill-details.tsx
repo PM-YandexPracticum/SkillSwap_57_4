@@ -10,6 +10,7 @@ export const SkillDetails = ({
   categoryName,
   subcategoryName,
   images,
+  variant = 'page',
   titleAs = 'h1',
   actions,
   className,
@@ -20,7 +21,7 @@ export const SkillDetails = ({
   const hiddenCount = restImages.length - thumbnails.length
 
   return (
-    <div className={clsx(styles.skillDetails, className)}>
+    <div className={clsx(styles.skillDetails, styles[variant], className)}>
       <div className={styles.info}>
         <Title className={styles.title}>{title}</Title>
         <p className={styles.category}>
@@ -42,7 +43,7 @@ export const SkillDetails = ({
 
                 return (
                   <li
-                    key={src}
+                    key={`${src}-${index}`}
                     className={clsx(styles.thumbnail, showCounter && styles.thumbnailMore)}
                     data-count={showCounter ? `+${hiddenCount}` : undefined}
                   >
