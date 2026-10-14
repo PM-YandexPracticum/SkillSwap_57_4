@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 import {
@@ -6,7 +6,16 @@ import {
   selectSkillCategories,
   selectSkillCategoriesStatus,
 } from '@/entities/skill'
-import { loadUsers, selectUsersStatus } from '@/entities/user'
+import {
+  loadUsers,
+  selectNewestUsers,
+  selectPopularUsers,
+  selectUsers,
+  selectUsersStatus,
+  toUserCardData,
+  UserCard,
+} from '@/entities/user'
+import type { User, UserCardData } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import { DEFAULT_FILTERS } from '@/features/catalog-filters'
@@ -14,15 +23,30 @@ import type { CatalogFilters } from '@/features/catalog-filters'
 
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
+import { FiltersSidebar } from '@/widgets/filters-sidebar'
+import { CardsSection } from '@/widgets/cards-section'
+import { ChevronRightIcon } from '@/shared/assets/icons'
 
 import styles from './catalog-page.module.css'
-import { FiltersSidebar } from '@/widgets/filters-sidebar'
+
+const POPULAR_LIMIT = 3
+const NEWEST_LIMIT = 3
+const RECOMMENDED_LIMIT = 6
+
+const ViewAllButton = () => (
+  <Button variant="tertiary" rightIcon={<ChevronRightIcon />}>
+    Смотреть все
+  </Button>
+)
 
 export default function CatalogPage() {
   const [filters, setFilters] = useState<CatalogFilters>(DEFAULT_FILTERS)
 
   const dispatch = useAppDispatch()
 
+  const popularUsers = useAppSelector(selectPopularUsers)
+  const newestUsers = useAppSelector(selectNewestUsers)
+  const users = useAppSelector(selectUsers)
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
 
@@ -43,6 +67,18 @@ export default function CatalogPage() {
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
   const isFailed = statuses.includes('failed')
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
+
+  const toCards = useCallback(
+    (list: User[], limit: number) =>
+      list.slice(0, limit).map((user) => toUserCardData(user, categories, cities)),
+    [categories, cities],
+  )
+
+  const popularCards = useMemo(() => toCards(popularUsers, POPULAR_LIMIT), [toCards, popularUsers])
+  const newestCards = useMemo(() => toCards(newestUsers, NEWEST_LIMIT), [toCards, newestUsers])
+  const recommendedCards = useMemo(() => toCards(users, RECOMMENDED_LIMIT), [toCards, users])
+
+  const renderCard = (card: UserCardData) => <UserCard key={card.id} data={card} />
 
   return (
     <>
@@ -72,7 +108,17 @@ export default function CatalogPage() {
             cities={cities}
           />
 
-          <div className={styles.sections}></div>
+          <div className={styles.sections}>
+            <CardsSection title="Популярное" action={<ViewAllButton />}>
+              {popularCards.map(renderCard)}
+            </CardsSection>
+            <CardsSection title="Новое" action={<ViewAllButton />}>
+              {newestCards.map(renderCard)}
+            </CardsSection>
+            <CardsSection title="Рекомендуем" action={<ViewAllButton />}>
+              {recommendedCards.map(renderCard)}
+            </CardsSection>
+          </div>
         </div>
       )}
     </>
