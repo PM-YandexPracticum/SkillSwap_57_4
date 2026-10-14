@@ -67,3 +67,17 @@ export function getAge(birthDate: string, now: Date = new Date()): number | null
 export function formatAge(age: number): string {
   return `${age} ${pluralize(age, ['год', 'года', 'лет'])}`
 }
+
+/** Перемешивает массив (алгоритм Фишера-Йетса), исходный массив не меняется */
+export function shuffle<T>(items: T[], random: () => number = Math.random): T[] {
+  const result = [...items]
+
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1))
+    const temp = result[i]
+    result[i] = result[j]
+    result[j] = temp
+  }
+
+  return result
+}
