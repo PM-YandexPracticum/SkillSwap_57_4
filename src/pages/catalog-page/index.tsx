@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { generatePath, useNavigate } from 'react-router-dom'
 
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 import {
@@ -26,6 +27,7 @@ import { Loader } from '@/shared/ui/loader'
 import { FiltersSidebar } from '@/widgets/filters-sidebar'
 import { CardsSection } from '@/widgets/cards-section'
 import { ChevronRightIcon } from '@/shared/assets/icons'
+import { ROUTES } from '@/shared/lib/constants'
 
 import styles from './catalog-page.module.css'
 
@@ -41,8 +43,10 @@ const ViewAllButton = () => (
 
 export default function CatalogPage() {
   const [filters, setFilters] = useState<CatalogFilters>(DEFAULT_FILTERS)
+  const [likedIds, setLikedIds] = useState<string[]>([])
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const popularUsers = useAppSelector(selectPopularUsers)
   const newestUsers = useAppSelector(selectNewestUsers)
@@ -78,7 +82,25 @@ export default function CatalogPage() {
   const newestCards = useMemo(() => toCards(newestUsers, NEWEST_LIMIT), [toCards, newestUsers])
   const recommendedCards = useMemo(() => toCards(users, RECOMMENDED_LIMIT), [toCards, users])
 
-  const renderCard = (card: UserCardData) => <UserCard key={card.id} data={card} />
+  const toggleLike = (userId: string) => {
+    setLikedIds((ids) =>
+      ids.includes(userId) ? ids.filter((id) => id !== userId) : [...ids, userId],
+    )
+  }
+
+  const renderCard = (card: UserCardData) => {
+    const isLiked = likedIds.includes(card.id)
+
+    return (
+      <UserCard
+        key={card.id}
+        data={{ ...card, likesCount: card.likesCount + (isLiked ? 1 : 0) }}
+        isLiked={isLiked}
+        onLikeToggle={() => toggleLike(card.id)}
+        onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: card.skillId }))}
+      />
+    )
+  }
 
   return (
     <>
@@ -112,9 +134,11 @@ export default function CatalogPage() {
             <CardsSection title="Популярное" action={<ViewAllButton />}>
               {popularCards.map(renderCard)}
             </CardsSection>
+
             <CardsSection title="Новое" action={<ViewAllButton />}>
               {newestCards.map(renderCard)}
             </CardsSection>
+
             <CardsSection title="Рекомендуем" action={<ViewAllButton />}>
               {recommendedCards.map(renderCard)}
             </CardsSection>
