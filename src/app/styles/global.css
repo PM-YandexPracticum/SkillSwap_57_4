@@ -71,6 +71,7 @@
   --space-2xl: 32px;
   --space-3xl: 40px;
   --space-4xl: 60px;
+  --space-modal-icon-bottom: 52px;
   --space-card-inline: 52px;
 
   /* Borders */
@@ -95,6 +96,7 @@
   --size-error-image: 344px;
   --size-illustration-panel-image: 300px;
   --size-skills-menu: 1136px;
+  --size-modal-icon: 100px;
   --size-gallery-main: 324px;
   --size-gallery-thumb: 92px;
   --size-skill-offer-info: 399px; /* левая колонка SkillDetails на странице навыка */
