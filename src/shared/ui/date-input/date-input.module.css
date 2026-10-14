@@ -1,0 +1,159 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.anchor {
+  position: relative;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  min-height: var(--size-control);
+  padding: 0 var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-base);
+}
+
+.control:focus-within {
+  border-color: var(--color-accent);
+}
+
+.controlError,
+.controlError:focus-within {
+  border-color: var(--color-error);
+}
+
+.input {
+  flex: 1;
+  align-self: stretch;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  caret-color: var(--color-link);
+}
+
+.input::placeholder {
+  color: var(--color-text-caption);
+}
+
+.input:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.popup {
+  position: absolute;
+  top: calc(100% + var(--space-xxs));
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  min-width: 100%;
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+/* === Календарь (перебиваем стили react-day-picker) === */
+.calendar {
+  --rdp-accent-color: var(--color-link);
+  --rdp-accent-background-color: var(--color-accent-light);
+  --rdp-day-width: var(--size-calendar-day);
+  --rdp-day-height: var(--size-calendar-day);
+  --rdp-selected-border: none;
+  --rdp-today-color: var(--color-text);
+  --rdp-dropdown-gap: var(--space-2xl);
+  --rdp-weekday-opacity: 1;
+  --rdp-weekday-padding: 0 0 var(--space-xs);
+  --rdp-outside-opacity: 1;
+  --rdp-disabled-opacity: 1;
+
+  margin: 0 auto;
+  font-size: var(--font-size-calendar);
+}
+
+.caption {
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+}
+
+.captionLabel {
+  gap: var(--space-xxs);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+
+.chevron {
+  fill: currentcolor;
+}
+
+.weekday {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-caption);
+  color: var(--color-link);
+}
+
+.day {
+  color: var(--color-text);
+}
+
+.dayButton {
+  width: var(--size-calendar-day);
+  height: var(--size-calendar-day);
+  border-radius: var(--radius-circle);
+  transition: background-color var(--transition-base);
+}
+
+.day:not(.disabled, .selected) .dayButton:hover {
+  background-color: var(--color-accent-light);
+}
+
+.dayButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}
+
+.selected {
+  font-size: inherit;
+  font-weight: var(--font-weight-regular);
+}
+
+.selected .dayButton {
+  background-color: var(--color-accent);
+}
+
+.today:not(.outside) {
+  font-weight: var(--font-weight-medium);
+}
+
+.outside,
+.disabled {
+  color: var(--color-text-disabled);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.action {
+  flex: 1;
+}
+
+.errorText {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-error);
+}
