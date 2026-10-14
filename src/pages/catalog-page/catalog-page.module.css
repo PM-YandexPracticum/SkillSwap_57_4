@@ -1,3 +1,16 @@
+.layout {
+  display: grid;
+  grid-template-columns: var(--size-sidebar) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+
 .state {
   display: flex;
   flex: 1;
@@ -11,4 +24,9 @@
   align-items: center;
   gap: var(--space-xl);
   text-align: center;
+}
+
+.error > .text {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
 }
