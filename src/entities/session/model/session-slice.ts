@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { getAuthUser } from './auth-utils'
 import type { AuthUser } from '@/shared/types'
 

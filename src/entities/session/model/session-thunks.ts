@@ -1,6 +1,6 @@
-import { AuthUser } from '@/shared/types'
-import { RootState } from '@/store'
-import { ThunkAction, UnknownAction } from '@reduxjs/toolkit'
+import type { AuthUser } from '@/shared/types'
+import type { RootState } from '@/store'
+import type { ThunkAction, UnknownAction } from '@reduxjs/toolkit'
 import { setSessionUser } from './session-slice'
 import { clearAuthUser, saveAuthUser } from './auth-utils'
 

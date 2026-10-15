@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from 'vitest'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { setupStore } from '@/store'
 import { selectUser } from './selectors'
-import { AuthUser } from '@/shared/types'
+import type { AuthUser } from '@/shared/types'
 import { sessionReducer, setSessionUser } from './session-slice'
 
 const AUTH_USER: AuthUser = {

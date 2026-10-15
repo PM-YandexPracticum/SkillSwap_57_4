@@ -4,9 +4,18 @@ import { login, logout } from './session-thunks'
 import { selectUser } from './selectors'
 import { getAuthUser } from './auth-utils'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import type { AuthUser } from '@/shared/types'
 
-const USER_ONE = { id: 'user-01', name: 'Иван', email: 'user01@skillswap.com' }
-const USER_TWO = { id: 'user-02', name: 'Анна', email: 'user02@skillswap.com' }
+const USER_ONE: Omit<AuthUser, 'token'> = {
+  id: 'user-01',
+  name: 'Иван',
+  email: 'user01@skillswap.com',
+}
+const USER_TWO: Omit<AuthUser, 'token'> = {
+  id: 'user-02',
+  name: 'Анна',
+  email: 'user02@skillswap.com',
+}
 
 describe("[thunk'и сессии]", () => {
   beforeEach(() => {
