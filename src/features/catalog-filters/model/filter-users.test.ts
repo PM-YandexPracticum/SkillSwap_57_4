@@ -1,8 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import type { User } from '@/shared/types'
 import { filterUsers } from './filter-users'
-import { DEFAULT_FILTERS } from './filters'
-import type { CatalogFilters } from './filters'
+import { DEFAULT_FILTERS, type CatalogFilters } from './filters'
 
 const ivan: User = {
   id: 'user-01',
@@ -122,46 +121,38 @@ const ekaterina: User = {
 const users: User[] = [ivan, anna, dmitry, maria, ekaterina]
 
 describe('filterUsers', () => {
+  const yoga: CatalogFilters = { ...DEFAULT_FILTERS, subcategoryIds: ['yoga-meditation'] }
+
   test('режим "learn" ищет по teachSkill.subcategoryId', () => {
-    const filters: CatalogFilters = {
-      ...DEFAULT_FILTERS,
-      mode: 'learn',
-      subcategoryIds: ['music-sound'],
-    }
-    const result = filterUsers(users, filters)
-    expect(result.map((u) => u.id)).toEqual(['user-01'])
+    const result = filterUsers(users, { ...yoga, mode: 'learn' })
+    expect(result.map((u) => u.id)).toEqual(['user-06'])
   })
 
   test('режим "teach" ищет по learnSkills', () => {
-    const filters: CatalogFilters = {
-      ...DEFAULT_FILTERS,
-      mode: 'teach',
-      subcategoryIds: ['english'],
-    }
-    const result = filterUsers(users, filters)
-    expect(result).toEqual([])
+    const result = filterUsers(users, { ...yoga, mode: 'teach' })
+    expect(result.map((u) => u.id)).toEqual(['user-02'])
   })
 
   test('режим "all" ищет и по teachSkill, и по learnSkills', () => {
-    const filters: CatalogFilters = {
-      ...DEFAULT_FILTERS,
-      mode: 'all',
-      subcategoryIds: ['cooking'],
-    }
-    const result = filterUsers(users, filters)
-    expect(result.map((u) => u.id)).toEqual(['user-01', 'user-06'])
+    const result = filterUsers(users, { ...yoga, mode: 'all' })
+    expect(result.map((u) => u.id)).toEqual(['user-02', 'user-06'])
   })
 
   test('поиск без учёта регистра и пробелов по краям, только по teachSkill.title', () => {
     expect(filterUsers(users, DEFAULT_FILTERS, '  БАРАБАНАХ  ').map((u) => u.id)).toEqual([
       'user-01',
     ])
-    expect(filterUsers(users, DEFAULT_FILTERS, 'английский').map((u) => u.id)).toEqual(['user-02'])
-    expect(filterUsers(users, DEFAULT_FILTERS, 'music-sound')).toEqual([])
+    expect(filterUsers(users, DEFAULT_FILTERS, 'Иван')).toEqual([])
+    expect(filterUsers(users, DEFAULT_FILTERS, 'аэропорта')).toEqual([])
     expect(filterUsers(users, DEFAULT_FILTERS, 'english')).toEqual([])
   })
 
-  test('без строки поиска работают только фильтры', () => {
+  test('пустая строка поиска и строка из пробелов не отбрасывают никого', () => {
+    expect(filterUsers(users, DEFAULT_FILTERS, '')).toEqual(users)
+    expect(filterUsers(users, DEFAULT_FILTERS, '   ')).toEqual(users)
+  })
+
+  test('фильтр по полу (без строки поиска работают только фильтры)', () => {
     const filters: CatalogFilters = {
       ...DEFAULT_FILTERS,
       gender: 'female',
@@ -170,16 +161,23 @@ describe('filterUsers', () => {
     expect(result.map((u) => u.id)).toEqual(['user-02', 'user-04', 'user-06'])
   })
 
+  test('фильтр по городам', () => {
+    const filters: CatalogFilters = {
+      ...DEFAULT_FILTERS,
+      cityIds: ['moscow', 'samara'],
+    }
+    const result = filterUsers(users, filters)
+    expect(result.map((u) => u.id)).toEqual(['user-02', 'user-06'])
+  })
+
   test('несколько условий работают как "И"', () => {
     const filters: CatalogFilters = {
       ...DEFAULT_FILTERS,
-      gender: 'male',
-      cityIds: ['saint-petersburg'],
-      subcategoryIds: ['music-sound'],
-      mode: 'learn',
+      gender: 'female',
+      subcategoryIds: ['cooking'],
     }
     const result = filterUsers(users, filters)
-    expect(result.map((u) => u.id)).toEqual(['user-01'])
+    expect(result.map((u) => u.id)).toEqual(['user-06'])
   })
 
   test('исходный массив не меняется', () => {
