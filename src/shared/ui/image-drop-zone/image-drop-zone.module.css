@@ -1,8 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  width: 100%;
+  gap: var(--space-xxs);
 }
 
 .dropzone {
@@ -10,11 +9,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-2xl) var(--space-lg);
-  border: 2px dashed var(--color-disabled);
+  padding: calc(var(--space-md) - 1px) calc(var(--space-lg) - 1px);
+  border: 1px dashed var(--color-border);
   border-radius: var(--radius-sm);
-  background-color: var(--color-background);
+  background-color: transparent;
   transition: border-color var(--transition-base);
   text-align: center;
 }
@@ -23,18 +21,18 @@
   border-color: var(--color-link);
 }
 
-
-.dropzone * {
-  pointer-events: none;
-}
-
 .selectButton {
-  pointer-events: auto; 
   display: inline-flex;
   align-items: center;
   gap: var(--space-xxs);
   color: var(--color-link);
   font-weight: var(--font-weight-medium);
+  margin-top: var(--space-xs);
+}
+
+.selectButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
 }
 
 .buttonIcon {
@@ -43,7 +41,6 @@
 }
 
 .text {
-  font-size: var(--font-size-caption);
   color: var(--color-text-caption);
 }
 
@@ -51,6 +48,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .previewItem {
@@ -68,14 +68,12 @@
 
 .removeButton {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--color-surface);
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  top: var(--space-xxs);
+  right: var(--space-xxs);
 }
 
 .error {
   font-size: var(--font-size-caption);
   color: var(--color-error);
-  margin: 0;
+  line-height: var(--line-height-caption);
 }

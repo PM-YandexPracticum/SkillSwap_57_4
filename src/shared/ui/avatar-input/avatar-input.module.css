@@ -2,43 +2,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
 }
 
 .button {
-  position: relative;
-  border-radius: var(--radius-circle);
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity var(--transition-base);
 }
 
-.button:hover,
-.button:focus-visible {
+.button:hover {
   opacity: 0.8;
+}
+
+.button:focus-visible {
   outline: var(--focus-outline);
   outline-offset: var(--focus-offset);
 }
 
-.overlayIcon {
+.badge {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  background-color: var(--color-surface);
+  bottom: var(--space-xs);
+  right: var(--space-xs);
+  width: var(--size-avatar-badge);
+  height: var(--size-avatar-badge);
+  background-color: var(--color-accent);
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-link);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.badge > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badgeLarge {
+  bottom: 0;
+  right: 0;
+  width: var(--size-avatar-badge-l);
+  height: var(--size-avatar-badge-l);
+  background-color: var(--color-accent-light);
+  padding: var(--space-md);
+}
+
+.badgeLarge > svg {
+  width: 24px;
+  height: 24px;
 }
 
 .error {
   font-size: var(--font-size-caption);
   color: var(--color-error);
   text-align: center;
+  margin-top: var(--space-xxs);
+  line-height: var(--line-height-caption);
 }

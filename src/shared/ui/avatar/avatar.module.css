@@ -29,8 +29,7 @@
   height: var(--size-avatar-l);
 }
 
-
 .form {
-  width: 100px;
-  height: 100px;
+  width: var(--size-avatar-form);
+  height: var(--size-avatar-form);
 }

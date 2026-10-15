@@ -1,2 +1,2 @@
-export { AvatarInput } from './avatar-input';
-export type { AvatarInputProps } from './types';
+export { AvatarInput } from './avatar-input'
+export type { AvatarInputProps } from './types'

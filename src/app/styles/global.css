@@ -89,6 +89,9 @@
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
   --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
+  --size-avatar-form: 72px;
+  --size-avatar-badge: 16px;
+  --size-avatar-badge-l: 56px;
   --size-footer-column: 324px;
   --size-card-min-width: 315px;
   --size-dropdown-max-height: 240px;
