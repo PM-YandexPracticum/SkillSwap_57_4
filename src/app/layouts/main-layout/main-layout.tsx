@@ -1,7 +1,7 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { loadUsers, selectUserById } from '@/entities/user'
-import { clearAuthUser, getAuthUser } from '@/entities/session'
+import { logout, selectUser } from '@/entities/session'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Loader } from '@/shared/ui/loader'
@@ -12,7 +12,7 @@ import styles from './main-layout.module.css'
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [authUser, setAuthUser] = useState(getAuthUser)
+  const authUser = useAppSelector(selectUser)
   const user = useAppSelector((state) =>
     authUser ? selectUserById(state, authUser.id) : undefined,
   )
@@ -22,8 +22,7 @@ export const MainLayout = () => {
   }, [dispatch])
 
   const handleLogout = () => {
-    clearAuthUser()
-    setAuthUser(null)
+    dispatch(logout())
     navigate(ROUTES.HOME)
   }
 
