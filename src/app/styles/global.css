@@ -92,6 +92,7 @@
   --size-footer-column: 324px;
   --size-card-min-width: 315px;
   --size-dropdown-max-height: 240px;
+  --size-calendar-day: 32px; /* ячейка дня в календаре DateInput */
   --size-error-content: 460px;
   --size-error-image: 344px;
   --size-auth-card: 556px;
