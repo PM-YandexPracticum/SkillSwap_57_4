@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { loadUsers, selectUserById } from '@/entities/user'
-import { clearAuthUser, getAuthUser } from '@/features/auth'
+import { clearAuthUser, getAuthUser } from '@/entities/session'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Loader } from '@/shared/ui/loader'
