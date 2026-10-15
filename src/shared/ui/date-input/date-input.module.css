@@ -56,9 +56,9 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--space-md);
   min-width: 100%;
-  padding: var(--space-xl) var(--space-md) var(--space-md);
+  padding: calc(var(--space-md) - 1px);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -72,23 +72,24 @@
   --rdp-day-height: var(--size-calendar-day);
   --rdp-selected-border: none;
   --rdp-today-color: var(--color-text);
-  --rdp-dropdown-gap: var(--space-2xl);
+  --rdp-dropdown-gap: 0;
+  --rdp-nav-height: auto;
   --rdp-weekday-opacity: 1;
-  --rdp-weekday-padding: 0 0 var(--space-xs);
+  --rdp-weekday-padding: 0;
   --rdp-outside-opacity: 1;
   --rdp-disabled-opacity: 1;
 
-  margin: 0 auto;
-  font-size: var(--font-size-calendar);
+  padding: 0 var(--space-sm);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
 }
 
 .caption {
   justify-content: center;
-  margin-bottom: var(--space-sm);
 }
 
 .captionLabel {
-  gap: var(--space-xxs);
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body);
@@ -99,6 +100,7 @@
 }
 
 .weekday {
+  height: var(--size-calendar-day);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-caption);
