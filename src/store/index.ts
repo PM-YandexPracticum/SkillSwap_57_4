@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { usersReducer } from '@/entities/user'
 import { citiesReducer } from '@/entities/city'
 import { skillCategoriesReducer } from '@/entities/skill'
+import { sessionReducer } from '@/entities/session'
 
 const rootReducer = combineReducers({
   users: usersReducer,
   cities: citiesReducer,
   skillCategories: skillCategoriesReducer,
+  session: sessionReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
