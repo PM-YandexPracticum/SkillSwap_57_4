@@ -12,12 +12,21 @@
   padding: calc(var(--space-lg) - 1px);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-sm);
-  transition: border-color var(--transition-base);
   text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.dropzone:hover,
+.dropzoneActive {
+  border-color: var(--color-link);
+  opacity: 0.8;
 }
 
 .dropzoneActive {
-  border-color: var(--color-link);
+  border-style: solid;
 }
 
 .selectButton {
@@ -37,6 +46,15 @@
 .buttonIcon {
   width: var(--size-icon);
   height: var(--size-icon);
+  transition: transform var(--transition-base);
+}
+
+.dropzone:hover .buttonIcon {
+  transform: rotate(-12deg);
+}
+
+.dropzoneActive .buttonIcon {
+  transform: rotate(-12deg) scale(1.2);
 }
 
 .text {
@@ -51,8 +69,8 @@
 
 .previewItem {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: var(--size-upload-preview);
+  height: var(--size-upload-preview);
 }
 
 .image {
@@ -62,14 +80,24 @@
   border-radius: var(--radius-sm);
 }
 
-.removeButton {
+.previewItem .removeButton {
   position: absolute;
-  top: var(--space-xxs);
-  right: var(--space-xxs);
+  top: 0;
+  right: 0;
+  width: var(--size-upload-preview-remove);
+  height: var(--size-upload-preview-remove);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-circle);
 }
 
 .error {
   font-size: var(--font-size-caption);
   color: var(--color-error);
   line-height: var(--line-height-caption);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buttonIcon {
+    transition: none;
+  }
 }

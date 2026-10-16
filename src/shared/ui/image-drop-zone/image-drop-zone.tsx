@@ -23,10 +23,9 @@ export const ImageDropZone = forwardRef<HTMLButtonElement, ImageDropZoneProps>(
       }
     }
 
-    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
       accept: IMAGE_ACCEPT,
       maxSize: MAX_IMAGE_SIZE,
-      noClick: true,
       noKeyboard: true,
       onDrop: handleDrop,
     })
@@ -50,7 +49,6 @@ export const ImageDropZone = forwardRef<HTMLButtonElement, ImageDropZoneProps>(
             type="button"
             ref={ref}
             className={styles.selectButton}
-            onClick={open}
             aria-describedby={displayError ? errorId : undefined}
           >
             <GalleryAddIcon className={styles.buttonIcon} aria-hidden="true" />
