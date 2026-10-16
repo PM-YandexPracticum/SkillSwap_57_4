@@ -136,6 +136,13 @@ export default function CatalogPage() {
     )
   }
 
+  const renderViewAllButton = (section: ExpandableSection) => (
+    <ViewAllButton
+      isExpanded={expandedSections[section]}
+      onClick={() => handleToggleSection(section)}
+    />
+  )
+
   return (
     <>
       <h1 className="visually-hidden">Каталог навыков</h1>
@@ -165,27 +172,11 @@ export default function CatalogPage() {
           />
 
           <div className={styles.sections}>
-            <CardsSection
-              title="Популярное"
-              action={
-                <ViewAllButton
-                  isExpanded={expandedSections.popular}
-                  onClick={() => handleToggleSection('popular')}
-                />
-              }
-            >
+            <CardsSection title="Популярное" action={renderViewAllButton('popular')}>
               {popularCards.map(renderCard)}
             </CardsSection>
 
-            <CardsSection
-              title="Новое"
-              action={
-                <ViewAllButton
-                  isExpanded={expandedSections.newest}
-                  onClick={() => handleToggleSection('newest')}
-                />
-              }
-            >
+            <CardsSection title="Новое" action={renderViewAllButton('newest')}>
               {newestCards.map(renderCard)}
             </CardsSection>
 
