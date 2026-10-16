@@ -9,10 +9,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--space-md) - 1px) calc(var(--space-lg) - 1px);
+  padding: calc(var(--space-lg) - 1px);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-sm);
-  background-color: transparent;
   transition: border-color var(--transition-base);
   text-align: center;
 }
@@ -48,9 +47,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
-  padding: 0;
-  margin: 0;
-  list-style: none;
 }
 
 .previewItem {

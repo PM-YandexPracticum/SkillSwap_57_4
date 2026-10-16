@@ -40,13 +40,17 @@ export const AvatarInput = forwardRef<HTMLButtonElement, AvatarInputProps>(
           type="button"
           ref={ref}
           onClick={open}
-          className={styles.button}
+          className={clsx(styles.button, size === 'l' && styles.buttonLarge)}
           aria-label={src ? 'Изменить фото профиля' : 'Загрузить фото профиля'}
           aria-describedby={displayError ? errorId : undefined}
         >
           <Avatar src={src} size={size} alt="" />
           <span
-            className={clsx(styles.badge, size === 'l' && styles.badgeLarge)}
+            className={clsx(
+              styles.badge,
+              size === 'l' && styles.badgeLarge,
+              src && styles.badgeEdit,
+            )}
             aria-hidden="true"
           >
             {src ? <GalleryEditIcon /> : <AddIcon />}

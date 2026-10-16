@@ -5,7 +5,6 @@
   overflow: hidden;
   border-radius: var(--radius-circle);
   flex-shrink: 0;
-  background-color: var(--color-disabled);
 }
 
 .image {

@@ -6,6 +6,7 @@ import styles from './avatar.module.css'
 
 export const Avatar = ({ src, alt, size = 'm', className }: AvatarProps) => {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
+
   // Приводим к Boolean и проверяем, что ссылка не в списке битых
   const showImage = Boolean(src) && src !== failedSrc
 
