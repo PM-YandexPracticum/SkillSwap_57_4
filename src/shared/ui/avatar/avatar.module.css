@@ -5,7 +5,6 @@
   overflow: hidden;
   border-radius: var(--radius-circle);
   flex-shrink: 0;
-  background-color: var(--color-disabled);
 }
 
 .image {
@@ -27,4 +26,9 @@
 .l {
   width: var(--size-avatar-l);
   height: var(--size-avatar-l);
+}
+
+.form {
+  width: var(--size-avatar-form);
+  height: var(--size-avatar-form);
 }

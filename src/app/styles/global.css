@@ -86,6 +86,9 @@
   --size-avatar-s: 48px;
   --size-avatar-m: 100px;
   --size-avatar-l: 244px;
+  --size-avatar-form: 56px;
+  --size-avatar-badge: 16px;
+  --size-avatar-badge-l: 56px;
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
   --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
@@ -104,6 +107,8 @@
   --size-gallery-thumb: 92px;
   --size-skill-offer-info: 399px; /* левая колонка SkillDetails на странице навыка */
   --size-skill-check-info: 420px; /* левая колонка SkillDetails в окне проверки при регистрации */
+  --size-upload-preview: 72px; /* превью фото навыка в ImageDropZone */
+  --size-upload-preview-remove: 20px; /* кнопка удаления на превью */
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
