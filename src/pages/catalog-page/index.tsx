@@ -27,7 +27,7 @@ import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
 import { FiltersSidebar } from '@/widgets/filters-sidebar'
 import { CardsSection } from '@/widgets/cards-section'
-import { ChevronRightIcon } from '@/shared/assets/icons'
+import { ChevronDownIcon, ChevronRightIcon } from '@/shared/assets/icons'
 import { ROUTES } from '@/shared/lib/constants'
 
 import styles from './catalog-page.module.css'
@@ -35,9 +35,22 @@ import styles from './catalog-page.module.css'
 const POPULAR_LIMIT = 3
 const NEWEST_LIMIT = 3
 const RECOMMENDED_LIMIT = 6
+const EXPANDED_LIMIT = 9
 
-const ViewAllButton = () => (
-  <Button variant="tertiary" rightIcon={<ChevronRightIcon />}>
+type ExpandableSection = 'popular' | 'newest'
+
+interface ViewAllButtonProps {
+  isExpanded: boolean
+  onClick: () => void
+}
+
+const ViewAllButton = ({ isExpanded, onClick }: ViewAllButtonProps) => (
+  <Button
+    variant="tertiary"
+    rightIcon={isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+    aria-expanded={isExpanded}
+    onClick={onClick}
+  >
     Смотреть все
   </Button>
 )
@@ -45,6 +58,10 @@ const ViewAllButton = () => (
 export default function CatalogPage() {
   const [filters, setFilters] = useState<CatalogFilters>(DEFAULT_FILTERS)
   const [likedIds, setLikedIds] = useState<string[]>([])
+  const [expandedSections, setExpandedSections] = useState<Record<ExpandableSection, boolean>>({
+    popular: false,
+    newest: false,
+  })
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -79,9 +96,25 @@ export default function CatalogPage() {
     [categories, cities],
   )
 
-  const popularCards = useMemo(() => toCards(popularUsers, POPULAR_LIMIT), [toCards, popularUsers])
-  const newestCards = useMemo(() => toCards(newestUsers, NEWEST_LIMIT), [toCards, newestUsers])
+  const popularLimit = expandedSections.popular ? EXPANDED_LIMIT : POPULAR_LIMIT
+  const newestLimit = expandedSections.newest ? EXPANDED_LIMIT : NEWEST_LIMIT
+
+  const popularCards = useMemo(
+    () => toCards(popularUsers, popularLimit),
+    [toCards, popularUsers, popularLimit],
+  )
+  const newestCards = useMemo(
+    () => toCards(newestUsers, newestLimit),
+    [toCards, newestUsers, newestLimit],
+  )
   const recommendedCards = useMemo(() => toCards(users, RECOMMENDED_LIMIT), [toCards, users])
+
+  const handleToggleSection = (section: ExpandableSection) => {
+    setExpandedSections((sections) => ({
+      ...sections,
+      [section]: !sections[section],
+    }))
+  }
 
   const toggleLike = (userId: string) => {
     setLikedIds((ids) =>
@@ -102,6 +135,13 @@ export default function CatalogPage() {
       />
     )
   }
+
+  const renderViewAllButton = (section: ExpandableSection) => (
+    <ViewAllButton
+      isExpanded={expandedSections[section]}
+      onClick={() => handleToggleSection(section)}
+    />
+  )
 
   return (
     <>
@@ -132,11 +172,11 @@ export default function CatalogPage() {
           />
 
           <div className={styles.sections}>
-            <CardsSection title="Популярное" action={<ViewAllButton />}>
+            <CardsSection title="Популярное" action={renderViewAllButton('popular')}>
               {popularCards.map(renderCard)}
             </CardsSection>
 
-            <CardsSection title="Новое" action={<ViewAllButton />}>
+            <CardsSection title="Новое" action={renderViewAllButton('newest')}>
               {newestCards.map(renderCard)}
             </CardsSection>
 
