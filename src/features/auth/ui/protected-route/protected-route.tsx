@@ -1,10 +1,12 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, type Location } from 'react-router-dom'
 
 import { selectUser } from '@/entities/session'
 import { useAppSelector } from '@/store/hooks'
 import { ROUTES } from '@/shared/lib/constants'
 
 import type { ProtectedRouteProps } from './types'
+
+type LocationState = { from?: Location } | null
 
 export const ProtectedRoute = ({ onlyUnAuth = false, children }: ProtectedRouteProps) => {
   const user = useAppSelector(selectUser)
@@ -15,9 +17,9 @@ export const ProtectedRoute = ({ onlyUnAuth = false, children }: ProtectedRouteP
   }
 
   if (onlyUnAuth && user) {
-    const from = location.state?.from?.pathname ?? ROUTES.HOME
+    const from = (location.state as LocationState)?.from ?? { pathname: ROUTES.HOME }
     return <Navigate to={from} replace />
   }
 
-  return <>{children}</>
+  return children
 }

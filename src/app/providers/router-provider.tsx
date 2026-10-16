@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 import { Loader } from '@/shared/ui/loader'
-import { ProtectedRoute } from '@/features/protected-route'
+import { ProtectedRoute } from '@/features/auth'
 import { MainLayout } from '../layouts/main-layout'
 import { AuthLayout } from '../layouts/auth-layout'
 
@@ -24,17 +24,52 @@ export function AppRouter() {
           <Route element={<MainLayout />}>
             <Route path={ROUTES.HOME} element={<CatalogPage />} />
             <Route path={ROUTES.SKILL} element={<SkillPage />} />
-            <Route path={ROUTES.FAVORITES} element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
-            <Route path={ROUTES.PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-            <Route path={ROUTES.CREATE} element={<ProtectedRoute><CreateSkillPage /></ProtectedRoute>} />
-            <Route path={ROUTES.LOGIN} element={<ProtectedRoute onlyUnAuth><LoginPage /></ProtectedRoute>} />
-            <Route path={ROUTES.REGISTER} element={<ProtectedRoute onlyUnAuth><LoginPage /></ProtectedRoute>} />
+
+            <Route
+              path={ROUTES.FAVORITES}
+              element={
+                <ProtectedRoute>
+                  <FavoritesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.PROFILE}
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.CREATE}
+              element={
+                <ProtectedRoute>
+                  <CreateSkillPage />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route element={<AuthLayout />}>
-            <Route path={ROUTES.LOGIN} element={<ProtectedRoute onlyUnAuth><LoginPage /></ProtectedRoute>} />
-            <Route path={ROUTES.REGISTER} element={<ProtectedRoute onlyUnAuth><LoginPage /></ProtectedRoute>} />
+            <Route
+              path={ROUTES.LOGIN}
+              element={
+                <ProtectedRoute onlyUnAuth>
+                  <LoginPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.REGISTER}
+              element={
+                <ProtectedRoute onlyUnAuth>
+                  <LoginPage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
       </Suspense>
