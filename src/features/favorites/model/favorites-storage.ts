@@ -1,38 +1,30 @@
-import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants';
+import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
-export type FavoritesByUser = Record<string, string[]>;
+export type FavoritesByUser = Record<string, string[]>
 
-export const isFavoritesByUser = (value: unknown): value is FavoritesByUser => {
+const isFavoritesByUser = (value: unknown): value is FavoritesByUser => {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    return false;
+    return false
   }
-  
+
   return Object.values(value).every(
-    (arr) => Array.isArray(arr) && arr.every((item) => typeof item === 'string')
-  );
-};
+    (arr) => Array.isArray(arr) && arr.every((item) => typeof item === 'string'),
+  )
+}
 
 export const loadFavorites = (): FavoritesByUser => {
   try {
-    const dataString = localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES);
-    if (!dataString) return {};
-
-    const parsedData = JSON.parse(dataString);
-    
-    if (isFavoritesByUser(parsedData)) {
-      return parsedData;
-    }
-    
-    return {};
+    const parsed: unknown = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES) ?? '{}')
+    return isFavoritesByUser(parsed) ? parsed : {}
   } catch {
-    return {};
+    return {}
   }
-};
+}
 
 export const saveFavorites = (byUser: FavoritesByUser): void => {
   try {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.FAVORITES, JSON.stringify(byUser));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.FAVORITES, JSON.stringify(byUser))
   } catch {
-    return;
+    // Хранилище переполнено или недоступно: избранное останется до перезагрузки
   }
-};
+}

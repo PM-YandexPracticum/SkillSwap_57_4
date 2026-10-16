@@ -21,23 +21,18 @@ export const setupStore = (preloadedState?: Partial<RootState>) =>
 
 export const store = setupStore()
 
-
-function persist<T>(
-  select: (state: RootState) => T,
-  save: (data: T) => void
-) {
+function persist<T>(select: (state: RootState) => T, save: (data: T) => void) {
   let currentValue = select(store.getState())
-  
+
   store.subscribe(() => {
     const previousValue = currentValue
     currentValue = select(store.getState())
-    
+
     if (previousValue !== currentValue) {
       save(currentValue)
     }
   })
 }
-
 
 persist((state) => state.favorites.byUser, saveFavorites)
 
