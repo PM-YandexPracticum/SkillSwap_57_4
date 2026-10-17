@@ -96,11 +96,9 @@ export default function SkillPage() {
 
   if (isFailed) {
     return (
-      <div className={styles.state}>
-        <div className={styles.error} role="alert">
-          <p className={styles.text}>Не удалось загрузить навык</p>
-          <Button onClick={loadData}>Повторить</Button>
-        </div>
+      <div className={styles.error} role="alert">
+        <p className={styles.text}>Не удалось загрузить навык</p>
+        <Button onClick={loadData}>Повторить</Button>
       </div>
     )
   }
