@@ -67,7 +67,7 @@ export default function CatalogPage() {
   })
   const [recommendedCount, setRecommendedCount] = useState(RECOMMENDED_STEP)
 
-  const { ref: sentinelRef, inView } = useInView({ rootMargin: '0px 0px 100px 0px' })
+  const { ref: sentinelRef, inView } = useInView({ rootMargin: '0px 0px 50px 0px' })
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
