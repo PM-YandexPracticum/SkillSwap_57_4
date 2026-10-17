@@ -2,6 +2,7 @@ import { useId, useRef, useState, type KeyboardEvent } from 'react'
 import { UserInfo } from '@/entities/user'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import { LogoutIcon } from '@/shared/assets/icons'
+import { Dropdown } from '@/shared/ui/dropdown'
 import type { UserMenuProps } from './types'
 import styles from './user-menu.module.css'
 
@@ -50,19 +51,21 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
       </button>
 
       {isOpen && (
-        <ul className={styles.menu} id={menuId}>
-          <li>
-            <button className={styles.item} type="button" onClick={handleProfileClick}>
-              Личный кабинет
-            </button>
-          </li>
-          <li>
-            <button className={styles.item} type="button" onClick={handleLogout}>
-              Выйти из аккаунта
-              <LogoutIcon className={styles.icon} aria-hidden="true" />
-            </button>
-          </li>
-        </ul>
+        <Dropdown className={styles.menu} id={menuId}>
+          <ul className={styles.list}>
+            <li>
+              <button className={styles.item} type="button" onClick={handleProfileClick}>
+                Личный кабинет
+              </button>
+            </li>
+            <li>
+              <button className={styles.item} type="button" onClick={handleLogout}>
+                Выйти из аккаунта
+                <LogoutIcon className={styles.icon} aria-hidden="true" />
+              </button>
+            </li>
+          </ul>
+        </Dropdown>
       )}
     </div>
   )

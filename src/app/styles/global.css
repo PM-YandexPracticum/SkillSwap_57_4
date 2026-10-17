@@ -116,6 +116,7 @@
 
   /* Layering */
   --z-header: 100;
+  --z-dropdown: 10; /* выпадающие меню, списки и календарь над содержимым страницы */
 
   /* Motion */
   --transition-base: 0.2s ease-in-out;

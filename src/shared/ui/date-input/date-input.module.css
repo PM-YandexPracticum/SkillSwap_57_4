@@ -53,7 +53,7 @@
   position: absolute;
   top: calc(100% + var(--space-xxs));
   left: 0;
-  z-index: 10;
+  z-index: var(--z-dropdown);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);

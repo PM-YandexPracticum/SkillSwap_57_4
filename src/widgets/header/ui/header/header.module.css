@@ -40,7 +40,6 @@
 }
 
 .skillsMenu {
-  position: absolute;
   top: 100%;
   left: var(--layout-padding);
   width: min(var(--size-skills-menu), 100% - 2 * var(--layout-padding));
