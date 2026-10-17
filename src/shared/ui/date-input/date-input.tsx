@@ -79,7 +79,14 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>(function D
     inputRef.current?.focus()
   }
 
-  useDismiss({ ref: containerRef, onDismiss: closeCalendar, isActive: isOpen })
+  const handleDismiss = () => setIsOpen(false)
+
+  useDismiss({
+    ref: containerRef,
+    onDismiss: handleDismiss,
+    isActive: isOpen,
+    returnFocusRef: inputRef,
+  })
 
   const handleToggle = () => {
     if (isOpen) {

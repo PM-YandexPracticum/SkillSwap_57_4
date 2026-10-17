@@ -90,6 +90,7 @@
   --size-avatar-badge: 16px;
   --size-avatar-badge-l: 56px;
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
+  --size-header: calc(var(--layout-padding) + var(--size-control) + var(--space-lg));
   --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
   --size-footer-column: 324px;
@@ -116,6 +117,7 @@
 
   /* Layering */
   --z-header: 100;
+  --z-dropdown: 10; /* выпадающие меню, списки и календарь над содержимым страницы */
 
   /* Motion */
   --transition-base: 0.2s ease-in-out;

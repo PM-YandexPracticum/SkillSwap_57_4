@@ -76,4 +76,17 @@ describe('[useDismiss]', () => {
 
     expect(onDismiss).not.toHaveBeenCalled()
   })
+
+  test('после esc возвращает фокус на returnFocusRef', () => {
+    const ref = createRef()
+    const button = document.createElement('button')
+    document.body.appendChild(button)
+
+    renderHook(() =>
+      useDismiss({ ref, onDismiss: vi.fn(), isActive: true, returnFocusRef: { current: button } }),
+    )
+    pressEscape()
+
+    expect(button).toHaveFocus()
+  })
 })

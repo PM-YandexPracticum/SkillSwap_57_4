@@ -1,7 +1,8 @@
-import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { useId, useRef, useState } from 'react'
 import { UserInfo } from '@/entities/user'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import { LogoutIcon } from '@/shared/assets/icons'
+import { Dropdown } from '@/shared/ui/dropdown'
 import type { UserMenuProps } from './types'
 import styles from './user-menu.module.css'
 
@@ -24,14 +25,10 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
     onLogout()
   }
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen) triggerRef.current?.focus()
-  }
-
-  useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen })
+  useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen, returnFocusRef: triggerRef })
 
   return (
-    <div className={styles.container} ref={wrapperRef} onKeyDown={handleKeyDown}>
+    <div className={styles.container} ref={wrapperRef}>
       <button
         ref={triggerRef}
         className={styles.trigger}
@@ -50,19 +47,21 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
       </button>
 
       {isOpen && (
-        <ul className={styles.menu} id={menuId}>
-          <li>
-            <button className={styles.item} type="button" onClick={handleProfileClick}>
-              Личный кабинет
-            </button>
-          </li>
-          <li>
-            <button className={styles.item} type="button" onClick={handleLogout}>
-              Выйти из аккаунта
-              <LogoutIcon className={styles.icon} aria-hidden="true" />
-            </button>
-          </li>
-        </ul>
+        <Dropdown className={styles.menu} id={menuId}>
+          <ul className={styles.list}>
+            <li>
+              <button className={styles.item} type="button" onClick={handleProfileClick}>
+                Личный кабинет
+              </button>
+            </li>
+            <li>
+              <button className={styles.item} type="button" onClick={handleLogout}>
+                Выйти из аккаунта
+                <LogoutIcon className={styles.icon} aria-hidden="true" />
+              </button>
+            </li>
+          </ul>
+        </Dropdown>
       )}
     </div>
   )

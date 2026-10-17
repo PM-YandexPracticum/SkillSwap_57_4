@@ -40,10 +40,14 @@
 }
 
 .skillsMenu {
-  position: absolute;
   top: 100%;
   left: var(--layout-padding);
   width: min(var(--size-skills-menu), 100% - 2 * var(--layout-padding));
+  max-height: calc(100vh - var(--size-header) - var(--space-lg));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--color-disabled) transparent;
+  scrollbar-width: thin;
 }
 
 /* Блок с иконками и меню пользователя */
