@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { useId, useRef, useState } from 'react'
 import { UserInfo } from '@/entities/user'
 import { useDismiss } from '@/shared/hooks/useDismiss'
 import { LogoutIcon } from '@/shared/assets/icons'
@@ -25,14 +25,10 @@ export const UserMenu = ({ name, avatarUrl, onProfileClick, onLogout }: UserMenu
     onLogout()
   }
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen) triggerRef.current?.focus()
-  }
-
-  useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen })
+  useDismiss({ ref: wrapperRef, onDismiss: close, isActive: isOpen, returnFocusRef: triggerRef })
 
   return (
-    <div className={styles.container} ref={wrapperRef} onKeyDown={handleKeyDown}>
+    <div className={styles.container} ref={wrapperRef}>
       <button
         ref={triggerRef}
         className={styles.trigger}

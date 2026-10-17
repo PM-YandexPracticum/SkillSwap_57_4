@@ -62,7 +62,12 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
     setQuery(null)
   }
 
-  useDismiss({ ref: containerRef, onDismiss: closeDropdown, isActive: isOpen })
+  useDismiss({
+    ref: containerRef,
+    onDismiss: closeDropdown,
+    isActive: isOpen,
+    returnFocusRef: searchable ? inputRef : buttonRef,
+  })
 
   const handleToggle = () => setIsOpen((open) => !open)
 
@@ -90,10 +95,6 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
     inputRef.current?.focus()
   }
 
-  const handleContainerKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen) focusField()
-  }
-
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return
     e.preventDefault()
@@ -102,11 +103,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   }
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(styles.container, className)}
-      onKeyDown={handleContainerKeyDown}
-    >
+    <div ref={containerRef} className={clsx(styles.container, className)}>
       <label id={labelId} htmlFor={fieldId}>
         {label}
       </label>

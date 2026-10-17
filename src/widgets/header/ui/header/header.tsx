@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink, useMatch, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
@@ -41,11 +41,12 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
   const toggleSkillsMenu = () => setIsSkillsMenuOpen((prev) => !prev)
   const closeSkillsMenu = () => setIsSkillsMenuOpen(false)
 
-  useDismiss({ ref: skillsRef, isActive: isSkillsMenuOpen, onDismiss: closeSkillsMenu })
-
-  const handleSkillsKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isSkillsMenuOpen) skillsTriggerRef.current?.focus()
-  }
+  useDismiss({
+    ref: skillsRef,
+    isActive: isSkillsMenuOpen,
+    onDismiss: closeSkillsMenu,
+    returnFocusRef: skillsTriggerRef,
+  })
 
   const handleFavoritesClick = () => navigate(ROUTES.FAVORITES)
   const handleProfileClick = () => navigate(ROUTES.PROFILE)
@@ -66,7 +67,7 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
               О проекте
             </NavLink>
           </li>
-          <li ref={skillsRef} onKeyDown={handleSkillsKeyDown}>
+          <li ref={skillsRef}>
             <button
               type="button"
               className={clsx(styles.link, styles.skillsButton)}

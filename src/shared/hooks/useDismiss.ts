@@ -4,10 +4,12 @@ type UseDismissParams = {
   ref: RefObject<HTMLElement | null>
   onDismiss: () => void
   isActive: boolean
+  returnFocusRef?: RefObject<HTMLElement | null>
 }
 
 /**
  * Вызывает `onDismiss` при клике мимо `ref` или при нажатии `Escape`.
+ * После `Escape` возвращает фокус на `returnFocusRef`, если он передан: иначе фокус пропадёт вместе с окном.
  * Обработчики вешаются на `document` только при `isActive === true`
  * и снимаются при его смене на `false` или размонтировании компонента.
  *
@@ -18,10 +20,11 @@ type UseDismissParams = {
  * useDismiss({
  *   ref: wrapperRef,
  *   onDismiss: () => setisOpen(false),
- *   isActive: isOpen
+ *   isActive: isOpen,
+ *   returnFocusRef: buttonRef
  * })
  */
-export function useDismiss({ ref, onDismiss, isActive }: UseDismissParams) {
+export function useDismiss({ ref, onDismiss, isActive, returnFocusRef }: UseDismissParams) {
   const onDismissRef = useRef(onDismiss)
 
   useEffect(() => {
@@ -38,7 +41,9 @@ export function useDismiss({ ref, onDismiss, isActive }: UseDismissParams) {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onDismissRef.current()
+      if (event.key !== 'Escape') return
+      onDismissRef.current()
+      returnFocusRef?.current?.focus()
     }
 
     document.addEventListener('mousedown', handleMouseDown)
@@ -48,5 +53,5 @@ export function useDismiss({ ref, onDismiss, isActive }: UseDismissParams) {
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [ref, isActive])
+  }, [ref, isActive, returnFocusRef])
 }
