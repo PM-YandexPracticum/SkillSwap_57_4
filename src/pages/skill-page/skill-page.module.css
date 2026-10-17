@@ -1,3 +1,15 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4xl);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: var(--size-sidebar) minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
 .state {
   display: flex;
   flex: 1;
