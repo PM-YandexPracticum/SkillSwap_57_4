@@ -11,6 +11,12 @@
   gap: var(--space-3xl);
 }
 
+.sentinel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .state {
   display: flex;
   flex: 1;
