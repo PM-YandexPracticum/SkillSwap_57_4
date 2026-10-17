@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
+import { useInView } from 'react-intersection-observer'
 
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 import {
@@ -29,13 +30,15 @@ import { FiltersSidebar } from '@/widgets/filters-sidebar'
 import { CardsSection } from '@/widgets/cards-section'
 import { ChevronDownIcon, ChevronRightIcon } from '@/shared/assets/icons'
 import { ROUTES } from '@/shared/lib/constants'
+import { shuffle } from '@/shared/lib/helpers'
 
 import styles from './catalog-page.module.css'
 
 const POPULAR_LIMIT = 3
 const NEWEST_LIMIT = 3
-const RECOMMENDED_LIMIT = 6
+const RECOMMENDED_STEP = 6
 const EXPANDED_LIMIT = 9
+const LOAD_MORE_DELAY = 500
 
 type ExpandableSection = 'popular' | 'newest'
 
@@ -62,6 +65,9 @@ export default function CatalogPage() {
     popular: false,
     newest: false,
   })
+  const [recommendedCount, setRecommendedCount] = useState(RECOMMENDED_STEP)
+
+  const { ref: sentinelRef, inView } = useInView({ rootMargin: '0px 0px 50px 0px' })
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -76,6 +82,10 @@ export default function CatalogPage() {
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
   const citiesStatus = useAppSelector(selectCitiesStatus)
 
+  const shuffledUsers = useMemo(() => shuffle(users), [users])
+  const hasMoreRecommended = recommendedCount < shuffledUsers.length
+  const isLoadingMore = inView && hasMoreRecommended
+
   const loadData = useCallback(() => {
     dispatch(loadUsers())
     dispatch(loadSkillCategories())
@@ -85,6 +95,16 @@ export default function CatalogPage() {
   useEffect(() => {
     loadData()
   }, [loadData])
+
+  useEffect(() => {
+    if (!isLoadingMore) return
+
+    const timer = setTimeout(() => {
+      setRecommendedCount((count) => count + RECOMMENDED_STEP)
+    }, LOAD_MORE_DELAY)
+
+    return () => clearTimeout(timer)
+  }, [isLoadingMore, recommendedCount])
 
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
   const isFailed = statuses.includes('failed')
@@ -107,7 +127,10 @@ export default function CatalogPage() {
     () => toCards(newestUsers, newestLimit),
     [toCards, newestUsers, newestLimit],
   )
-  const recommendedCards = useMemo(() => toCards(users, RECOMMENDED_LIMIT), [toCards, users])
+  const recommendedCards = useMemo(
+    () => toCards(shuffledUsers, recommendedCount),
+    [toCards, shuffledUsers, recommendedCount],
+  )
 
   const handleToggleSection = (section: ExpandableSection) => {
     setExpandedSections((sections) => ({
@@ -181,6 +204,12 @@ export default function CatalogPage() {
             </CardsSection>
 
             <CardsSection title="Рекомендуем">{recommendedCards.map(renderCard)}</CardsSection>
+
+            {hasMoreRecommended && (
+              <div ref={sentinelRef} className={styles.sentinel}>
+                {isLoadingMore && <Loader size="m" />}
+              </div>
+            )}
           </div>
         </div>
       )}
