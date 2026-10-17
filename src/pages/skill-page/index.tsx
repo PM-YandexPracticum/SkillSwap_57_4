@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { generatePath, useNavigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
@@ -12,25 +12,33 @@ import {
 import {
   loadUsers,
   selectUserBySkillId,
+  selectUsers,
   selectUsersStatus,
   toUserCardData,
   UserCard,
+  type UserCardData,
 } from '@/entities/user'
 import { ErrorState } from '@/widgets/error-state'
 import { SkillOffer } from '@/widgets/skill-offer'
+import { CardsSection } from '@/widgets/cards-section'
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
 import { findSubcategory } from '@/shared/lib/skills'
+import { ROUTES } from '@/shared/lib/constants'
 
 import styles from './skill-page.module.css'
+
+const SIMILAR_LIMIT = 4
 
 export default function SkillPage() {
   const [likedIds, setLikedIds] = useState<string[]>([])
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const { id } = useParams<{ id: string }>()
 
+  const users = useAppSelector(selectUsers)
   const author = useAppSelector((state) => selectUserBySkillId(state, id ?? ''))
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
@@ -48,6 +56,25 @@ export default function SkillPage() {
   useEffect(() => {
     loadData()
   }, [loadData])
+
+  // так как при выборе карточки из списка похожих страница не размонтируется -
+  // она остается прокрученной вниз - возвращаем вверх
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [id])
+
+  const similarCards = useMemo(() => {
+    if (!author) return []
+
+    return users
+      .filter(
+        (user) =>
+          user.id !== author.id &&
+          user.teachSkill.subcategoryId === author.teachSkill.subcategoryId,
+      )
+      .slice(0, SIMILAR_LIMIT)
+      .map((user) => toUserCardData(user, categories, cities))
+  }, [author, users, categories, cities])
 
   if (!author) {
     return <ErrorState code={404} />
@@ -87,6 +114,21 @@ export default function SkillPage() {
     )
   }
 
+  const renderSimilarCard = (card: UserCardData) => {
+    const isLiked = likedIds.includes(card.id)
+
+    return (
+      <UserCard
+        key={card.id}
+        data={{ ...card, likesCount: card.likesCount + (isLiked ? 1 : 0) }}
+        titleAs="h3"
+        isLiked={isLiked}
+        onLikeToggle={() => toggleLike(card.id)}
+        onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: card.skillId }))}
+      />
+    )
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.top}>
@@ -102,6 +144,12 @@ export default function SkillPage() {
           onLikeToggle={() => toggleLike(author.id)}
         />
       </div>
+
+      {similarCards.length > 0 && (
+        <CardsSection title="Похожие предложения">
+          {similarCards.map(renderSimilarCard)}
+        </CardsSection>
+      )}
     </div>
   )
 }
