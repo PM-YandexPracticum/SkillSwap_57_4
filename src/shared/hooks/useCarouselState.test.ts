@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
-import { CarouselApi, useCarouselState } from './useCarouselState'
+import { useCarouselState, type CarouselApi } from './useCarouselState'
 
 type Handler = (api: CarouselApi) => void
 

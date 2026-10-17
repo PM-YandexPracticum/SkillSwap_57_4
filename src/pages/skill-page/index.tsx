@@ -132,6 +132,7 @@ export default function SkillPage() {
       <div className={styles.top}>
         <UserCard data={authorCard} variant="author" titleAs="h2" />
         <SkillOffer
+          key={skill.id}
           title={skill.title}
           description={skill.description}
           categoryName={found?.category.name ?? ''}
