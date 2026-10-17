@@ -76,10 +76,6 @@ export default function SkillPage() {
       .map((user) => toUserCardData(user, categories, cities))
   }, [author, users, categories, cities])
 
-  if (!author) {
-    return <ErrorState code={404} />
-  }
-
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
   const isFailed = statuses.includes('failed')
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
@@ -89,11 +85,6 @@ export default function SkillPage() {
       ids.includes(userId) ? ids.filter((item) => item !== userId) : [...ids, userId],
     )
   }
-
-  const { teachSkill: skill } = author
-  const authorCard = toUserCardData(author, categories, cities)
-  const found = findSubcategory(skill.subcategoryId, categories)
-  const isLiked = likedIds.includes(author.id)
 
   if (isLoading) {
     return (
@@ -113,6 +104,15 @@ export default function SkillPage() {
       </div>
     )
   }
+
+  if (!author) {
+    return <ErrorState code={404} />
+  }
+
+  const { teachSkill: skill } = author
+  const authorCard = toUserCardData(author, categories, cities)
+  const found = findSubcategory(skill.subcategoryId, categories)
+  const isLiked = likedIds.includes(author.id)
 
   const renderSimilarCard = (card: UserCardData) => {
     const isLiked = likedIds.includes(card.id)
