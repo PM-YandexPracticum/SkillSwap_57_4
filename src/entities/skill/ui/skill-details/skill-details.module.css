@@ -45,23 +45,92 @@
   gap: var(--space-xl);
 }
 
-.mainImage {
+.sliders {
+  position: relative;
   width: var(--size-gallery-main);
   height: var(--size-gallery-main);
+}
+
+.viewport {
+  height: 100%;
+  overflow: hidden;
   border-radius: var(--radius-sm);
+}
+
+.slides {
+  display: flex;
+  height: 100%;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
   object-fit: cover;
 }
 
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: var(--size-carousel-arrow);
+  height: var(--size-carousel-arrow);
+  padding: var(--space-xs);
+  border-radius: var(--radius-circle);
+  color: var(--color-text-caption);
+  background-color: var(--color-disabled);
+  transform: translateY(-50%);
+}
+
+.arrow:focus-visible {
+  border-radius: var(--radius-circle);
+}
+
+.arrow:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.prev {
+  left: var(--space-md);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.next {
+  right: var(--space-md);
+}
+
 .thumbnails {
+  position: relative;
+  height: var(--size-gallery-main);
+}
+
+.thumbnailsViewport {
+  height: 100%;
+  overflow: hidden;
+}
+
+.thumbnailsList {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
+  height: 100%;
 }
 
 .thumbnail {
-  position: relative;
+  flex: 0 0 var(--size-gallery-thumb);
   width: var(--size-gallery-thumb);
-  height: var(--size-gallery-thumb);
+}
+
+.thumbnailButton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.thumbnailButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
 }
 
 .thumbnailImage {
@@ -69,12 +138,22 @@
   height: 100%;
   border-radius: var(--radius-sm);
   object-fit: cover;
+  opacity: 0.6;
+  transition: opacity var(--transition-base);
 }
 
-.thumbnailMore::after {
-  content: attr(data-count);
+.thumbnailSelected .thumbnailImage,
+.thumbnailButton:hover .thumbnailImage {
+  opacity: 1;
+}
+
+.more {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--size-gallery-thumb);
+  height: var(--size-gallery-thumb);
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
