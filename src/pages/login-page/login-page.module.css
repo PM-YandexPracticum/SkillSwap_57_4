@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.title {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  text-align: center;
+}
+
+.registerLink {
+  display: block;
+  text-align: center;
+  color: var(--color-link);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+}
+
+.registerLink:hover {
+  text-decoration: underline;
+}
+
+.registerLink:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}

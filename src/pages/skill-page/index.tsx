@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { generatePath, useNavigate, useParams } from 'react-router-dom'
+import { generatePath, useLocation, useNavigate, useParams } from 'react-router-dom'
+
+import { selectUser } from '@/entities/session'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
@@ -35,6 +37,8 @@ export default function SkillPage() {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+  const sessionUser = useAppSelector(selectUser)
 
   const { id } = useParams<{ id: string }>()
 
@@ -81,8 +85,17 @@ export default function SkillPage() {
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
 
   const toggleLike = (userId: string) => {
+    if (!sessionUser) {
+      navigate(ROUTES.LOGIN, {
+        state: { from: location },
+      })
+      return
+    }
+
     setLikedIds((ids) =>
-      ids.includes(userId) ? ids.filter((item) => item !== userId) : [...ids, userId],
+      ids.includes(userId)
+        ? ids.filter((item) => item !== userId)
+        : [...ids, userId],
     )
   }
 
