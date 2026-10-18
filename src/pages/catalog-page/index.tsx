@@ -23,13 +23,14 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import {
-  countActiveFilters,
   filterUsers,
+  isCatalogFiltered,
   selectCatalogFilters,
   setFilters,
   type CatalogFilters,
 } from '@/features/catalog-filters'
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
+import { selectSearch } from '@/features/catalog-search'
 
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
@@ -38,6 +39,7 @@ import { CardsSection } from '@/widgets/cards-section'
 import { ChevronDownIcon, ChevronRightIcon, SortIcon } from '@/shared/assets/icons'
 import { ROUTES } from '@/shared/lib/constants'
 import { shuffle } from '@/shared/lib/helpers'
+import { useDebounce } from '@/shared/hooks/useDebounce'
 
 import styles from './catalog-page.module.css'
 
@@ -46,6 +48,7 @@ const NEWEST_LIMIT = 3
 const RECOMMENDED_STEP = 6
 const EXPANDED_LIMIT = 9
 const LOAD_MORE_DELAY = 500
+const SEARCH_DELAY = 200
 
 type ExpandableSection = 'popular' | 'newest'
 
@@ -84,8 +87,11 @@ export default function CatalogPage() {
   const users = useAppSelector(selectUsers)
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
-  const filters = useAppSelector(selectCatalogFilters)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+
+  const filters = useAppSelector(selectCatalogFilters)
+  const typedSearch = useAppSelector(selectSearch)
+  const search = useDebounce(typedSearch, SEARCH_DELAY)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -140,11 +146,11 @@ export default function CatalogPage() {
     [toCards, shuffledUsers, recommendedCount],
   )
 
-  const isFiltered = countActiveFilters(filters) > 0
+  const isFiltered = isCatalogFiltered(filters, search)
   const resultCards = useMemo(() => {
-    const found = sortByNewest(filterUsers(users, filters))
+    const found = sortByNewest(filterUsers(users, filters, search))
     return toCards(isNewestFirst ? found : found.reverse())
-  }, [toCards, users, filters, isNewestFirst])
+  }, [toCards, users, filters, search, isNewestFirst])
 
   const handleFiltersChange = (value: CatalogFilters) => {
     dispatch(setFilters(value))

@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
 import { ChevronDownIcon, ChevronUpIcon } from '@/shared/assets/icons'
 import { loadSkillCategories, selectSkillCategories } from '@/entities/skill'
+import { selectSearch, setSearch } from '@/features/catalog-search'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useDismiss } from '@/shared/hooks/useDismiss'
@@ -24,11 +25,14 @@ import styles from './header.module.css'
 
 export const Header = ({ user, onLogout }: HeaderProps) => {
   const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const categories = useAppSelector(selectSkillCategories)
+
+  const search = useAppSelector(selectSearch)
+  const isHome = Boolean(useMatch(ROUTES.HOME))
+  const isFavoritesActive = Boolean(useMatch(ROUTES.FAVORITES))
 
   const skillsRef = useRef<HTMLLIElement>(null)
   const skillsTriggerRef = useRef<HTMLButtonElement>(null)
@@ -48,12 +52,16 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
     returnFocusRef: skillsTriggerRef,
   })
 
+  const handleSearchChange = (value: string) => {
+    dispatch(setSearch(value))
+    if (value && !isHome && !isFavoritesActive) navigate(ROUTES.HOME)
+  }
+
   const handleFavoritesClick = () => navigate(ROUTES.FAVORITES)
   const handleProfileClick = () => navigate(ROUTES.PROFILE)
   const handleLoginClick = () => navigate(ROUTES.LOGIN)
   const handleRegisterClick = () => navigate(ROUTES.REGISTER)
 
-  const isFavoritesActive = Boolean(useMatch(ROUTES.FAVORITES))
   const SkillsArrowIcon = isSkillsMenuOpen ? ChevronUpIcon : ChevronDownIcon
 
   return (
@@ -92,7 +100,7 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
         </ul>
       </nav>
 
-      <SearchInput value={searchValue} onChange={setSearchValue} />
+      <SearchInput value={search} onChange={handleSearchChange} />
 
       {user ? (
         <div className={styles.actions}>

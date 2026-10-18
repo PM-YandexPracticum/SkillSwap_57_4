@@ -9,6 +9,7 @@ export {
   FILTER_MODE_OPTIONS,
   FILTER_GENDER_OPTIONS,
   countActiveFilters,
+  isCatalogFiltered,
 } from './model/filters'
 export type { CatalogFilters, FilterMode, FilterGender } from './model/filters'
 export { filterUsers } from './model/filter-users'
