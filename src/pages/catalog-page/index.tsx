@@ -14,6 +14,7 @@ import {
   selectPopularUsers,
   selectUsers,
   selectUsersStatus,
+  sortByNewest,
   toUserCardData,
   UserCard,
   type User,
@@ -21,14 +22,19 @@ import {
 } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
-import { selectCatalogFilters, setFilters } from '@/features/catalog-filters'
-import type { CatalogFilters } from '@/features/catalog-filters'
+import {
+  countActiveFilters,
+  filterUsers,
+  selectCatalogFilters,
+  setFilters,
+  type CatalogFilters,
+} from '@/features/catalog-filters'
 
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
 import { FiltersSidebar } from '@/widgets/filters-sidebar'
 import { CardsSection } from '@/widgets/cards-section'
-import { ChevronDownIcon, ChevronRightIcon } from '@/shared/assets/icons'
+import { ChevronDownIcon, ChevronRightIcon, SortIcon } from '@/shared/assets/icons'
 import { ROUTES } from '@/shared/lib/constants'
 import { shuffle } from '@/shared/lib/helpers'
 
@@ -60,6 +66,7 @@ const ViewAllButton = ({ isExpanded, onClick }: ViewAllButtonProps) => (
 
 export default function CatalogPage() {
   const [likedIds, setLikedIds] = useState<string[]>([])
+  const [isNewestFirst, setIsNewestFirst] = useState<boolean>(true)
   const [expandedSections, setExpandedSections] = useState<Record<ExpandableSection, boolean>>({
     popular: false,
     newest: false,
@@ -111,8 +118,7 @@ export default function CatalogPage() {
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
 
   const toCards = useCallback(
-    (list: User[], limit: number) =>
-      list.slice(0, limit).map((user) => toUserCardData(user, categories, cities)),
+    (list: User[]) => list.map((user) => toUserCardData(user, categories, cities)),
     [categories, cities],
   )
 
@@ -120,17 +126,23 @@ export default function CatalogPage() {
   const newestLimit = expandedSections.newest ? EXPANDED_LIMIT : NEWEST_LIMIT
 
   const popularCards = useMemo(
-    () => toCards(popularUsers, popularLimit),
+    () => toCards(popularUsers.slice(0, popularLimit)),
     [toCards, popularUsers, popularLimit],
   )
   const newestCards = useMemo(
-    () => toCards(newestUsers, newestLimit),
+    () => toCards(newestUsers.slice(0, newestLimit)),
     [toCards, newestUsers, newestLimit],
   )
   const recommendedCards = useMemo(
-    () => toCards(shuffledUsers, recommendedCount),
+    () => toCards(shuffledUsers.slice(0, recommendedCount)),
     [toCards, shuffledUsers, recommendedCount],
   )
+
+  const isFiltered = countActiveFilters(filters) > 0
+  const resultCards = useMemo(() => {
+    const found = sortByNewest(filterUsers(users, filters))
+    return toCards(isNewestFirst ? found : found.reverse())
+  }, [toCards, users, filters, isNewestFirst])
 
   const handleFiltersChange = (value: CatalogFilters) => {
     dispatch(setFilters(value))
@@ -142,6 +154,8 @@ export default function CatalogPage() {
       [section]: !sections[section],
     }))
   }
+
+  const handleSortToggle = () => setIsNewestFirst((value) => !value)
 
   const toggleLike = (userId: string) => {
     setLikedIds((ids) =>
@@ -162,6 +176,21 @@ export default function CatalogPage() {
       />
     )
   }
+
+  const sortButton = (
+    <Button variant="tertiary" leftIcon={<SortIcon />} onClick={handleSortToggle}>
+      {isNewestFirst ? 'Сначала новые' : 'Сначала старые'}
+    </Button>
+  )
+
+  const renderResults = () =>
+    resultCards.length > 0 ? (
+      <CardsSection title={`Подходящие предложения: ${resultCards.length}`} action={sortButton}>
+        {resultCards.map(renderCard)}
+      </CardsSection>
+    ) : (
+      <p className={styles.empty}>Ничего не найдено</p>
+    )
 
   const renderViewAllButton = (section: ExpandableSection) => (
     <ViewAllButton
@@ -199,20 +228,26 @@ export default function CatalogPage() {
           />
 
           <div className={styles.sections}>
-            <CardsSection title="Популярное" action={renderViewAllButton('popular')}>
-              {popularCards.map(renderCard)}
-            </CardsSection>
+            {isFiltered ? (
+              renderResults()
+            ) : (
+              <>
+                <CardsSection title="Популярное" action={renderViewAllButton('popular')}>
+                  {popularCards.map(renderCard)}
+                </CardsSection>
 
-            <CardsSection title="Новое" action={renderViewAllButton('newest')}>
-              {newestCards.map(renderCard)}
-            </CardsSection>
+                <CardsSection title="Новое" action={renderViewAllButton('newest')}>
+                  {newestCards.map(renderCard)}
+                </CardsSection>
 
-            <CardsSection title="Рекомендуем">{recommendedCards.map(renderCard)}</CardsSection>
+                <CardsSection title="Рекомендуем">{recommendedCards.map(renderCard)}</CardsSection>
 
-            {hasMoreRecommended && (
-              <div ref={sentinelRef} className={styles.sentinel}>
-                {isLoadingMore && <Loader size="m" />}
-              </div>
+                {hasMoreRecommended && (
+                  <div ref={sentinelRef} className={styles.sentinel}>
+                    {isLoadingMore && <Loader size="m" />}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
