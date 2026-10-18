@@ -6,6 +6,7 @@ import { skillCategoriesReducer } from '@/entities/skill'
 import { sessionReducer } from '@/entities/session'
 import { favoritesReducer, saveFavorites } from '@/features/favorites'
 import { catalogFiltersReducer } from '@/features/catalog-filters'
+import { catalogSearchReducer } from '@/features/catalog-search'
 
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   favorites: favoritesReducer,
   catalogFilters: catalogFiltersReducer,
+  catalogSearch: catalogSearchReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

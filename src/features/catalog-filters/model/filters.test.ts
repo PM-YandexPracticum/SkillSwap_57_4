@@ -1,5 +1,10 @@
 import { describe, expect, test } from 'vitest'
-import { countActiveFilters, DEFAULT_FILTERS, type CatalogFilters } from './filters'
+import {
+  countActiveFilters,
+  DEFAULT_FILTERS,
+  isCatalogFiltered,
+  type CatalogFilters,
+} from './filters'
 
 const withFilters = (added: Partial<CatalogFilters>): CatalogFilters => ({
   ...DEFAULT_FILTERS,
@@ -42,5 +47,23 @@ describe('[countActiveFilters]', () => {
     }
 
     expect(countActiveFilters(filters)).toBe(7)
+  })
+})
+
+describe('[isCatalogFiltered]', () => {
+  test('без фильтров и поиска - false', () => {
+    expect(isCatalogFiltered(DEFAULT_FILTERS, '')).toBe(false)
+  })
+
+  test('поиск из одних пробелов не считается', () => {
+    expect(isCatalogFiltered(DEFAULT_FILTERS, '   ')).toBe(false)
+  })
+
+  test('есть поиск - true', () => {
+    expect(isCatalogFiltered(DEFAULT_FILTERS, 'англ')).toBe(true)
+  })
+
+  test('выбран фильтр - true, даже без поиска', () => {
+    expect(isCatalogFiltered(withFilters({ cityIds: ['moscow'] }), '')).toBe(true)
   })
 })

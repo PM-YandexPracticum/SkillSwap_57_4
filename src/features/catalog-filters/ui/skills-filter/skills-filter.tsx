@@ -1,9 +1,11 @@
-import { useState } from 'react'
 import { CategoryItem } from '@/shared/ui/category-item'
 import { CheckboxItem } from '@/shared/ui/checkbox-item'
 import { ExpandButton } from '@/shared/ui/expand-button'
 import type { CheckboxState } from '@/shared/ui/checkbox'
 import type { SkillCategory, SkillCategoryId } from '@/shared/types'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectOpenedCategoryIds, selectShowAllCategories } from '../../model/selectors'
+import { toggleCategoryOpened, toggleShowAllCategories } from '../../model/catalog-filters-slice'
 import type { SkillsFilterProps } from './types'
 import styles from './skills-filter.module.css'
 
@@ -23,13 +25,14 @@ export const SkillsFilter = ({
   onChange,
   visibleCount = 6,
 }: SkillsFilterProps) => {
-  const [openedIds, setOpenedIds] = useState<SkillCategoryId[]>([])
-  const [showAll, setShowAll] = useState(false)
+  const dispatch = useAppDispatch()
+  const openedIds = useAppSelector(selectOpenedCategoryIds)
+  const showAll = useAppSelector(selectShowAllCategories)
 
   const visibleCategories = showAll ? categories : categories.slice(0, visibleCount)
 
   const toggleOpened = (id: SkillCategoryId) => {
-    setOpenedIds((ids) => (ids.includes(id) ? ids.filter((item) => item !== id) : [...ids, id]))
+    dispatch(toggleCategoryOpened(id))
   }
 
   const toggleCategory = (category: SkillCategory, checked: boolean) => {
@@ -85,7 +88,7 @@ export const SkillsFilter = ({
         <ExpandButton
           label="Все категории"
           opened={showAll}
-          onToggle={() => setShowAll((previous) => !previous)}
+          onToggle={() => dispatch(toggleShowAllCategories())}
         />
       )}
     </div>
