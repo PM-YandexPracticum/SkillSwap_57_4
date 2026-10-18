@@ -75,6 +75,7 @@
   --space-card-inline: 52px;
 
   /* Borders */
+  --radius-xs: 8px;
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 100px;
@@ -111,6 +112,8 @@
   --size-skill-check-info: 420px; /* левая колонка SkillDetails в окне проверки при регистрации */
   --size-upload-preview: 72px; /* превью фото навыка в ImageDropZone */
   --size-upload-preview-remove: 20px; /* кнопка удаления на превью */
+  --size-registration-step: 60px;
+  --size-registration-step-height: 4px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
