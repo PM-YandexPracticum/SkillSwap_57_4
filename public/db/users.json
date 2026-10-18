@@ -127,12 +127,7 @@
       "description": "Расскажу, как выровнять стены, поклеить обои и заменить смеситель без вызова мастера.",
       "categoryId": "home",
       "subcategoryId": "repair",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-2.jpg"]
     },
     "learnSkills": ["english"],
     "createdAt": "2026-01-25T09:30:00.000Z"
@@ -181,12 +176,7 @@
       "description": "Составим понятный бюджет, настроим учёт расходов и разберёмся, как откладывать на цели без жёсткой экономии.",
       "categoryId": "home",
       "subcategoryId": "home-finance",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-7.jpg", "/db/images/placeholder-6.jpg"]
     },
     "learnSkills": ["photography", "music-sound"],
     "createdAt": "2025-11-12T12:10:00.000Z"
@@ -267,8 +257,7 @@
       "images": [
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
+        "/db/images/placeholder-7.jpg"
       ]
     },
     "learnSkills": ["japanese"],
@@ -318,12 +307,7 @@
       "description": "Подберём растения под ваш подоконник, разберёмся с поливом, пересадкой и лечением от вредителей.",
       "categoryId": "home",
       "subcategoryId": "houseplants",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-1.jpg"]
     },
     "learnSkills": ["decor-diy", "storage"],
     "createdAt": "2025-03-27T11:00:00.000Z"
@@ -373,9 +357,8 @@
       "categoryId": "creativity",
       "subcategoryId": "video-editing",
       "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
         "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-5.jpg",
         "/db/images/placeholder-4.jpg"
       ]
     },
@@ -399,12 +382,7 @@
       "description": "Подготовлю к деловой переписке, созвонам и собеседованиям на немецком языке.",
       "categoryId": "languages",
       "subcategoryId": "german",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-3.jpg", "/db/images/placeholder-5.jpg"]
     },
     "learnSkills": ["repair", "time-management"],
     "createdAt": "2025-09-29T17:25:00.000Z"

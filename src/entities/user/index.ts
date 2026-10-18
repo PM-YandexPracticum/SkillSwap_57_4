@@ -14,6 +14,7 @@ export {
 // ─── Lib ─────────────────────────────────────────────────
 export { toUserCardData } from './lib/to-user-card-data'
 export { sortByNewest } from './lib/sort-by-newest'
+export { getSimilarUsers } from './lib/get-similar-users'
 
 // ─── UI ──────────────────────────────────────────────────
 export { UserInfo } from './ui/user-info/user-info'

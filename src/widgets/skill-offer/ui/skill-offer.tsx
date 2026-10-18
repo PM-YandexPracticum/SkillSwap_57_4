@@ -28,6 +28,7 @@ export const SkillOffer = ({
       </div>
 
       <SkillDetails
+        className={styles.details}
         title={title}
         categoryName={categoryName}
         subcategoryName={subcategoryName}
