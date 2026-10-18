@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -18,6 +18,7 @@ import {
   UserCard,
   type UserCardData,
 } from '@/entities/user'
+import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
 import { ErrorState } from '@/widgets/error-state'
 import { SkillOffer } from '@/widgets/skill-offer'
 import { CardsSection } from '@/widgets/cards-section'
@@ -31,10 +32,9 @@ import styles from './skill-page.module.css'
 const SIMILAR_LIMIT = 4
 
 export default function SkillPage() {
-  const [likedIds, setLikedIds] = useState<string[]>([])
-
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const toggleLike = useToggleFavorite()
 
   const { id } = useParams<{ id: string }>()
 
@@ -42,6 +42,7 @@ export default function SkillPage() {
   const author = useAppSelector((state) => selectUserBySkillId(state, id ?? ''))
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
+  const favoriteIds = useAppSelector(selectFavoriteIds)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -80,12 +81,6 @@ export default function SkillPage() {
   const isFailed = statuses.includes('failed')
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
 
-  const toggleLike = (userId: string) => {
-    setLikedIds((ids) =>
-      ids.includes(userId) ? ids.filter((item) => item !== userId) : [...ids, userId],
-    )
-  }
-
   if (isLoading) {
     return (
       <div className={styles.state}>
@@ -110,10 +105,10 @@ export default function SkillPage() {
   const { teachSkill: skill } = author
   const authorCard = toUserCardData(author, categories, cities)
   const found = findSubcategory(skill.subcategoryId, categories)
-  const isLiked = likedIds.includes(author.id)
+  const isLiked = favoriteIds.includes(author.id)
 
   const renderSimilarCard = (card: UserCardData) => {
-    const isLiked = likedIds.includes(card.id)
+    const isLiked = favoriteIds.includes(card.id)
 
     return (
       <UserCard
