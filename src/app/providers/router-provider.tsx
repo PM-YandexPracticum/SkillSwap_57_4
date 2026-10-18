@@ -13,8 +13,19 @@ const ProfilePage = lazy(() => import('@/pages/profile-page'))
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'))
 const CreateSkillPage = lazy(() => import('@/pages/create-skill-page'))
 const LoginPage = lazy(() => import('@/pages/login-page'))
+const RegisterPage = lazy(() => import('@/pages/register-page'))
 const NotFoundPage = lazy(() => import('@/pages/not-found-page'))
 const ServerErrorPage = lazy(() => import('@/pages/server-error-page'))
+
+const AccountStep = lazy(() =>
+  import('@/features/registration').then((module) => ({ default: module.AccountStep })),
+)
+const UserStep = lazy(() =>
+  import('@/features/registration').then((module) => ({ default: module.UserStep })),
+)
+const SkillStep = lazy(() =>
+  import('@/features/registration').then((module) => ({ default: module.SkillStep })),
+)
 
 export function AppRouter() {
   return (
@@ -66,10 +77,14 @@ export function AppRouter() {
               path={ROUTES.REGISTER}
               element={
                 <ProtectedRoute onlyUnAuth>
-                  <LoginPage />
+                  <RegisterPage />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route path={ROUTES.REGISTER_ACCOUNT} element={<AccountStep />} />
+              <Route path={ROUTES.REGISTER_USER} element={<UserStep />} />
+              <Route path={ROUTES.REGISTER_SKILL} element={<SkillStep />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>
