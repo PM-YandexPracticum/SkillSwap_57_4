@@ -18,6 +18,8 @@ import { ThemeToggleButton } from '@/features/theme-toggle'
 import { SkillsMenu } from '../skills-menu'
 import { FavoritesButton } from '../favorites-button'
 import { UserMenu } from '../user-menu'
+import { findSubcategory } from '@/shared/lib/skills'
+import { selectSubcategory } from '@/features/catalog-filters'
 
 import type { HeaderProps } from './types'
 
@@ -57,6 +59,15 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
     if (value && !isHome && !isFavoritesActive) navigate(ROUTES.HOME)
   }
 
+  const handleSkillSelect = (subcategoryId: string) => {
+    const found = findSubcategory(subcategoryId, categories)
+    if (found) dispatch(selectSubcategory({ categoryId: found.category.id, subcategoryId }))
+    dispatch(setSearch(''))
+    closeSkillsMenu()
+    skillsTriggerRef.current?.focus()
+    navigate(ROUTES.HOME)
+  }
+
   const handleFavoritesClick = () => navigate(ROUTES.FAVORITES)
   const handleProfileClick = () => navigate(ROUTES.PROFILE)
   const handleLoginClick = () => navigate(ROUTES.LOGIN)
@@ -93,7 +104,7 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
                 id={skillsMenuId}
                 className={styles.skillsMenu}
                 categories={categories}
-                onSelect={closeSkillsMenu}
+                onSelect={handleSkillSelect}
               />
             )}
           </li>

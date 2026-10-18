@@ -4,6 +4,7 @@ import { describe, expect, test } from 'vitest'
 import {
   catalogFiltersReducer,
   resetFilters,
+  selectSubcategory,
   setFilters,
   toggleCategoryOpened,
   toggleShowAllCategories,
@@ -109,5 +110,31 @@ describe('[catalogFiltersSlice]', () => {
     expect(opened.showAllCities).toBe(true)
     expect(closed.showAllCities).toBe(false)
     expect(opened.showAllCategories).toBe(false)
+  })
+
+  describe('selectSubcategory', () => {
+    const ENGLISH = { categoryId: 'languages', subcategoryId: 'english' } as const
+    const PHOTOGRAPHY = { categoryId: 'creativity', subcategoryId: 'photography' } as const
+
+    test('выбрана только эта подкатегория, остальные фильтры сброшены', () => {
+      const state = applyActions(setFilters(CUSTOM_FILTERS), selectSubcategory(ENGLISH))
+      expect(state.filters).toEqual({ ...DEFAULT_FILTERS, subcategoryIds: ['english'] })
+    })
+
+    test('раскрыта только её категория, остальные свёрнуты', () => {
+      const opened = withOpenedSidebar()
+      const state = catalogFiltersReducer(opened, selectSubcategory(ENGLISH))
+
+      expect(state.openedCategoryIds).toEqual(['languages'])
+      expect(state.showAllCategories).toBe(true)
+      expect(state.showAllCities).toBe(true)
+    })
+
+    test('следующий выбор из другой категории сворачивает прошлую', () => {
+      const state = applyActions(selectSubcategory(ENGLISH), selectSubcategory(PHOTOGRAPHY))
+
+      expect(state.filters.subcategoryIds).toEqual(['photography'])
+      expect(state.openedCategoryIds).toEqual(['creativity'])
+    })
   })
 })

@@ -38,6 +38,14 @@ const catalogFiltersSlice = createSlice({
     toggleShowAllCities: (state) => {
       state.showAllCities = !state.showAllCities
     },
+    selectSubcategory: (
+      state,
+      action: PayloadAction<{ categoryId: SkillCategoryId; subcategoryId: string }>,
+    ) => {
+      const { categoryId, subcategoryId } = action.payload
+      state.filters = { ...DEFAULT_FILTERS, subcategoryIds: [subcategoryId] }
+      state.openedCategoryIds = [categoryId]
+    },
   },
 })
 
@@ -47,5 +55,6 @@ export const {
   toggleCategoryOpened,
   toggleShowAllCategories,
   toggleShowAllCities,
+  selectSubcategory,
 } = catalogFiltersSlice.actions
 export const catalogFiltersReducer = catalogFiltersSlice.reducer
