@@ -29,6 +29,7 @@ import {
   setFilters,
   type CatalogFilters,
 } from '@/features/catalog-filters'
+import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
 
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
@@ -65,7 +66,6 @@ const ViewAllButton = ({ isExpanded, onClick }: ViewAllButtonProps) => (
 )
 
 export default function CatalogPage() {
-  const [likedIds, setLikedIds] = useState<string[]>([])
   const [isNewestFirst, setIsNewestFirst] = useState<boolean>(true)
   const [expandedSections, setExpandedSections] = useState<Record<ExpandableSection, boolean>>({
     popular: false,
@@ -77,6 +77,7 @@ export default function CatalogPage() {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const toggleLike = useToggleFavorite()
 
   const popularUsers = useAppSelector(selectPopularUsers)
   const newestUsers = useAppSelector(selectNewestUsers)
@@ -84,6 +85,7 @@ export default function CatalogPage() {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const filters = useAppSelector(selectCatalogFilters)
+  const favoriteIds = useAppSelector(selectFavoriteIds)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -157,14 +159,8 @@ export default function CatalogPage() {
 
   const handleSortToggle = () => setIsNewestFirst((value) => !value)
 
-  const toggleLike = (userId: string) => {
-    setLikedIds((ids) =>
-      ids.includes(userId) ? ids.filter((id) => id !== userId) : [...ids, userId],
-    )
-  }
-
   const renderCard = (card: UserCardData) => {
-    const isLiked = likedIds.includes(card.id)
+    const isLiked = favoriteIds.includes(card.id)
 
     return (
       <UserCard
