@@ -1,7 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
 import { catalogFiltersReducer, resetFilters, setFilters } from './catalog-filters-slice'
-import type { CatalogFiltersState } from './catalog-filters-slice'
 import { DEFAULT_FILTERS } from './filters'
 import type { CatalogFilters } from './filters'
 
@@ -12,38 +11,37 @@ const CUSTOM_FILTERS: CatalogFilters = {
   cityIds: ['moscow'],
 }
 
+const OTHER_FILTERS: CatalogFilters = {
+  mode: 'teach',
+  subcategoryIds: ['german'],
+  gender: 'male',
+  cityIds: ['kazan', 'perm'],
+}
+
+const withFilters = (filters: CatalogFilters) =>
+  catalogFiltersReducer(undefined, setFilters(filters))
+
 describe('[catalogFiltersSlice]', () => {
   test('начальное состояние - фильтры по умолчанию', () => {
     const state = catalogFiltersReducer(undefined, { type: 'unknown' })
-    expect(state).toEqual({ filters: DEFAULT_FILTERS })
+    expect(state.filters).toEqual(DEFAULT_FILTERS)
   })
 
   describe('setFilters', () => {
     test('заменяет фильтры целиком', () => {
-      const previous: CatalogFiltersState = {
-        filters: {
-          mode: 'teach',
-          subcategoryIds: ['german'],
-          gender: 'male',
-          cityIds: ['kazan', 'perm'],
-        },
-      }
-
-      const state = catalogFiltersReducer(previous, setFilters(CUSTOM_FILTERS))
+      const state = catalogFiltersReducer(withFilters(OTHER_FILTERS), setFilters(CUSTOM_FILTERS))
       expect(state.filters).toEqual(CUSTOM_FILTERS)
     })
 
-    test('с пустыми списками не сохраняет прежние значения', () => {
-      const previous: CatalogFiltersState = { filters: CUSTOM_FILTERS }
-      const state = catalogFiltersReducer(previous, setFilters(DEFAULT_FILTERS))
+    test('фильтры по умолчанию снимают весь выбор', () => {
+      const state = catalogFiltersReducer(withFilters(CUSTOM_FILTERS), setFilters(DEFAULT_FILTERS))
       expect(state.filters).toEqual(DEFAULT_FILTERS)
     })
   })
 
   describe('resetFilters', () => {
     test('возвращает DEFAULT_FILTERS', () => {
-      const previous: CatalogFiltersState = { filters: CUSTOM_FILTERS }
-      const state = catalogFiltersReducer(previous, resetFilters())
+      const state = catalogFiltersReducer(withFilters(CUSTOM_FILTERS), resetFilters())
       expect(state.filters).toEqual(DEFAULT_FILTERS)
     })
 
