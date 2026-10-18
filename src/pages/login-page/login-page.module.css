@@ -10,12 +10,15 @@
   text-align: center;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
 .registerLink {
-  display: block;
-  text-align: center;
+  align-self: center;
   color: var(--color-link);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-regular);
 }
 
 .registerLink:hover {

@@ -12,23 +12,18 @@ export default function LoginPage() {
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Вход</h1>
-
       <AuthFrame
         illustration={<LightBulbIcon />}
         title="С возвращением в SkillSwap!"
         text="Обменивайтесь знаниями и навыками с другими людьми"
       >
         <SocialAuth />
-
-        <LoginForm />
-
-        <Link
-          to={ROUTES.REGISTER}
-          replace
-          className={styles.registerLink}
-        >
-          Зарегистрироваться
-        </Link>
+        <div className={styles.form}>
+          <LoginForm />
+          <Link to={ROUTES.REGISTER} replace className={styles.registerLink}>
+            Зарегистрироваться
+          </Link>
+        </div>
       </AuthFrame>
     </div>
   )
