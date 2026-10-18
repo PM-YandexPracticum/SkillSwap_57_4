@@ -21,7 +21,7 @@ import {
 } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
-import { DEFAULT_FILTERS } from '@/features/catalog-filters'
+import { selectCatalogFilters, setFilters } from '@/features/catalog-filters'
 import type { CatalogFilters } from '@/features/catalog-filters'
 
 import { Button } from '@/shared/ui/button'
@@ -59,7 +59,6 @@ const ViewAllButton = ({ isExpanded, onClick }: ViewAllButtonProps) => (
 )
 
 export default function CatalogPage() {
-  const [filters, setFilters] = useState<CatalogFilters>(DEFAULT_FILTERS)
   const [likedIds, setLikedIds] = useState<string[]>([])
   const [expandedSections, setExpandedSections] = useState<Record<ExpandableSection, boolean>>({
     popular: false,
@@ -77,6 +76,7 @@ export default function CatalogPage() {
   const users = useAppSelector(selectUsers)
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
+  const filters = useAppSelector(selectCatalogFilters)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -131,6 +131,10 @@ export default function CatalogPage() {
     () => toCards(shuffledUsers, recommendedCount),
     [toCards, shuffledUsers, recommendedCount],
   )
+
+  const handleFiltersChange = (value: CatalogFilters) => {
+    dispatch(setFilters(value))
+  }
 
   const handleToggleSection = (section: ExpandableSection) => {
     setExpandedSections((sections) => ({
@@ -189,7 +193,7 @@ export default function CatalogPage() {
         <div className={styles.layout}>
           <FiltersSidebar
             value={filters}
-            onChange={setFilters}
+            onChange={handleFiltersChange}
             categories={categories}
             cities={cities}
           />
