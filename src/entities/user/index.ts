@@ -13,6 +13,7 @@ export {
 
 // ─── Lib ─────────────────────────────────────────────────
 export { toUserCardData } from './lib/to-user-card-data'
+export { sortByNewest } from './lib/sort-by-newest'
 
 // ─── UI ──────────────────────────────────────────────────
 export { UserInfo } from './ui/user-info/user-info'
