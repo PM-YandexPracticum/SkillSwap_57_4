@@ -10,6 +10,7 @@ import {
   selectSkillCategoriesStatus,
 } from '@/entities/skill'
 import {
+  getSimilarUsers,
   loadUsers,
   selectUserBySkillId,
   selectUsers,
@@ -36,10 +37,10 @@ export default function SkillPage() {
   const navigate = useNavigate()
   const toggleLike = useToggleFavorite()
 
-  const { id } = useParams<{ id: string }>()
+  const { id = '' } = useParams<{ id: string }>()
 
   const users = useAppSelector(selectUsers)
-  const author = useAppSelector((state) => selectUserBySkillId(state, id ?? ''))
+  const author = useAppSelector((state) => selectUserBySkillId(state, id))
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
@@ -67,12 +68,7 @@ export default function SkillPage() {
   const similarCards = useMemo(() => {
     if (!author) return []
 
-    return users
-      .filter(
-        (user) =>
-          user.id !== author.id &&
-          user.teachSkill.subcategoryId === author.teachSkill.subcategoryId,
-      )
+    return getSimilarUsers(users, author)
       .slice(0, SIMILAR_LIMIT)
       .map((user) => toUserCardData(user, categories, cities))
   }, [author, users, categories, cities])
@@ -105,7 +101,7 @@ export default function SkillPage() {
   const { teachSkill: skill } = author
   const authorCard = toUserCardData(author, categories, cities)
   const found = findSubcategory(skill.subcategoryId, categories)
-  const isLiked = favoriteIds.includes(author.id)
+  const isAuthorLiked = favoriteIds.includes(author.id)
 
   const renderSimilarCard = (card: UserCardData) => {
     const isLiked = favoriteIds.includes(card.id)
@@ -133,8 +129,8 @@ export default function SkillPage() {
           categoryName={found?.category.name ?? ''}
           subcategoryName={found?.subcategory.name ?? ''}
           images={skill.images}
-          likesCount={author.likesCount + (isLiked ? 1 : 0)}
-          isLiked={isLiked}
+          likesCount={author.likesCount + (isAuthorLiked ? 1 : 0)}
+          isLiked={isAuthorLiked}
           onLikeToggle={() => toggleLike(author.id)}
         />
       </div>

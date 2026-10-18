@@ -3,9 +3,11 @@ import { NavLink, useMatch, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
 import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
+import { findSubcategory } from '@/shared/lib/skills'
 import { ChevronDownIcon, ChevronUpIcon } from '@/shared/assets/icons'
 import { loadSkillCategories, selectSkillCategories } from '@/entities/skill'
 import { selectSearch, setSearch } from '@/features/catalog-search'
+import { selectSubcategory } from '@/features/catalog-filters'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useDismiss } from '@/shared/hooks/useDismiss'
@@ -18,8 +20,6 @@ import { ThemeToggleButton } from '@/features/theme-toggle'
 import { SkillsMenu } from '../skills-menu'
 import { FavoritesButton } from '../favorites-button'
 import { UserMenu } from '../user-menu'
-import { findSubcategory } from '@/shared/lib/skills'
-import { selectSubcategory } from '@/features/catalog-filters'
 
 import type { HeaderProps } from './types'
 
