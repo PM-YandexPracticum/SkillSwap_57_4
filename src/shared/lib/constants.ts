@@ -6,6 +6,9 @@ export const ROUTES = {
   CREATE: '/create',
   LOGIN: '/login',
   REGISTER: '/register',
+  REGISTER_ACCOUNT: '/register/account',
+  REGISTER_USER: '/register/user',
+  REGISTER_SKILL: '/register/skill',
   SERVER_ERROR: '/500',
 } as const
 
@@ -35,4 +38,8 @@ export const LOCAL_STORAGE_KEYS = {
   FAVORITES: 'skillswap_favorites',
   REQUESTS: 'skillswap_requests',
   THEME: 'skillswap_theme',
+} as const
+
+export const SESSION_STORAGE_KEYS = {
+  REGISTRATION_DRAFT: 'skillswap_registration_draft',
 } as const
