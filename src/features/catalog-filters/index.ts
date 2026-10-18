@@ -12,3 +12,6 @@ export {
 } from './model/filters'
 export type { CatalogFilters, FilterMode, FilterGender } from './model/filters'
 export { filterUsers } from './model/filter-users'
+
+export { catalogFiltersReducer, setFilters, resetFilters } from './model/catalog-filters-slice'
+export { selectCatalogFilters } from './model/selectors'
