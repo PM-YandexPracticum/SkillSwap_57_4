@@ -4,7 +4,8 @@ import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 const BASE_URL = '/db'
 const ACCOUNT_NOT_FOUND_ERROR = 'Аккаунт не найден'
 
-export const LOGIN_ERROR = 'Email или пароль введён неверно'
+export const LOGIN_ERROR =
+  'Email или пароль введён неверно. Пожалуйста, проверьте правильность введённых данных'
 export const EMAIL_TAKEN_ERROR = 'Этот email уже зарегистрирован'
 
 interface Account {
