@@ -34,6 +34,7 @@
 
 .modal {
   width: var(--size-message-modal);
+  padding-block: var(--space-message-modal-block);
 }
 
 .modalText {
