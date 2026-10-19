@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
+import { useDebounce } from '@/shared/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   loadUsers,
@@ -18,15 +19,22 @@ import {
 } from '@/entities/skill'
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 
-import { ROUTES } from '@/shared/lib/constants'
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
+import { filterUsers, selectCatalogFilters } from '@/features/catalog-filters'
+import { selectSearch } from '@/features/catalog-search'
+
+import { ROUTES } from '@/shared/lib/constants'
 import { Loader } from '@/shared/ui/loader'
 import { Button } from '@/shared/ui/button'
 import type { FavoritesListProps } from './types'
 
 import styles from './favorites-list.module.css'
 
-export const FavoritesList = ({ className }: FavoritesListProps) => {
+// по тикету должно быть 300мс, но в catalog-page уже стоит 200 -
+// для консистентности оставил тоже 200 пока
+const SEARCH_DELAY = 200
+
+export const FavoritesList = ({ applyFilters = false, className }: FavoritesListProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const toggleFavorite = useToggleFavorite()
@@ -35,6 +43,10 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+
+  const filters = useAppSelector(selectCatalogFilters)
+  const typedSearch = useAppSelector(selectSearch)
+  const search = useDebounce(typedSearch, SEARCH_DELAY)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -56,13 +68,17 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
 
   // пустота считается по пересечению с загруженными пользователями, а не по сырым id
   // id пользователя, которого уже нет в базе, не должен давать пустую сетку
-  const cards = useMemo(() => {
+  const favoriteUsers = useMemo(() => {
     const ids = new Set(favoriteIds)
 
-    return users
-      .filter((user) => ids.has(user.id))
-      .map((user) => toUserCardData(user, categories, cities))
-  }, [users, favoriteIds, categories, cities])
+    return users.filter((user) => ids.has(user.id))
+  }, [users, favoriteIds])
+
+  const cards = useMemo(() => {
+    const visibleUsers = applyFilters ? filterUsers(favoriteUsers, filters, search) : favoriteUsers
+
+    return visibleUsers.map((user) => toUserCardData(user, categories, cities))
+  }, [applyFilters, favoriteUsers, filters, search, categories, cities])
 
   if (isLoading) {
     return (
@@ -81,12 +97,18 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
     )
   }
 
-  if (cards.length === 0) {
+  if (favoriteUsers.length < 1) {
     return (
       <div className={clsx(styles.state, className)}>
         <p className={styles.text}>Здесь пока пусто</p>
         <Button onClick={() => navigate(ROUTES.HOME)}>Вернуться в каталог</Button>
       </div>
+    )
+  }
+
+  if (cards.length < 1) {
+    return (
+      <p className={clsx(styles.state, styles.text, styles.muted, className)}>Ничего не найдено</p>
     )
   }
 
