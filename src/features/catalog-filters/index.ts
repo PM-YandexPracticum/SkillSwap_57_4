@@ -21,3 +21,5 @@ export {
   selectSubcategory,
 } from './model/catalog-filters-slice'
 export { selectCatalogFilters } from './model/selectors'
+
+export { getFilterChips, type FilterChip } from './model/filter-chips'
