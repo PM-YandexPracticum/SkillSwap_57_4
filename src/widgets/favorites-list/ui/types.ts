@@ -1,4 +1,6 @@
+import type { CatalogFilters } from '@/features/catalog-filters'
+
 export interface FavoritesListProps {
-  applyFilters?: boolean
+  filters?: CatalogFilters
   className?: string
 }

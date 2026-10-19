@@ -20,7 +20,7 @@ import {
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
-import { filterUsers, selectCatalogFilters } from '@/features/catalog-filters'
+import { filterUsers } from '@/features/catalog-filters'
 import { selectSearch } from '@/features/catalog-search'
 
 import { ROUTES } from '@/shared/lib/constants'
@@ -32,7 +32,7 @@ import styles from './favorites-list.module.css'
 
 const SEARCH_DELAY = 200
 
-export const FavoritesList = ({ applyFilters = false, className }: FavoritesListProps) => {
+export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const toggleFavorite = useToggleFavorite()
@@ -42,7 +42,6 @@ export const FavoritesList = ({ applyFilters = false, className }: FavoritesList
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
 
-  const filters = useAppSelector(selectCatalogFilters)
   const typedSearch = useAppSelector(selectSearch)
   const search = useDebounce(typedSearch, SEARCH_DELAY)
 
@@ -73,10 +72,10 @@ export const FavoritesList = ({ applyFilters = false, className }: FavoritesList
   }, [users, favoriteIds])
 
   const cards = useMemo(() => {
-    const visibleUsers = applyFilters ? filterUsers(favoriteUsers, filters, search) : favoriteUsers
+    const visibleUsers = filters ? filterUsers(favoriteUsers, filters, search) : favoriteUsers
 
     return visibleUsers.map((user) => toUserCardData(user, categories, cities))
-  }, [applyFilters, favoriteUsers, filters, search, categories, cities])
+  }, [favoriteUsers, filters, search, categories, cities])
 
   if (isLoading) {
     return (
