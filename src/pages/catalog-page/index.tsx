@@ -20,6 +20,8 @@ import {
   type User,
   type UserCardData,
 } from '@/entities/user'
+import { selectUser } from '@/entities/session'
+import { selectProposedSkillIds } from '@/entities/request'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import {
@@ -30,8 +32,6 @@ import {
   setFilters,
   type CatalogFilters,
 } from '@/features/catalog-filters'
-import { selectUser } from '@/entities/session'
-import { selectProposedSkillIds } from '@/entities/request'
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
 import { selectSearch } from '@/features/catalog-search'
 
@@ -91,8 +91,8 @@ export default function CatalogPage() {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
-  const me = useAppSelector(selectUser)
-  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, me?.id))
+  const authUser = useAppSelector(selectUser)
+  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
   const filters = useAppSelector(selectCatalogFilters)
   const typedSearch = useAppSelector(selectSearch)

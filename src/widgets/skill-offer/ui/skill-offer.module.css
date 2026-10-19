@@ -17,3 +17,7 @@
 .details {
   margin: auto 0;
 }
+
+.proposed {
+  pointer-events: none;
+}

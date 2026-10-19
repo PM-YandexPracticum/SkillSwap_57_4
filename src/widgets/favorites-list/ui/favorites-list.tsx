@@ -43,8 +43,8 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
-  const me = useAppSelector(selectUser)
-  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, me?.id))
+  const authUser = useAppSelector(selectUser)
+  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
   const typedSearch = useAppSelector(selectSearch)
   const search = useDebounce(typedSearch, SEARCH_DELAY)

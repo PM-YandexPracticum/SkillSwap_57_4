@@ -46,8 +46,8 @@ export default function SkillPage() {
 
   const { id = '' } = useParams<{ id: string }>()
 
-  const me = useAppSelector(selectUser)
-  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, me?.id))
+  const authUser = useAppSelector(selectUser)
+  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
   const users = useAppSelector(selectUsers)
   const author = useAppSelector((state) => selectUserBySkillId(state, id))
@@ -114,14 +114,18 @@ export default function SkillPage() {
   const isAuthorLiked = favoriteIds.includes(author.id)
 
   const handleProposeExchange = () => {
-    if (!me) {
+    if (!authUser) {
       navigate(ROUTES.LOGIN, { state: { from: location } })
       return
     }
 
-    dispatch(addRequest({ skillId: skill.id, fromUserId: me.id, toUserId: author.id }))
+    dispatch(addRequest({ skillId: skill.id, fromUserId: authUser.id, toUserId: author.id }))
     dispatch(
-      addNotification({ userId: me.id, kind: 'sent', title: `Вы предложили обмен ${author.name}` }),
+      addNotification({
+        userId: authUser.id,
+        kind: 'sent',
+        title: `Вы предложили обмен ${author.name}`,
+      }),
     )
     setIsProposalSent(true)
   }
@@ -159,7 +163,7 @@ export default function SkillPage() {
           isLiked={isAuthorLiked}
           onLikeToggle={() => toggleLike(author.id)}
           isExchangeProposed={proposedSkillIds.includes(skill.id)}
-          canProposeExchange={author.id !== me?.id}
+          canProposeExchange={author.id !== authUser?.id}
           onProposeExchange={handleProposeExchange}
         />
       </div>

@@ -1,15 +1,27 @@
-import { beforeEach, describe, expect, test } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
-import { setupStore } from '@/store'
+import { setupStore, store as appStore } from '@/store'
 import { addRequest } from './requests-slice'
 import { selectProposedSkillIds } from './selectors'
-import { loadRequests } from './requests-storage'
+import { loadRequests, saveRequests } from './requests-storage'
 
 const REQUEST = { skillId: 'skill-01', fromUserId: 'user-02', toUserId: 'user-01' }
+
+const SAVED_REQUEST = {
+  ...REQUEST,
+  id: 'request-1',
+  status: 'pending',
+  createdAt: '2026-10-19T10:00:00.000Z',
+  updatedAt: '2026-10-19T10:00:00.000Z',
+}
 
 describe('[слайс заявок]', () => {
   beforeEach(() => {
     localStorage.clear()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   test('addRequest добавляет заявку со статусом pending, id и датами', () => {
@@ -20,6 +32,15 @@ describe('[слайс заявок]', () => {
     expect(request).toMatchObject({ ...REQUEST, status: 'pending' })
     expect(request.id).toEqual(expect.any(String))
     expect(request.createdAt).toBe(request.updatedAt)
+  })
+
+  test('у двух заявок разные id', () => {
+    const store = setupStore()
+    store.dispatch(addRequest(REQUEST))
+    store.dispatch(addRequest(REQUEST))
+
+    const [first, second] = store.getState().requests.items
+    expect(first.id).not.toBe(second.id)
   })
 
   test('новый store читает заявки, сохранённые в localStorage', () => {
@@ -39,6 +60,38 @@ describe('[слайс заявок]', () => {
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.REQUESTS, JSON.stringify([{ id: 1 }]))
     expect(loadRequests()).toEqual([])
+  })
+
+  test.each([
+    ['неизвестный статус', { status: 'unknown' }],
+    ['нет toUserId', { toUserId: undefined }],
+  ])('заявка с ошибкой (%s) - пустой список', (_, change) => {
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.REQUESTS,
+      JSON.stringify([{ ...SAVED_REQUEST, ...change }]),
+    )
+
+    expect(loadRequests()).toEqual([])
+  })
+
+  test('правильная заявка читается как есть', () => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.REQUESTS, JSON.stringify([SAVED_REQUEST]))
+
+    expect(loadRequests()).toEqual([SAVED_REQUEST])
+  })
+
+  test('saveRequests не падает, если записать не удалось', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('QuotaExceededError')
+    })
+
+    expect(() => saveRequests([])).not.toThrow()
+  })
+
+  test('изменения в store приложения сохраняются в localStorage', () => {
+    appStore.dispatch(addRequest(REQUEST))
+
+    expect(loadRequests()).toEqual(appStore.getState().requests.items)
   })
 
   describe('selectProposedSkillIds', () => {

@@ -23,7 +23,7 @@ export const SkillOffer = ({
 }: SkillOfferProps) => {
   // Повторного предложения нет: кнопка остаётся активной, но клик ничего не делает
   const exchangeButton = isExchangeProposed ? (
-    <Button variant="secondary" leftIcon={<ClockIcon />} fullWidth>
+    <Button className={styles.proposed} variant="secondary" leftIcon={<ClockIcon />} fullWidth>
       Обмен предложен
     </Button>
   ) : (
@@ -47,7 +47,7 @@ export const SkillOffer = ({
         subcategoryName={subcategoryName}
         description={description}
         images={images}
-        actions={canProposeExchange ? exchangeButton : undefined}
+        actions={canProposeExchange && exchangeButton}
       />
     </article>
   )
