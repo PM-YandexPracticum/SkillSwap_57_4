@@ -1,0 +1,20 @@
+.layout {
+  display: grid;
+  grid-template-columns: var(--size-sidebar) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/*
+кнопка на других страницах растягивает высоту хедера до 48px
+поэтому чтоб не было скачка - добавил вертикальный паддинг
+*/
+.header {
+  padding-block: var(--space-xxs);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
