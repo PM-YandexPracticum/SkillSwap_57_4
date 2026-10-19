@@ -29,9 +29,7 @@ const NotificationsGroup = ({
   return (
     <section className={styles.group} aria-labelledby={titleId}>
       <div className={styles.groupHeader}>
-        <h2 id={titleId} className={styles.groupTitle}>
-          {title}
-        </h2>
+        <h2 id={titleId}>{title}</h2>
         <button type="button" className={styles.action} onClick={onAction}>
           {actionLabel}
         </button>

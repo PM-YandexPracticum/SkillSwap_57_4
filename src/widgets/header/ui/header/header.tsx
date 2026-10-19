@@ -34,8 +34,8 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const categories = useAppSelector(selectSkillCategories)
-  const sessionUser = useAppSelector(selectUser)
-  const hasUnread = useAppSelector((state) => selectHasUnread(state, sessionUser?.id))
+  const authUser = useAppSelector(selectUser)
+  const hasUnread = useAppSelector((state) => selectHasUnread(state, authUser?.id))
 
   const search = useAppSelector(selectSearch)
   const isHome = Boolean(useMatch(ROUTES.HOME))
