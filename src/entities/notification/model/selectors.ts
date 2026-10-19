@@ -1,15 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
 
-export const selectItems = (state: RootState) => state.notifications.items
-export const selectUserId = (_state: RootState, userId: string) => userId
+const selectItems = (state: RootState) => state.notifications.items
+const selectUserId = (_state: RootState, userId: string | undefined) => userId
 
-export const selectUserNotifications = createSelector(
-  [selectItems, selectUserId],
-  (items, userId) =>
-    items
-      .filter((notification) => notification.userId === userId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+const selectUserNotifications = createSelector([selectItems, selectUserId], (items, userId) =>
+  items
+    .filter((notification) => notification.userId === userId)
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
 )
 
 export const selectUnreadNotifications = createSelector([selectUserNotifications], (items) =>
@@ -20,7 +18,5 @@ export const selectReadNotifications = createSelector([selectUserNotifications],
   items.filter((notification) => notification.isRead),
 )
 
-export const selectHasUnread = createSelector(
-  [selectUnreadNotifications],
-  (notifications) => notifications.length > 0,
-)
+export const selectHasUnread = (state: RootState, userId: string | undefined) =>
+  selectUnreadNotifications(state, userId).length > 0

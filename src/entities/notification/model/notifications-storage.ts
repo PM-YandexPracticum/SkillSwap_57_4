@@ -6,15 +6,7 @@ export interface StoredNotifications {
   seededUserIds: string[]
 }
 
-const EMPTY: StoredNotifications = {
-  items: [],
-  seededUserIds: [],
-}
-
-const createEmptyNotifications = (): StoredNotifications => ({
-  items: [...EMPTY.items],
-  seededUserIds: [...EMPTY.seededUserIds],
-})
+const createEmptyNotifications = (): StoredNotifications => ({ items: [], seededUserIds: [] })
 
 const isNotificationKind = (value: unknown): value is NotificationKind =>
   value === 'incoming' || value === 'sent' || value === 'accepted'
@@ -67,6 +59,6 @@ export const saveNotifications = (notifications: StoredNotifications): void => {
   try {
     localStorage.setItem(LOCAL_STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notifications))
   } catch {
-    return
+    // Хранилище переполнено или недоступно: уведомления останутся до перезагрузки
   }
 }
