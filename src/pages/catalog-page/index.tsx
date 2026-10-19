@@ -188,7 +188,7 @@ export default function CatalogPage() {
 
   const renderResults = () => (
     <>
-      <ActiveFilters />
+      <ActiveFilters className={styles.activeFilters} />
       {resultCards.length > 0 ? (
         <CardsSection title={`Подходящие предложения: ${resultCards.length}`} action={sortButton}>
           {resultCards.map(renderCard)}
