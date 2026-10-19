@@ -10,6 +10,7 @@ import {
   selectSkillCategoriesStatus,
 } from '@/entities/skill'
 import {
+  excludeUser,
   getSimilarUsers,
   loadUsers,
   selectUserBySkillId,
@@ -78,10 +79,12 @@ export default function SkillPage() {
   const similarCards = useMemo(() => {
     if (!author) return []
 
-    return getSimilarUsers(users, author)
+    const similar = excludeUser(getSimilarUsers(users, author), authUser?.id)
+
+    return similar
       .slice(0, SIMILAR_LIMIT)
       .map((user) => toUserCardData(user, categories, cities))
-  }, [author, users, categories, cities])
+  }, [author, users, categories, cities, authUser?.id])
 
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
   const isFailed = statuses.includes('failed')

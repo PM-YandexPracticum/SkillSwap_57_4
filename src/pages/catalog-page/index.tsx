@@ -9,6 +9,7 @@ import {
   selectSkillCategoriesStatus,
 } from '@/entities/skill'
 import {
+  excludeUser,
   loadUsers,
   selectNewestUsers,
   selectPopularUsers,
@@ -102,7 +103,17 @@ export default function CatalogPage() {
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
   const citiesStatus = useAppSelector(selectCitiesStatus)
 
-  const shuffledUsers = useMemo(() => shuffle(users), [users])
+  const otherUsers = useMemo(() => excludeUser(users, authUser?.id), [users, authUser?.id])
+  const otherPopularUsers = useMemo(
+    () => excludeUser(popularUsers, authUser?.id),
+    [popularUsers, authUser?.id],
+  )
+  const otherNewestUsers = useMemo(
+    () => excludeUser(newestUsers, authUser?.id),
+    [newestUsers, authUser?.id],
+  )
+
+  const shuffledUsers = useMemo(() => shuffle(otherUsers), [otherUsers])
   const hasMoreRecommended = recommendedCount < shuffledUsers.length
   const isLoadingMore = inView && hasMoreRecommended
 
@@ -139,12 +150,12 @@ export default function CatalogPage() {
   const newestLimit = expandedSections.newest ? EXPANDED_LIMIT : NEWEST_LIMIT
 
   const popularCards = useMemo(
-    () => toCards(popularUsers.slice(0, popularLimit)),
-    [toCards, popularUsers, popularLimit],
+    () => toCards(otherPopularUsers.slice(0, popularLimit)),
+    [toCards, otherPopularUsers, popularLimit],
   )
   const newestCards = useMemo(
-    () => toCards(newestUsers.slice(0, newestLimit)),
-    [toCards, newestUsers, newestLimit],
+    () => toCards(otherNewestUsers.slice(0, newestLimit)),
+    [toCards, otherNewestUsers, newestLimit],
   )
   const recommendedCards = useMemo(
     () => toCards(shuffledUsers.slice(0, recommendedCount)),
@@ -153,9 +164,9 @@ export default function CatalogPage() {
 
   const isFiltered = isCatalogFiltered(filters, search)
   const resultCards = useMemo(() => {
-    const found = sortByNewest(filterUsers(users, filters, search))
+    const found = sortByNewest(filterUsers(otherUsers, filters, search))
     return toCards(isNewestFirst ? found : found.reverse())
-  }, [toCards, users, filters, search, isNewestFirst])
+  }, [toCards, otherUsers, filters, search, isNewestFirst])
 
   const handleFiltersChange = (value: CatalogFilters) => {
     dispatch(setFilters(value))
