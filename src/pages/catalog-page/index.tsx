@@ -23,6 +23,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import {
+  ActiveFilters,
   filterUsers,
   isCatalogFiltered,
   selectCatalogFilters,
@@ -185,14 +186,18 @@ export default function CatalogPage() {
     </Button>
   )
 
-  const renderResults = () =>
-    resultCards.length > 0 ? (
-      <CardsSection title={`Подходящие предложения: ${resultCards.length}`} action={sortButton}>
-        {resultCards.map(renderCard)}
-      </CardsSection>
-    ) : (
-      <p className={styles.empty}>Ничего не найдено</p>
-    )
+  const renderResults = () => (
+    <>
+      <ActiveFilters />
+      {resultCards.length > 0 ? (
+        <CardsSection title={`Подходящие предложения: ${resultCards.length}`} action={sortButton}>
+          {resultCards.map(renderCard)}
+        </CardsSection>
+      ) : (
+        <p className={styles.empty}>Ничего не найдено</p>
+      )}
+    </>
+  )
 
   const renderViewAllButton = (section: ExpandableSection) => (
     <ViewAllButton
