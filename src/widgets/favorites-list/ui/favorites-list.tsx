@@ -54,6 +54,8 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
   const isFailed = statuses.includes('failed')
   const isLoading = !isFailed && statuses.some((status) => status !== 'succeeded')
 
+  // пустота считается по пересечению с загруженными пользователями, а не по сырым id
+  // id пользователя, которого уже нет в базе, не должен давать пустую сетку
   const cards = useMemo(() => {
     const ids = new Set(favoriteIds)
 
@@ -70,6 +72,24 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
     )
   }
 
+  if (isFailed) {
+    return (
+      <div className={clsx(styles.state, className)} role="alert">
+        <p className={styles.text}>Не удалось загрузить избранное</p>
+        <Button onClick={loadData}>Повторить</Button>
+      </div>
+    )
+  }
+
+  if (cards.length === 0) {
+    return (
+      <div className={clsx(styles.state, className)}>
+        <p className={styles.text}>Здесь пока пусто</p>
+        <Button onClick={() => navigate(ROUTES.HOME)}>Вернуться в каталог</Button>
+      </div>
+    )
+  }
+
   const renderCard = (card: UserCardData) => (
     <UserCard
       key={card.id}
@@ -80,15 +100,6 @@ export const FavoritesList = ({ className }: FavoritesListProps) => {
       onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: card.skillId }))}
     />
   )
-
-  if (isFailed) {
-    return (
-      <div className={clsx(styles.state, className)} role="alert">
-        <p className={styles.text}>Не удалось загрузить избранное</p>
-        <Button onClick={loadData}>Повторить</Button>
-      </div>
-    )
-  }
 
   return <div className={clsx(styles.grid, className)}>{cards.map(renderCard)}</div>
 }
