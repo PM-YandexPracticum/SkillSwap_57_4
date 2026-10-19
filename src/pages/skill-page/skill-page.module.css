@@ -31,3 +31,16 @@
   font-size: var(--font-size-h2);
   line-height: var(--line-height-h2);
 }
+
+.modal {
+  width: var(--size-message-modal);
+}
+
+.modalText {
+  margin-top: var(--space-sm);
+  text-align: center;
+}
+
+.modalButton {
+  margin-top: var(--space-2xl);
+}

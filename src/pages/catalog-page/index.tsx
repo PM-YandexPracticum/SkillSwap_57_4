@@ -30,6 +30,8 @@ import {
   setFilters,
   type CatalogFilters,
 } from '@/features/catalog-filters'
+import { selectUser } from '@/entities/session'
+import { selectProposedSkillIds } from '@/entities/request'
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
 import { selectSearch } from '@/features/catalog-search'
 
@@ -89,6 +91,8 @@ export default function CatalogPage() {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+  const me = useAppSelector(selectUser)
+  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, me?.id))
 
   const filters = useAppSelector(selectCatalogFilters)
   const typedSearch = useAppSelector(selectSearch)
@@ -174,6 +178,7 @@ export default function CatalogPage() {
         key={card.id}
         data={{ ...card, likesCount: card.likesCount + (isLiked ? 1 : 0) }}
         isLiked={isLiked}
+        isExchangeProposed={proposedSkillIds.includes(card.skillId)}
         onLikeToggle={() => toggleLike(card.id)}
         onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: card.skillId }))}
       />
