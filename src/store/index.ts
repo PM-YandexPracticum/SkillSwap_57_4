@@ -4,6 +4,7 @@ import { usersReducer } from '@/entities/user'
 import { citiesReducer } from '@/entities/city'
 import { skillCategoriesReducer } from '@/entities/skill'
 import { sessionReducer } from '@/entities/session'
+import { notificationsReducer, saveNotifications } from '@/entities/notification'
 import { favoritesReducer, saveFavorites } from '@/features/favorites'
 import { catalogFiltersReducer } from '@/features/catalog-filters'
 import { catalogSearchReducer } from '@/features/catalog-search'
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   skillCategories: skillCategoriesReducer,
   session: sessionReducer,
   favorites: favoritesReducer,
+  notifications: notificationsReducer,
   catalogFilters: catalogFiltersReducer,
   catalogSearch: catalogSearchReducer,
 })
@@ -39,6 +41,7 @@ function persist<T>(select: (state: RootState) => T, save: (data: T) => void) {
 }
 
 persist((state) => state.favorites.byUser, saveFavorites)
+persist((state) => state.notifications, saveNotifications)
 
 export type AppStore = ReturnType<typeof setupStore>
 export type AppDispatch = AppStore['dispatch']
