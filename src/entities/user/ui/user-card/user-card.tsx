@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ClockIcon } from '@/shared/assets/icons'
 import { Button } from '@/shared/ui/button'
 import { LikeButton } from '@/shared/ui/like-button'
 import { Tag } from '@/shared/ui/tag'
@@ -15,6 +16,7 @@ export const UserCard = ({
   isLiked = false,
   onLikeToggle,
   onDetailsClick,
+  isExchangeProposed = false,
   className,
 }: UserCardProps) => {
   const isCatalog = variant === 'catalog'
@@ -69,11 +71,22 @@ export const UserCard = ({
         )}
       </dl>
 
-      {isCatalog && (
-        <Button className={styles.details} fullWidth onClick={onDetailsClick}>
-          Подробнее
-        </Button>
-      )}
+      {isCatalog &&
+        (isExchangeProposed ? (
+          <Button
+            className={styles.details}
+            variant="secondary"
+            leftIcon={<ClockIcon />}
+            fullWidth
+            onClick={onDetailsClick}
+          >
+            Обмен предложен
+          </Button>
+        ) : (
+          <Button className={styles.details} fullWidth onClick={onDetailsClick}>
+            Подробнее
+          </Button>
+        ))}
     </article>
   )
 }

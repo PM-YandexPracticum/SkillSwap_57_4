@@ -106,6 +106,8 @@
   --size-skills-menu: 1136px;
   --size-notifications-panel: 556px;
   --size-modal-icon: 100px;
+  --size-message-modal: 556px;
+  --space-message-modal-block: 80px; /* верхнее и нижнее поле окна-сообщения */
   --size-gallery-main: 324px;
   --size-gallery-thumb: 92px;
   --size-carousel-arrow: 32px;

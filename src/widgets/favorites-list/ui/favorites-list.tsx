@@ -18,6 +18,8 @@ import {
   selectSkillCategoriesStatus,
 } from '@/entities/skill'
 import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
+import { selectUser } from '@/entities/session'
+import { selectProposedSkillIds } from '@/entities/request'
 
 import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
 import { filterUsers } from '@/features/catalog-filters'
@@ -41,6 +43,8 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+  const authUser = useAppSelector(selectUser)
+  const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
   const typedSearch = useAppSelector(selectSearch)
   const search = useDebounce(typedSearch, SEARCH_DELAY)
@@ -115,6 +119,7 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
       data={{ ...card, likesCount: card.likesCount + 1 }}
       titleAs="h2"
       isLiked
+      isExchangeProposed={proposedSkillIds.includes(card.skillId)}
       onLikeToggle={() => toggleFavorite(card.id)}
       onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: card.skillId }))}
     />
