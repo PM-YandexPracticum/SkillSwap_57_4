@@ -4,6 +4,9 @@ export type { SkillsFilterProps } from './ui/skills-filter/types'
 export { CitiesFilter } from './ui/cities-filter/cities-filter'
 export type { CitiesFilterProps } from './ui/cities-filter/types'
 
+export { ActiveFilters } from './ui/active-filters/active-filters'
+export type { ActiveFiltersProps } from './ui/active-filters/types'
+
 export {
   DEFAULT_FILTERS,
   FILTER_MODE_OPTIONS,
@@ -21,3 +24,5 @@ export {
   selectSubcategory,
 } from './model/catalog-filters-slice'
 export { selectCatalogFilters } from './model/selectors'
+
+export { getFilterChips, type FilterChip } from './model/filter-chips'
