@@ -1,3 +1,6 @@
+import { format, isSameDay, subDays } from 'date-fns'
+import { ru } from 'date-fns/locale'
+
 /** Форматирует дату в читаемый вид */
 export function formatDate(dateString: string): string {
   return new Intl.DateTimeFormat('ru-RU', {
@@ -80,4 +83,12 @@ export function shuffle<T>(items: T[], random: () => number = Math.random): T[] 
   }
 
   return result
+}
+
+/** Дата уведомления: "сегодня", "вчера" или, например, "23 мая" */
+export function formatRelativeDate(dateString: string, now: Date = new Date()): string {
+  const date = new Date(dateString)
+  if (isSameDay(date, now)) return 'сегодня'
+  if (isSameDay(date, subDays(now, 1))) return 'вчера'
+  return format(date, 'd MMMM', { locale: ru })
 }
