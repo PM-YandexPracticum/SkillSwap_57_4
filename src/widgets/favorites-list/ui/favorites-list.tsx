@@ -100,7 +100,7 @@ export const FavoritesList = ({ applyFilters = false, className }: FavoritesList
   if (favoriteUsers.length < 1) {
     return (
       <div className={clsx(styles.state, className)}>
-        <p className={styles.text}>Здесь пока пусто</p>
+        <p className={clsx(styles.text, styles.muted)}>Здесь пока пусто</p>
         <Button onClick={() => navigate(ROUTES.HOME)}>Вернуться в каталог</Button>
       </div>
     )
