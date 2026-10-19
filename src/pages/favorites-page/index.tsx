@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectCities } from '@/entities/city'
 import { selectSkillCategories } from '@/entities/skill'
 import { selectCatalogFilters, setFilters, type CatalogFilters } from '@/features/catalog-filters'
+import { FavoritesList } from '@/widgets/favorites-list'
 import { FiltersSidebar } from '@/widgets/filters-sidebar'
-import { FavoritesList } from '@/widgets/favorites-list/ui/favorites-list'
 
 import styles from './favorites-page.module.css'
 

@@ -1,4 +1,4 @@
 export interface FavoritesListProps {
-  applyFilters: boolean
+  applyFilters?: boolean
   className?: string
 }

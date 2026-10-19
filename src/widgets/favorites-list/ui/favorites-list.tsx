@@ -30,8 +30,6 @@ import type { FavoritesListProps } from './types'
 
 import styles from './favorites-list.module.css'
 
-// по тикету должно быть 300мс, но в catalog-page уже стоит 200 -
-// для консистентности оставил тоже 200 пока
 const SEARCH_DELAY = 200
 
 export const FavoritesList = ({ applyFilters = false, className }: FavoritesListProps) => {
