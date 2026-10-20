@@ -24,18 +24,17 @@ describe('accountSchema', () => {
 })
 
 describe('getPasswordHint', () => {
-  test.each([
-    [''],
-    ['short'],
-    ['NoSpecial1'],
-  ])('для некорректного пароля "%s" возвращает PASSWORD_HINT', (password) => {
-    expect(getPasswordHint(password)).toBe(PASSWORD_HINT)
-  })
+  test.each(['', 'short', 'NoSpecial1'])(
+    'для некорректного пароля "%s" возвращает PASSWORD_HINT',
+    (password) => {
+      expect(getPasswordHint(password)).toBe(PASSWORD_HINT)
+    },
+  )
 
-  test.each([
-    ['Secret12!'],
-    ['Пароль12!'],
-  ])('для корректного пароля "%s" возвращает "Надёжный"', (password) => {
-    expect(getPasswordHint(password)).toBe('Надёжный')
-  })
+  test.each(['Secret12!', 'Пароль12!'])(
+    'для корректного пароля "%s" возвращает "Надёжный"',
+    (password) => {
+      expect(getPasswordHint(password)).toBe('Надёжный')
+    },
+  )
 })

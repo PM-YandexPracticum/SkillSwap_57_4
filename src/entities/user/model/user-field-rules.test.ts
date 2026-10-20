@@ -23,7 +23,7 @@ describe('userFieldRules', () => {
   describe('passwordRule', () => {
     test.each([
       ['', 'Придумайте пароль'],
-      ['Ab1!', `Пароль - не менее ${PASSWORD_MIN_LENGTH} знаков`],
+      ['Secre1!', `Пароль - не менее ${PASSWORD_MIN_LENGTH} знаков`],
       ['Secret!!', 'Добавьте в пароль цифру'],
       ['SECRET12!', 'Добавьте в пароль строчную букву'],
       ['secret12!', 'Добавьте в пароль заглавную букву'],
@@ -33,10 +33,7 @@ describe('userFieldRules', () => {
       await expect(passwordRule.validate(password)).rejects.toThrow(errorText)
     })
 
-    test.each([
-      ['Secret12!'],
-      ['Пароль12!'],
-    ])('пароль %s проходит', async (password) => {
+    test.each(['Secret1!', 'Secret12!', 'Пароль12!'])('пароль %s проходит', async (password) => {
       await expect(passwordRule.validate(password)).resolves.toBe(password)
     })
   })
