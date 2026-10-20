@@ -38,6 +38,14 @@ describe('excludeUser', () => {
     expect(result.map((u) => u.id)).toEqual(['1', '3'])
   })
 
+  test('исходный массив не меняется', () => {
+    const list = [createUser('1'), createUser('2')]
+
+    excludeUser(list, '1')
+
+    expect(list.map((u) => u.id)).toEqual(['1', '2'])
+  })
+
   test('id, которого нет в списке, ничего не убирает', () => {
     const result = excludeUser(users, '999')
     expect(result.map((u) => u.id)).toEqual(['1', '2', '3'])

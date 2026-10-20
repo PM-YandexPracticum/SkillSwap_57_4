@@ -81,9 +81,7 @@ export default function SkillPage() {
 
     const similar = excludeUser(getSimilarUsers(users, author), authUser?.id)
 
-    return similar
-      .slice(0, SIMILAR_LIMIT)
-      .map((user) => toUserCardData(user, categories, cities))
+    return similar.slice(0, SIMILAR_LIMIT).map((user) => toUserCardData(user, categories, cities))
   }, [author, users, categories, cities, authUser?.id])
 
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
