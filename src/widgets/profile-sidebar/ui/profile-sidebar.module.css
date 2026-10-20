@@ -1,0 +1,25 @@
+.sidebar {
+  padding: var(--space-3xl);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-profile);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.link {
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+.link:focus {
+  outline: none;
+}
+
+.link:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}

@@ -10,11 +10,13 @@ export {
   selectPopularUsers,
   selectNewestUsers,
 } from './model/selectors'
+export { emailRule, passwordRule, PASSWORD_MIN_LENGTH } from './model/user-field-rules'
 
 // ─── Lib ─────────────────────────────────────────────────
 export { toUserCardData } from './lib/to-user-card-data'
 export { sortByNewest } from './lib/sort-by-newest'
 export { getSimilarUsers } from './lib/get-similar-users'
+export { excludeUser } from './lib/exclude-user'
 
 // ─── UI ──────────────────────────────────────────────────
 export { UserInfo } from './ui/user-info/user-info'
