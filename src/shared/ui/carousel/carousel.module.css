@@ -1,0 +1,55 @@
+.carousel {
+  position: relative;
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.slide {
+  display: flex;
+  flex: 0 0 max(var(--size-card-min-width), calc((100% - 3 * var(--space-xl)) / 4));
+  min-width: 0;
+
+  /* добавил чтоб не выделялся текст при перетаскивании карточки в сторону */
+  user-select: none;
+}
+
+.slide > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: var(--size-carousel-arrow);
+  height: var(--size-carousel-arrow);
+  padding: var(--space-xs);
+  border-radius: var(--radius-circle);
+  color: var(--color-text-caption);
+  background-color: var(--color-disabled);
+  transform: translateY(-50%);
+}
+
+.arrow:focus-visible {
+  border-radius: var(--radius-circle);
+}
+
+.prev {
+  left: calc(var(--size-carousel-arrow) / -2);
+}
+
+.next {
+  right: calc(var(--size-carousel-arrow) / -2);
+}
+
+/* разворот стрелки вправо */
+.flipped {
+  transform: rotate(180deg);
+}
