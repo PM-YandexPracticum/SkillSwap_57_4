@@ -10,6 +10,7 @@ export {
   selectPopularUsers,
   selectNewestUsers,
 } from './model/selectors'
+export { emailRule, passwordRule, PASSWORD_MIN_LENGTH } from './model/user-field-rules'
 
 // ─── Lib ─────────────────────────────────────────────────
 export { toUserCardData } from './lib/to-user-card-data'
