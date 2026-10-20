@@ -1,5 +1,5 @@
 import { Toaster } from 'sonner'
-import { useNotificationToasts } from '../../model/useNotificationToasts'
+import { MAX_VISIBLE_TOASTS, useNotificationToasts } from '../../model/useNotificationToasts'
 import type { NotificationToasterProps } from './types'
 
 export const NotificationToaster = ({ onNavigate }: NotificationToasterProps) => {
@@ -9,11 +9,11 @@ export const NotificationToaster = ({ onNavigate }: NotificationToasterProps) =>
     <Toaster
       position="bottom-left"
       offset="var(--layout-padding)"
-      visibleToasts={2}
+      visibleToasts={MAX_VISIBLE_TOASTS}
       gap={28}
       expand
       containerAriaLabel="Уведомления"
-      duration={10000}
+      duration={5000}
     />
   )
 }
