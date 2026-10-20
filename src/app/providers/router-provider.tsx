@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
+import { SectionStub } from '@/shared/ui/section-stub'
 import { ROUTES } from '@/shared/lib/constants'
 import { Loader } from '@/shared/ui/loader'
 import { ProtectedRoute } from '@/features/auth'
@@ -51,7 +52,12 @@ export function AppRouter() {
                   <ProfilePage />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route index element={<SectionStub />} />
+              <Route path={ROUTES.PROFILE_REQUESTS} element={<SectionStub />} />
+              <Route path={ROUTES.PROFILE_EXCHANGES} element={<SectionStub />} />
+              <Route path={ROUTES.PROFILE_SKILLS} element={<SectionStub />} />
+            </Route>
             <Route
               path={ROUTES.CREATE}
               element={
