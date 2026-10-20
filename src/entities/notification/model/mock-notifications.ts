@@ -33,4 +33,18 @@ export const MOCK_NOTIFICATIONS: MockNotification[] = [
     isRead: true,
     daysAgo: 10,
   },
+  {
+    kind: 'incoming',
+    title: 'Константин предложил вам обмен',
+    description: 'Примите обмен, чтобы обсудить детали',
+    isRead: false,
+    daysAgo: 1,
+  },
+  {
+    kind: 'accepted',
+    title: 'Анна-София-Виктория приняла ваш обмен',
+    description: 'Перейдите в профиль, чтобы обсудить детали',
+    isRead: false,
+    daysAgo: 2,
+  },
 ]
