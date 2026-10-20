@@ -36,8 +36,6 @@ import { ROUTES } from '@/shared/lib/constants'
 
 import styles from './skill-page.module.css'
 
-const SIMILAR_LIMIT = 4
-
 export default function SkillPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -80,8 +78,7 @@ export default function SkillPage() {
     if (!author) return []
 
     const similar = excludeUser(getSimilarUsers(users, author), authUser?.id)
-
-    return similar.slice(0, SIMILAR_LIMIT).map((user) => toUserCardData(user, categories, cities))
+    return similar.map((user) => toUserCardData(user, categories, cities))
   }, [author, users, categories, cities, authUser?.id])
 
   const statuses = [usersStatus, categoriesStatus, citiesStatus]
@@ -170,7 +167,7 @@ export default function SkillPage() {
       </div>
 
       {similarCards.length > 0 && (
-        <CardsSection title="Похожие предложения">
+        <CardsSection key={skill.id} title="Похожие предложения" carousel>
           {similarCards.map(renderSimilarCard)}
         </CardsSection>
       )}
