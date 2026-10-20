@@ -1,9 +1,16 @@
 import { useId } from 'react'
+import { Carousel } from '@/shared/ui/carousel'
 import type { CardsSectionProps } from './types'
 
 import styles from './cards-section.module.css'
 
-export const CardsSection = ({ title, action, children, className }: CardsSectionProps) => {
+export const CardsSection = ({
+  title,
+  action,
+  carousel = false,
+  children,
+  className,
+}: CardsSectionProps) => {
   const titleId = useId()
 
   return (
@@ -14,7 +21,12 @@ export const CardsSection = ({ title, action, children, className }: CardsSectio
         </h2>
         {action}
       </div>
-      <div className={styles.grid}>{children}</div>
+
+      {carousel ? (
+        <Carousel className={styles.carousel}>{children}</Carousel>
+      ) : (
+        <div className={styles.grid}>{children}</div>
+      )}
     </section>
   )
 }
