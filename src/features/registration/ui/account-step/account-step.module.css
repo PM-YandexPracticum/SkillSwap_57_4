@@ -7,7 +7,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--space-2xl);
 }
 
 .fields {
@@ -22,11 +22,8 @@
   gap: var(--space-sm);
 }
 
-.loginText {
-  text-align: center;
-}
-
 .loginLink {
+  align-self: center;
   color: var(--color-link);
 }
 

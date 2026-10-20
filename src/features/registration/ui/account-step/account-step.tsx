@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useForm, useWatch, type SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { EMAIL_TAKEN_ERROR, isEmailTaken } from '@/api/accounts'
 import { ROUTES } from '@/shared/lib/constants'
@@ -8,7 +8,7 @@ import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { PasswordInput } from '@/shared/ui/password-input'
 import { SocialAuth } from '@/shared/ui/social-auth'
-import { accountSchema, PASSWORD_HINT, type AccountFormValues } from '../../model/account-schema'
+import { accountSchema, getPasswordHint, type AccountFormValues } from '../../model/account-schema'
 import { loadDraft, saveDraft } from '../../model/draft'
 import styles from './account-step.module.css'
 
@@ -18,6 +18,7 @@ export const AccountStep = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
@@ -28,6 +29,8 @@ export const AccountStep = () => {
       password: draft.password ?? '',
     },
   })
+
+  const password = useWatch({ control, name: 'password' })
 
   const onSubmit: SubmitHandler<AccountFormValues> = async ({ email, password }) => {
     if (await isEmailTaken(email)) {
@@ -59,7 +62,7 @@ export const AccountStep = () => {
             label="Пароль"
             placeholder="Придумайте надёжный пароль"
             autoComplete="new-password"
-            hint={PASSWORD_HINT}
+            hint={getPasswordHint(password)}
             error={errors.password?.message}
           />
         </div>
@@ -69,12 +72,9 @@ export const AccountStep = () => {
             Далее
           </Button>
 
-          <p className={styles.loginText}>
-            Уже есть аккаунт?{' '}
-            <Link to={ROUTES.LOGIN} replace className={styles.loginLink}>
-              Войти
-            </Link>
-          </p>
+          <Link to={ROUTES.LOGIN} replace className={styles.loginLink}>
+            Уже есть аккаунт? Войти
+          </Link>
         </div>
       </form>
     </div>
