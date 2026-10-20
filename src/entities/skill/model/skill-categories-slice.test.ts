@@ -2,16 +2,14 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { fetchSkillCategories } from '@/api/skills'
 import { setupStore } from '@/store'
 import { loadSkillCategories } from './skill-categories-slice'
-import { selectSkillCategories, selectSkillCategoriesStatus, selectSkillCategoriesError } from './selectors'
+import { selectSkillCategories, selectSkillCategoriesStatus } from './selectors'
 import type { SkillCategory } from '@/shared/types'
 
 vi.mock('@/api/skills', () => ({
   fetchSkillCategories: vi.fn(),
 }))
 
-const categories: SkillCategory[] = [
-  { id: 'creativity', name: 'Творчество', subcategories: [] },
-]
+const categories: SkillCategory[] = [{ id: 'creativity', name: 'Творчество', subcategories: [] }]
 
 describe('skillCategoriesSlice', () => {
   beforeEach(() => {
@@ -35,7 +33,7 @@ describe('skillCategoriesSlice', () => {
     await store.dispatch(loadSkillCategories())
 
     expect(selectSkillCategoriesStatus(store.getState())).toBe('failed')
-    expect(selectSkillCategoriesError(store.getState())).toBe('Network error')
+    expect(store.getState().skillCategories.error).toBe('Network error')
   })
 
   test('повторный loadSkillCategories не вызывает fetchSkillCategories второй раз', async () => {

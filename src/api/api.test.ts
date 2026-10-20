@@ -3,13 +3,10 @@ import { fetchCities } from './cities'
 import { fetchSkillCategories } from './skills'
 import { fetchUsers } from './users'
 
-const mockFetch = (body: unknown, ok = true) => {
-  const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
-    ok,
-    json: () => Promise.resolve(body),
-  } as Response)
-  return spy
-}
+const mockFetch = (body: unknown, ok = true) =>
+  vi
+    .spyOn(globalThis, 'fetch')
+    .mockResolvedValue({ ok, json: () => Promise.resolve(body) } as Response)
 
 describe('api', () => {
   beforeEach(() => {

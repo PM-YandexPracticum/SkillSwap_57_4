@@ -2,8 +2,9 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { fetchCities } from '@/api/cities'
 import { setupStore } from '@/store'
 import { loadCities } from './cities-slice'
-import { selectCities, selectCitiesStatus, selectCitiesError } from './selectors'
+import { selectCities, selectCitiesStatus } from './selectors'
 import type { City } from '@/shared/types'
+
 vi.mock('@/api/cities', () => ({
   fetchCities: vi.fn(),
 }))
@@ -32,6 +33,16 @@ describe('citiesSlice', () => {
     await store.dispatch(loadCities())
 
     expect(selectCitiesStatus(store.getState())).toBe('failed')
-    expect(selectCitiesError(store.getState())).toBe('Network error')
+    expect(store.getState().cities.error).toBe('Network error')
+  })
+
+  test('повторный loadCities не вызывает fetchCities второй раз', async () => {
+    vi.mocked(fetchCities).mockResolvedValue(cities)
+    const store = setupStore()
+
+    await store.dispatch(loadCities())
+    await store.dispatch(loadCities())
+
+    expect(vi.mocked(fetchCities)).toHaveBeenCalledTimes(1)
   })
 })
