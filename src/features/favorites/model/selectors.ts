@@ -1,13 +1,12 @@
-import type { RootState } from '@/store';
-import { selectUser } from '@/entities/session';
+import type { RootState } from '@/store'
+import { selectUser } from '@/entities/session'
 
 export const selectFavoriteIds = (state: RootState): string[] => {
-  const user = selectUser(state);
-  
-  
+  const user = selectUser(state)
+
   if (!user) {
-    return [];
+    return []
   }
 
-  return state.favorites.byUser[user.id] || [];
-};
+  return state.favorites.byUser[user.id] || []
+}
