@@ -118,6 +118,7 @@
   --size-upload-preview-remove: 20px; /* кнопка удаления на превью */
   --size-registration-step: 60px;
   --size-registration-step-height: 4px;
+  --size-toast: 340px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
