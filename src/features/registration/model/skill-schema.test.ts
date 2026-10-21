@@ -40,8 +40,11 @@ describe('[skillSchema]', () => {
     })
 
     test('границы длины проходят', async () => {
-      await expect(validateField('title', 'a'.repeat(TITLE_MIN_LENGTH))).resolves.toBeTruthy()
-      await expect(validateField('title', 'a'.repeat(TITLE_MAX_LENGTH))).resolves.toBeTruthy()
+      const shortest = 'a'.repeat(TITLE_MIN_LENGTH)
+      const longest = 'a'.repeat(TITLE_MAX_LENGTH)
+
+      await expect(validateField('title', shortest)).resolves.toBe(shortest)
+      await expect(validateField('title', longest)).resolves.toBe(longest)
     })
   })
 
@@ -58,6 +61,12 @@ describe('[skillSchema]', () => {
       await expect(validateField('description', description)).rejects.toThrow(
         'Опишите, чему можете научить',
       )
+    })
+
+    test('ровно максимум символов проходит', async () => {
+      const longest = 'a'.repeat(DESCRIPTION_MAX_LENGTH)
+
+      await expect(validateField('description', longest)).resolves.toBe(longest)
     })
 
     test('длиннее максимума - ошибка "Описание - не больше 500 символов"', async () => {

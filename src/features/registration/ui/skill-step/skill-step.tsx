@@ -58,7 +58,7 @@ export const SkillStep = () => {
     setValue('categoryId', category.id, { shouldValidate: isSubmitted })
     const subcategoryId = getValues('subcategoryId')
     if (!category.subcategories.some((item) => item.id === subcategoryId)) {
-      setValue('subcategoryId', '')
+      setValue('subcategoryId', '', { shouldValidate: isSubmitted })
     }
   }
 
@@ -68,6 +68,10 @@ export const SkillStep = () => {
 
     setValue('subcategoryId', id, { shouldValidate: isSubmitted })
     setValue('categoryId', found.category.id, { shouldValidate: isSubmitted })
+  }
+
+  const handlePreviewClose = () => {
+    setPreview(null)
   }
 
   const handleBack = () => {
@@ -154,7 +158,7 @@ export const SkillStep = () => {
       <Modal
         className={styles.preview}
         isOpen={preview !== null}
-        onClose={() => setPreview(null)}
+        onClose={handlePreviewClose}
         title="Ваше предложение"
       >
         {preview && (
@@ -177,11 +181,11 @@ export const SkillStep = () => {
                     variant="secondary"
                     fullWidth
                     rightIcon={<EditIcon />}
-                    onClick={() => setPreview(null)}
+                    onClick={handlePreviewClose}
                   >
                     Редактировать
                   </Button>
-                  <Button fullWidth onClick={() => setPreview(null)}>
+                  <Button fullWidth onClick={handlePreviewClose}>
                     Готово
                   </Button>
                 </>
