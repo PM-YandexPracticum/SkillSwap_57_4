@@ -80,7 +80,8 @@ describe('accounts', () => {
 
     test('тот же email в другом регистре и с пробелами - ошибка', async () => {
       await registerAccount(mockUser, 'password')
-      await expect(registerAccount(mockUser, 'password')).rejects.toThrow(EMAIL_TAKEN_ERROR)
+      const sameEmail = { ...mockUser, id: 'user-2', email: '  TEST@Example.com ' }
+      await expect(registerAccount(sameEmail, 'password')).rejects.toThrow(EMAIL_TAKEN_ERROR)
       expect(getRegisteredUsers()).toHaveLength(1)
     })
 
@@ -125,11 +126,13 @@ describe('accounts', () => {
 
   describe('updateAccountUser', () => {
     test('сохраняет изменения: видны в getRegisteredUsers и при следующем входе', async () => {
+      const otherUser = { ...mockUser, id: 'user-2', email: 'other@example.com' }
       await registerAccount(mockUser, 'password')
+      await registerAccount(otherUser, 'password')
       const updatedUser = { ...mockUser, name: 'Updated' }
       await updateAccountUser(updatedUser)
 
-      expect(getRegisteredUsers()[0].name).toBe('Updated')
+      expect(getRegisteredUsers()).toEqual([updatedUser, otherUser])
       const user = await loginAccount(mockUser.email, 'password')
       expect(user.name).toBe('Updated')
     })
