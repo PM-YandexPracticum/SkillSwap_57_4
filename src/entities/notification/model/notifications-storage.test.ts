@@ -1,12 +1,13 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import type { AppNotification } from './types'
 import { loadNotifications, saveNotifications } from './notifications-storage'
 import type { StoredNotifications } from './notifications-storage'
 
-const validNotification = {
+const validNotification: AppNotification = {
   id: '1',
   userId: 'user-1',
-  kind: 'incoming' as const,
+  kind: 'incoming',
   title: 'Test',
   createdAt: '2026-01-01T00:00:00.000Z',
   isRead: false,
@@ -17,6 +18,10 @@ describe('notifications-storage', () => {
     localStorage.clear()
   })
 
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   describe('loadNotifications', () => {
     test('без данных - пустое состояние', () => {
       expect(loadNotifications()).toEqual({ items: [], seededUserIds: [] })
@@ -24,7 +29,7 @@ describe('notifications-storage', () => {
 
     test('читает записанное saveNotifications', () => {
       const data: StoredNotifications = {
-        items: [validNotification],
+        items: [{ ...validNotification, description: 'Примите обмен, чтобы обсудить детали' }],
         seededUserIds: ['user-1'],
       }
       saveNotifications(data)
@@ -61,9 +66,7 @@ describe('notifications-storage', () => {
     test('сохраняет данные в localStorage', () => {
       const data: StoredNotifications = { items: [validNotification], seededUserIds: ['u'] }
       saveNotifications(data)
-      expect(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.NOTIFICATIONS) ?? '')).toEqual(
-        data,
-      )
+      expect(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.NOTIFICATIONS) ?? '')).toEqual(data)
     })
 
     test('не падает, если запись не удалась', () => {
