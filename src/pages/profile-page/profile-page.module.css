@@ -1,0 +1,14 @@
+.layout {
+  display: grid;
+  flex: 1;
+  grid-template-columns: var(--size-sidebar) minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4xl);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-profile);
+}

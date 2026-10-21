@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4xl);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: var(--size-sidebar) minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
+.state {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: var(--space-xl);
+  text-align: center;
+}
+
+.error > .text {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+
+.modal {
+  width: var(--size-message-modal);
+  padding-block: var(--space-message-modal-block);
+}
+
+.modalText {
+  margin-top: var(--space-sm);
+  text-align: center;
+}
+
+.modalButton {
+  margin-top: var(--space-2xl);
+}

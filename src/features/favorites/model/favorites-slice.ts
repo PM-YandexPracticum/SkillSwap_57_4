@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { FavoritesByUser, loadFavorites } from './favorites-storage'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { loadFavorites, type FavoritesByUser } from './favorites-storage'
 
 export type FavoritesState = {
   byUser: FavoritesByUser
@@ -15,19 +15,11 @@ const favoritesSlice = createSlice({
   reducers: {
     toggleFavorite: (state, action: PayloadAction<{ userId: string; targetId: string }>) => {
       const { userId, targetId } = action.payload
+      const ids = state.byUser[userId] ?? []
 
-      if (!state.byUser[userId]) {
-        state.byUser[userId] = []
-      }
-
-      const userFavorites = state.byUser[userId]
-      const index = userFavorites.indexOf(targetId)
-
-      if (index !== -1) {
-        userFavorites.splice(index, 1)
-      } else {
-        userFavorites.push(targetId)
-      }
+      state.byUser[userId] = ids.includes(targetId)
+        ? ids.filter((id) => id !== targetId)
+        : [...ids, targetId]
     },
   },
 })

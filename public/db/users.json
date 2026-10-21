@@ -50,7 +50,7 @@
         "/db/images/placeholder-4.jpg"
       ]
     },
-    "learnSkills": ["photography", "yoga-meditation"],
+    "learnSkills": ["photography", "yoga-meditation", "spanish", "cooking"],
     "createdAt": "2025-08-11T14:20:00.000Z"
   },
   {
@@ -77,7 +77,7 @@
         "/db/images/placeholder-4.jpg"
       ]
     },
-    "learnSkills": ["german", "physical-training", "home-finance"],
+    "learnSkills": ["german", "physical-training", "home-finance", "english", "personal-brand"],
     "createdAt": "2025-09-02T09:15:00.000Z"
   },
   {
@@ -101,7 +101,10 @@
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
         "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
+        "/db/images/placeholder-4.jpg",
+        "/db/images/placeholder-5.jpg",
+        "/db/images/placeholder-6.jpg",
+        "/db/images/placeholder-7.jpg"
       ]
     },
     "learnSkills": ["french", "creative-writing"],
@@ -124,12 +127,7 @@
       "description": "Расскажу, как выровнять стены, поклеить обои и заменить смеситель без вызова мастера.",
       "categoryId": "home",
       "subcategoryId": "repair",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-2.jpg"]
     },
     "learnSkills": ["english"],
     "createdAt": "2026-01-25T09:30:00.000Z"
@@ -178,12 +176,7 @@
       "description": "Составим понятный бюджет, настроим учёт расходов и разберёмся, как откладывать на цели без жёсткой экономии.",
       "categoryId": "home",
       "subcategoryId": "home-finance",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-7.jpg", "/db/images/placeholder-6.jpg"]
     },
     "learnSkills": ["photography", "music-sound"],
     "createdAt": "2025-11-12T12:10:00.000Z"
@@ -236,7 +229,9 @@
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
         "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
+        "/db/images/placeholder-4.jpg",
+        "/db/images/placeholder-5.jpg",
+        "/db/images/placeholder-6.jpg"
       ]
     },
     "learnSkills": ["video-editing", "marketing"],
@@ -262,8 +257,7 @@
       "images": [
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
+        "/db/images/placeholder-7.jpg"
       ]
     },
     "learnSkills": ["japanese"],
@@ -313,12 +307,7 @@
       "description": "Подберём растения под ваш подоконник, разберёмся с поливом, пересадкой и лечением от вредителей.",
       "categoryId": "home",
       "subcategoryId": "houseplants",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-1.jpg"]
     },
     "learnSkills": ["decor-diy", "storage"],
     "createdAt": "2025-03-27T11:00:00.000Z"
@@ -368,9 +357,8 @@
       "categoryId": "creativity",
       "subcategoryId": "video-editing",
       "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
         "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-5.jpg",
         "/db/images/placeholder-4.jpg"
       ]
     },
@@ -394,12 +382,7 @@
       "description": "Подготовлю к деловой переписке, созвонам и собеседованиям на немецком языке.",
       "categoryId": "languages",
       "subcategoryId": "german",
-      "images": [
-        "/db/images/placeholder-1.jpg",
-        "/db/images/placeholder-2.jpg",
-        "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
-      ]
+      "images": ["/db/images/placeholder-3.jpg", "/db/images/placeholder-5.jpg"]
     },
     "learnSkills": ["repair", "time-management"],
     "createdAt": "2025-09-29T17:25:00.000Z"
@@ -428,7 +411,7 @@
         "/db/images/placeholder-4.jpg"
       ]
     },
-    "learnSkills": ["french", "decor-diy"],
+    "learnSkills": ["french", "decor-diy", "houseplants", "photography", "english"],
     "createdAt": "2025-01-15T10:00:00.000Z"
   },
   {
@@ -536,7 +519,7 @@
         "/db/images/placeholder-4.jpg"
       ]
     },
-    "learnSkills": ["video-editing", "yoga-meditation"],
+    "learnSkills": ["video-editing", "yoga-meditation", "marketing", "photography"],
     "createdAt": "2025-06-18T09:40:00.000Z"
   },
   {
@@ -644,7 +627,7 @@
         "/db/images/placeholder-4.jpg"
       ]
     },
-    "learnSkills": ["spanish", "photography"],
+    "learnSkills": ["spanish", "photography", "yoga-meditation", "mindfulness"],
     "createdAt": "2026-04-21T08:00:00.000Z"
   },
   {
@@ -660,10 +643,10 @@
     "favorites": ["user-10"],
     "teachSkill": {
       "id": "skill-25",
-      "title": "Как объяснять сложное просто",
-      "description": "Научу строить занятие, удерживать внимание аудитории и давать обратную связь, которая мотивирует.",
-      "categoryId": "education",
-      "subcategoryId": "teaching-skills",
+      "title": "Академический английский для науки",
+      "description": "Научу читать научные статьи, писать аннотации и готовиться к выступлениям на конференциях на английском.",
+      "categoryId": "languages",
+      "subcategoryId": "english",
       "images": [
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
@@ -1092,10 +1075,10 @@
     "favorites": ["user-10"],
     "teachSkill": {
       "id": "skill-41",
-      "title": "Учиться эффективно",
-      "description": "Покажу, как планировать обучение, делать конспекты и повторять материал, чтобы знания оставались надолго.",
-      "categoryId": "education",
-      "subcategoryId": "learning-skills",
+      "title": "Английский: слова без зубрёжки",
+      "description": "Покажу, как запоминать лексику через контекст и интервальные повторения, чтобы слова оставались в памяти надолго.",
+      "categoryId": "languages",
+      "subcategoryId": "english",
       "images": [
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
@@ -1146,10 +1129,10 @@
     "favorites": ["user-37", "user-28"],
     "teachSkill": {
       "id": "skill-43",
-      "title": "Привычки и самодисциплина",
-      "description": "Научимся внедрять полезные привычки, отслеживать прогресс и не бросать начатое через неделю.",
-      "categoryId": "education",
-      "subcategoryId": "personal-development",
+      "title": "Фотография как новое хобби",
+      "description": "Освоим камеру или смартфон, разберём основы композиции и света и сделаем первые снимки, которыми не стыдно поделиться.",
+      "categoryId": "creativity",
+      "subcategoryId": "photography",
       "images": [
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
@@ -1181,7 +1164,9 @@
         "/db/images/placeholder-1.jpg",
         "/db/images/placeholder-2.jpg",
         "/db/images/placeholder-3.jpg",
-        "/db/images/placeholder-4.jpg"
+        "/db/images/placeholder-4.jpg",
+        "/db/images/placeholder-5.jpg",
+        "/db/images/placeholder-6.jpg"
       ]
     },
     "learnSkills": ["personal-brand", "art-therapy"],
@@ -1213,5 +1198,140 @@
     },
     "learnSkills": ["physical-training", "entrepreneurship"],
     "createdAt": "2025-05-15T15:15:00.000Z"
+  },
+  {
+    "id": "user-46",
+    "name": "Ангелина",
+    "email": "user46@skillswap.com",
+    "birthDate": "1994-05-18",
+    "gender": "female",
+    "cityId": "saint-petersburg",
+    "avatarUrl": "https://randomuser.me/api/portraits/women/14.jpg",
+    "about": "Работаю в международной компании и каждый день пишу деловые письма на английском.",
+    "likesCount": 36,
+    "favorites": ["user-22", "user-45"],
+    "teachSkill": {
+      "id": "skill-46",
+      "title": "Деловой английский: письма и созвоны",
+      "description": "Научу писать понятные письма, вести созвоны и обсуждать задачи с коллегами и клиентами на английском.",
+      "categoryId": "languages",
+      "subcategoryId": "english",
+      "images": [
+        "/db/images/placeholder-1.jpg",
+        "/db/images/placeholder-2.jpg",
+        "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-4.jpg"
+      ]
+    },
+    "learnSkills": ["time-management"],
+    "createdAt": "2026-09-28T10:30:00.000Z"
+  },
+  {
+    "id": "user-47",
+    "name": "Руслан",
+    "email": "user47@skillswap.com",
+    "birthDate": "1991-12-03",
+    "gender": "male",
+    "cityId": "kazan",
+    "avatarUrl": "https://randomuser.me/api/portraits/men/11.jpg",
+    "about": "Учу английский по сериалам и подкастам. Уверен, что язык проще всего осваивать в удовольствие.",
+    "likesCount": 17,
+    "favorites": ["user-02"],
+    "teachSkill": {
+      "id": "skill-47",
+      "title": "Английский через фильмы и сериалы",
+      "description": "Будем смотреть короткие сцены, разбирать живую речь и сленг и пополнять словарный запас без зубрёжки.",
+      "categoryId": "languages",
+      "subcategoryId": "english",
+      "images": [
+        "/db/images/placeholder-1.jpg",
+        "/db/images/placeholder-2.jpg",
+        "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-4.jpg"
+      ]
+    },
+    "learnSkills": ["video-editing"],
+    "createdAt": "2026-10-02T09:00:00.000Z"
+  },
+  {
+    "id": "user-48",
+    "name": "Богдан",
+    "email": "user48@skillswap.com",
+    "birthDate": "1997-07-21",
+    "gender": "male",
+    "cityId": "yekaterinburg",
+    "avatarUrl": "https://randomuser.me/api/portraits/men/15.jpg",
+    "about": "Каждые выходные гуляю по городу с камерой и ловлю случайные сюжеты.",
+    "likesCount": 41,
+    "favorites": ["user-09", "user-44"],
+    "teachSkill": {
+      "id": "skill-48",
+      "title": "Уличная фотография",
+      "description": "Научу замечать сюжеты на улице, ловить момент и выстраивать кадр в городской среде.",
+      "categoryId": "creativity",
+      "subcategoryId": "photography",
+      "images": [
+        "/db/images/placeholder-1.jpg",
+        "/db/images/placeholder-2.jpg",
+        "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-4.jpg"
+      ]
+    },
+    "learnSkills": ["german"],
+    "createdAt": "2026-08-19T16:40:00.000Z"
+  },
+  {
+    "id": "user-49",
+    "name": "Элина",
+    "email": "user49@skillswap.com",
+    "birthDate": "1992-11-06",
+    "gender": "female",
+    "cityId": "samara",
+    "avatarUrl": "https://randomuser.me/api/portraits/women/28.jpg",
+    "about": "Снимаю товары для интернет-магазинов и знаю, какие кадры повышают продажи.",
+    "likesCount": 58,
+    "favorites": ["user-20", "user-39"],
+    "teachSkill": {
+      "id": "skill-49",
+      "title": "Предметная съёмка для маркетплейсов",
+      "description": "Соберём простую студию из подручных материалов, выставим свет и сделаем чистые фото товаров для карточек.",
+      "categoryId": "creativity",
+      "subcategoryId": "photography",
+      "images": [
+        "/db/images/placeholder-1.jpg",
+        "/db/images/placeholder-2.jpg",
+        "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-4.jpg"
+      ]
+    },
+    "learnSkills": ["marketing", "sales"],
+    "createdAt": "2026-09-15T14:20:00.000Z"
+  },
+  {
+    "id": "user-50",
+    "name": "Глеб",
+    "email": "user50@skillswap.com",
+    "birthDate": "1985-03-27",
+    "gender": "male",
+    "cityId": "irkutsk",
+    "avatarUrl": "https://randomuser.me/api/portraits/men/17.jpg",
+    "about": "Живу рядом с Байкалом и снимаю его в любую погоду.",
+    "likesCount": 63,
+    "favorites": ["user-09", "user-11"],
+    "teachSkill": {
+      "id": "skill-50",
+      "title": "Фотография путешествий и пейзажей",
+      "description": "Разберём построение кадра, работу с золотым часом и фильтрами, а также подготовку к съёмке в походах и поездках.",
+      "categoryId": "creativity",
+      "subcategoryId": "photography",
+      "images": [
+        "/db/images/placeholder-1.jpg",
+        "/db/images/placeholder-2.jpg",
+        "/db/images/placeholder-3.jpg",
+        "/db/images/placeholder-4.jpg"
+      ]
+    },
+    "learnSkills": ["mindfulness"],
+    "createdAt": "2026-08-30T08:45:00.000Z"
   }
 ]

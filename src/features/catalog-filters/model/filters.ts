@@ -44,3 +44,7 @@ export function countActiveFilters(filters: CatalogFilters): number {
     filters.cityIds.length
   )
 }
+
+export function isCatalogFiltered(filters: CatalogFilters, search: string): boolean {
+  return countActiveFilters(filters) > 0 || search.trim() !== ''
+}

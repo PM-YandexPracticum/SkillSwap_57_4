@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-card-min-width), 1fr));
+  gap: var(--space-xl);
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-4xl);
+  text-align: center;
+}
+
+.text {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+
+.muted {
+  color: var(--color-text-caption);
+}

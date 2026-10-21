@@ -75,9 +75,11 @@
   --space-card-inline: 52px;
 
   /* Borders */
+  --radius-xs: 8px;
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 100px;
+  --radius-profile: 24px;
   --radius-circle: 50%;
 
   /* Sizes */
@@ -90,6 +92,7 @@
   --size-avatar-badge: 16px;
   --size-avatar-badge-l: 56px;
   --size-control: 48px; /* высота кнопок, полей ввода, поиска и выпадающих списков */
+  --size-header: calc(var(--layout-padding) + var(--size-control) + var(--space-lg));
   --size-dot: 12px; /* точка у уведомлений */
   --size-sidebar: 324px;
   --size-footer-column: 324px;
@@ -102,13 +105,20 @@
   --size-auth-frame-height: 692px;
   --size-illustration-panel-image: 300px;
   --size-skills-menu: 1136px;
+  --size-notifications-panel: 556px;
   --size-modal-icon: 100px;
+  --size-message-modal: 556px;
+  --space-message-modal-block: 80px; /* верхнее и нижнее поле окна-сообщения */
   --size-gallery-main: 324px;
   --size-gallery-thumb: 92px;
+  --size-carousel-arrow: 32px;
   --size-skill-offer-info: 399px; /* левая колонка SkillDetails на странице навыка */
   --size-skill-check-info: 420px; /* левая колонка SkillDetails в окне проверки при регистрации */
   --size-upload-preview: 72px; /* превью фото навыка в ImageDropZone */
   --size-upload-preview-remove: 20px; /* кнопка удаления на превью */
+  --size-registration-step: 60px;
+  --size-registration-step-height: 4px;
+  --size-toast: 340px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
@@ -116,6 +126,7 @@
 
   /* Layering */
   --z-header: 100;
+  --z-dropdown: 10; /* выпадающие меню, списки и календарь над содержимым страницы */
 
   /* Motion */
   --transition-base: 0.2s ease-in-out;

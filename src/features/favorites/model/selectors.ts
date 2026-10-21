@@ -1,12 +1,12 @@
+import { createSelector } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
 import { selectUser } from '@/entities/session'
 
-export const selectFavoriteIds = (state: RootState): string[] => {
-  const user = selectUser(state)
+const NO_FAVORITES: string[] = []
 
-  if (!user) {
-    return []
-  }
+const selectFavoritesByUser = (state: RootState) => state.favorites.byUser
 
-  return state.favorites.byUser[user.id] || []
-}
+export const selectFavoriteIds = createSelector(
+  [selectUser, selectFavoritesByUser],
+  (user, byUser) => (user ? (byUser[user.id] ?? NO_FAVORITES) : NO_FAVORITES),
+)
