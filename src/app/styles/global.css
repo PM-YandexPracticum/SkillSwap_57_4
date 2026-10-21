@@ -119,6 +119,7 @@
   --size-registration-step: 60px;
   --size-registration-step-height: 4px;
   --size-toast: 340px;
+  --size-skill-preview-modal: 1024px;
 
   /* Focus */
   --focus-outline: 1px solid var(--color-link);
