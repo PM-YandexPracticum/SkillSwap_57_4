@@ -46,5 +46,6 @@ export const LOCAL_STORAGE_KEYS = {
 
 export const SESSION_STORAGE_KEYS = {
   REGISTRATION_DRAFT: 'skillswap_registration_draft',
+  SKILL_CREATED: 'skillswap_skill_created',
   SHOWN_TOASTS: 'skillswap_shown_toasts',
 } as const
