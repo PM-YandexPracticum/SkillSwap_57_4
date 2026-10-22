@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { registerAccount } from '@/api/accounts'
+import { EMAIL_TAKEN_ERROR, registerAccount } from '@/api/accounts'
 import { loadSkillCategories, selectSkillCategories, SkillDetails } from '@/entities/skill'
 import { addUser } from '@/entities/user'
 import { login } from '@/entities/session'
@@ -90,6 +90,7 @@ export const SkillStep = () => {
 
   const handleDone = async (skill: SkillFormValues) => {
     const draft = loadDraft()
+    setDoneError(null)
     setIsSaving(true)
 
     try {
@@ -100,7 +101,11 @@ export const SkillStep = () => {
       markSkillCreated()
       dispatch(login({ id: user.id, name: user.name, email: user.email }))
     } catch (error) {
-      setDoneError(error instanceof Error ? error.message : 'Не удалось завершить регистрацию')
+      setDoneError(
+        error instanceof Error && error.message === EMAIL_TAKEN_ERROR
+          ? EMAIL_TAKEN_ERROR
+          : 'Не удалось завершить регистрацию. Попробуйте ещё раз',
+      )
       setIsSaving(false)
     }
   }

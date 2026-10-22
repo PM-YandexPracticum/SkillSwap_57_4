@@ -59,6 +59,7 @@ describe('[buildRegisteredUser]', () => {
     const second = buildRegisteredUser(DRAFT, SKILL, NOW)
 
     expect(first.id).not.toBe(first.teachSkill.id)
+    expect(first.teachSkill.id).not.toBe(second.teachSkill.id)
     expect(first.id).not.toBe(second.id)
   })
 
@@ -81,8 +82,14 @@ describe('[buildRegisteredUser]', () => {
     expect(user.learnSkills).toEqual([])
   })
 
+  test.each(['email', 'name', 'birthDate', 'gender', 'cityId'])(
+    'черновик без %s - ошибка',
+    (field) => {
+      expect(() => buildRegisteredUser({ ...DRAFT, [field]: undefined }, SKILL, NOW)).toThrow()
+    },
+  )
+
   test('черновик без данных шагов 1-2 - ошибка', () => {
-    expect(() => buildRegisteredUser({ ...DRAFT, name: undefined }, SKILL, NOW)).toThrow()
     expect(() => buildRegisteredUser({}, SKILL, NOW)).toThrow()
   })
 })
