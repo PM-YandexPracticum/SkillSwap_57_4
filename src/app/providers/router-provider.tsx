@@ -27,6 +27,9 @@ const UserStep = lazy(() =>
 const SkillStep = lazy(() =>
   import('@/features/registration').then((module) => ({ default: module.SkillStep })),
 )
+const PersonalDataForm = lazy(() =>
+  import('@/features/edit-profile').then((module) => ({ default: module.PersonalDataForm })),
+)
 
 export function AppRouter() {
   return (
@@ -53,7 +56,7 @@ export function AppRouter() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<SectionStub />} />
+              <Route index element={<PersonalDataForm />} />
               <Route path={ROUTES.PROFILE_REQUESTS} element={<SectionStub />} />
               <Route path={ROUTES.PROFILE_EXCHANGES} element={<SectionStub />} />
               <Route path={ROUTES.PROFILE_SKILLS} element={<SectionStub />} />
