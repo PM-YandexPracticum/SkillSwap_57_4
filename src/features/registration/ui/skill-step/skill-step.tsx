@@ -2,26 +2,32 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { registerAccount } from '@/api/accounts'
 import { loadSkillCategories, selectSkillCategories, SkillDetails } from '@/entities/skill'
-import { useFilePreviews } from '@/shared/hooks/useFilePreviews'
+import { addUser } from '@/entities/user'
+import { login } from '@/entities/session'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useFilePreviews } from '@/shared/hooks/useFilePreviews'
+import { findSubcategory } from '@/shared/lib/skills'
+import { ROUTES } from '@/shared/lib/constants'
+import { markSkillCreated } from '@/shared/lib/skill-created'
+import { Input } from '@/shared/ui/input'
+import { Select } from '@/shared/ui/select'
+import { Textarea } from '@/shared/ui/textarea'
+import { ImageDropZone } from '@/shared/ui/image-drop-zone'
+import { Button } from '@/shared/ui/button'
+import { Modal } from '@/shared/ui/modal'
+import { EditIcon } from '@/shared/assets/icons'
 import {
   DESCRIPTION_MAX_LENGTH,
   type SkillFormValues,
   skillSchema,
   TITLE_MAX_LENGTH,
 } from '../../model/skill-schema'
-import { findSubcategory } from '@/shared/lib/skills'
-import { ROUTES } from '@/shared/lib/constants'
-import styles from './skill-step.module.css'
-import { Input } from '@/shared/ui/input'
-import { Select } from '@/shared/ui/select'
 import { getSubcategoryOptions } from '../../model/learn-skills'
-import { Textarea } from '@/shared/ui/textarea'
-import { ImageDropZone } from '@/shared/ui/image-drop-zone'
-import { Button } from '@/shared/ui/button'
-import { Modal } from '@/shared/ui/modal'
-import { EditIcon } from '@/shared/assets/icons'
+import { clearDraft, loadDraft } from '../../model/draft'
+import { buildRegisteredUser } from '../../model/build-registered-user'
+import styles from './skill-step.module.css'
 
 const NO_FILES: File[] = []
 
@@ -32,6 +38,9 @@ export const SkillStep = () => {
 
   const [preview, setPreview] = useState<SkillFormValues | null>(null)
   const previewImages = useFilePreviews(preview?.images ?? NO_FILES)
+
+  const [isSaving, setIsSaving] = useState<boolean>(false)
+  const [doneError, setDoneError] = useState<string | null>(null)
 
   const {
     control,
@@ -70,12 +79,30 @@ export const SkillStep = () => {
     setValue('categoryId', found.category.id, { shouldValidate: isSubmitted })
   }
 
-  const handlePreviewClose = () => {
-    setPreview(null)
-  }
-
   const handleBack = () => {
     navigate(ROUTES.REGISTER_USER, { replace: true })
+  }
+
+  const handlePreviewClose = () => {
+    setPreview(null)
+    setDoneError(null)
+  }
+
+  const handleDone = async (skill: SkillFormValues) => {
+    const draft = loadDraft()
+    setIsSaving(true)
+
+    try {
+      const user = buildRegisteredUser(draft, skill)
+      await registerAccount(user, draft.password ?? '')
+      dispatch(addUser(user))
+      clearDraft()
+      markSkillCreated()
+      dispatch(login({ id: user.id, name: user.name, email: user.email }))
+    } catch (error) {
+      setDoneError(error instanceof Error ? error.message : 'Не удалось завершить регистрацию')
+      setIsSaving(false)
+    }
   }
 
   const previewNames = preview ? findSubcategory(preview.subcategoryId, categories) : undefined
@@ -185,12 +212,17 @@ export const SkillStep = () => {
                   >
                     Редактировать
                   </Button>
-                  <Button fullWidth onClick={handlePreviewClose}>
+                  <Button fullWidth disabled={isSaving} onClick={() => handleDone(preview)}>
                     Готово
                   </Button>
                 </>
               }
             />
+            {doneError && (
+              <p className={styles.error} role="alert">
+                {doneError}
+              </p>
+            )}
           </>
         )}
       </Modal>

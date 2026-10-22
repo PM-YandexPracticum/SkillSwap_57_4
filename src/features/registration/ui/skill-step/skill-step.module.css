@@ -25,3 +25,7 @@
 .details {
   margin-top: var(--space-3xl);
 }
+
+.error {
+  color: var(--color-error);
+}
