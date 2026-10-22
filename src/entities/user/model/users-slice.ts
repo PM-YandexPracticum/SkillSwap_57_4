@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { fetchUsers } from '@/api/users'
 
 import type { LoadingStatus, User } from '@/shared/types'
@@ -26,7 +26,13 @@ export const loadUsers = createTypedAsyncThunk('users/load', () => fetchUsers(),
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    addUser: (state, action: PayloadAction<User>) => {
+      if (!state.items.some((user) => user.id === action.payload.id)) {
+        state.items.push(action.payload)
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loadUsers.pending, (state) => {
@@ -44,4 +50,5 @@ const usersSlice = createSlice({
   },
 })
 
+export const { addUser } = usersSlice.actions
 export const usersReducer = usersSlice.reducer

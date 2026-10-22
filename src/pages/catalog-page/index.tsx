@@ -38,11 +38,13 @@ import { selectSearch } from '@/features/catalog-search'
 
 import { Button } from '@/shared/ui/button'
 import { Loader } from '@/shared/ui/loader'
+import { Modal } from '@/shared/ui/modal'
 import { FiltersSidebar } from '@/widgets/filters-sidebar'
 import { CardsSection } from '@/widgets/cards-section'
-import { ChevronDownIcon, ChevronRightIcon, SortIcon } from '@/shared/assets/icons'
+import { ChevronDownIcon, ChevronRightIcon, DoneIcon, SortIcon } from '@/shared/assets/icons'
 import { ROUTES } from '@/shared/lib/constants'
 import { shuffle } from '@/shared/lib/helpers'
+import { clearSkillCreated, isSkillCreated } from '@/shared/lib/skill-created'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 
 import styles from './catalog-page.module.css'
@@ -79,6 +81,7 @@ export default function CatalogPage() {
     newest: false,
   })
   const [recommendedCount, setRecommendedCount] = useState(RECOMMENDED_STEP)
+  const [isSkillCreatedOpen, setIsSkillCreatedOpen] = useState(isSkillCreated)
 
   const { ref: sentinelRef, inView } = useInView({ rootMargin: '0px 0px 50px 0px' })
 
@@ -181,6 +184,11 @@ export default function CatalogPage() {
 
   const handleSortToggle = () => setIsNewestFirst((value) => !value)
 
+  const handleSkillCreatedClose = () => {
+    clearSkillCreated()
+    setIsSkillCreatedOpen(false)
+  }
+
   const renderCard = (card: UserCardData) => {
     const isLiked = favoriteIds.includes(card.id)
 
@@ -275,6 +283,19 @@ export default function CatalogPage() {
           </div>
         </div>
       )}
+
+      <Modal
+        className={styles.createdModal}
+        icon={<DoneIcon />}
+        isOpen={isSkillCreatedOpen}
+        onClose={handleSkillCreatedClose}
+        title="Ваше предложение создано"
+      >
+        <p className={styles.createdText}>Теперь вы можете предложить обмен</p>
+        <Button className={styles.createdButton} fullWidth onClick={handleSkillCreatedClose}>
+          Готово
+        </Button>
+      </Modal>
     </>
   )
 }
