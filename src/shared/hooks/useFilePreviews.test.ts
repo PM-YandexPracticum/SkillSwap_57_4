@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { useFilePreviews } from './useFilePreviews'
 
@@ -17,18 +17,8 @@ describe('useFilePreviews', () => {
     createObjectURLMock = vi.fn(() => `blob:${++counter}`)
     revokeObjectURLMock = vi.fn()
 
-    const OriginalURL = globalThis.URL
-    const MockedURL = Object.assign(OriginalURL, {
-      createObjectURL: createObjectURLMock,
-      revokeObjectURL: revokeObjectURLMock,
-    })
-
-    vi.stubGlobal('URL', MockedURL)
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-    vi.restoreAllMocks()
+    URL.createObjectURL = createObjectURLMock
+    URL.revokeObjectURL = revokeObjectURLMock
   })
 
   test('на каждый файл объект { file, url }', () => {
@@ -37,6 +27,7 @@ describe('useFilePreviews', () => {
     expect(result.current).toHaveLength(2)
     expect(result.current[0].file).toBe(files1[0])
     expect(result.current[0].url).toBe('blob:1')
+    expect(result.current[1].file).toBe(files1[1])
     expect(result.current[1].url).toBe('blob:2')
   })
 

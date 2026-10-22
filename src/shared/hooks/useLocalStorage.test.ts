@@ -1,10 +1,14 @@
-import { beforeEach, describe, expect, test } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
 import { useLocalStorage } from './useLocalStorage'
 
 describe('useLocalStorage', () => {
   beforeEach(() => {
     localStorage.clear()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   test('без данных - initialValue', () => {
@@ -33,5 +37,20 @@ describe('useLocalStorage', () => {
 
     expect(result.current[0]).toBe('updated')
     expect(JSON.parse(localStorage.getItem('key') ?? '')).toBe('updated')
+  })
+
+  test('запись не удалась - значение всё равно меняется, ошибка в консоли', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('QuotaExceededError')
+    })
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { result } = renderHook(() => useLocalStorage('key', 'initial'))
+
+    act(() => {
+      result.current[1]('updated')
+    })
+
+    expect(result.current[0]).toBe('updated')
+    expect(consoleError).toHaveBeenCalledWith('Failed to save to localStorage: key')
   })
 })
