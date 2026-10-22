@@ -1,0 +1,37 @@
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.loginLink {
+  align-self: center;
+  color: var(--color-link);
+}
+
+.loginLink:hover {
+  text-decoration: underline;
+}
+
+.loginLink:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}

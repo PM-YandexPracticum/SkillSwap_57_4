@@ -1,4 +1,4 @@
-import { forwardRef, useState, useRef, useId, type KeyboardEvent } from 'react'
+import { forwardRef, useState, useRef, useId } from 'react'
 import { clsx } from 'clsx'
 import { mergeRefs } from 'react-merge-refs'
 import type { MultiSelectProps } from './types'
@@ -34,7 +34,12 @@ export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(funct
 
   const closeDropdown = () => setIsOpen(false)
 
-  useDismiss({ ref: containerRef, onDismiss: closeDropdown, isActive: isOpen })
+  useDismiss({
+    ref: containerRef,
+    onDismiss: closeDropdown,
+    isActive: isOpen,
+    returnFocusRef: buttonRef,
+  })
 
   const handleToggle = () => setIsOpen((open) => !open)
 
@@ -46,16 +51,8 @@ export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(funct
     }
   }
 
-  const handleContainerKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen) buttonRef.current?.focus()
-  }
-
   return (
-    <div
-      ref={containerRef}
-      className={clsx(styles.container, className)}
-      onKeyDown={handleContainerKeyDown}
-    >
+    <div ref={containerRef} className={clsx(styles.container, className)}>
       <label id={labelId} htmlFor={fieldId}>
         {label}
       </label>

@@ -47,7 +47,7 @@
   gap: var(--space-xxs);
 }
 
-.learnTags > * {
+.catalog .learnTags > * {
   max-width: calc((100% - var(--space-xxs)) / 2);
 }
 

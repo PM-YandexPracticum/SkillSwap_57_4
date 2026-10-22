@@ -1,5 +1,14 @@
 import { describe, expect, test } from 'vitest'
-import { formatAge, getAge, pluralize, shuffle } from './helpers'
+import {
+  formatAge,
+  formatDate,
+  formatRelativeDate,
+  generateId,
+  getAge,
+  pluralize,
+  shuffle,
+  truncate,
+} from './helpers'
 
 describe('helpers', () => {
   describe('pluralize', () => {
@@ -82,6 +91,66 @@ describe('helpers', () => {
     test('корректно работает с пустым массивом и массивом из одного элемента', () => {
       expect(shuffle([])).toEqual([])
       expect(shuffle(['a'])).toEqual(['a'])
+    })
+  })
+
+  describe('formatRelativeDate', () => {
+    const fixedNow = new Date('2026-10-19T12:00:00')
+
+    test('сегодня, в том числе в начале дня', () => {
+      expect(formatRelativeDate('2026-10-19T08:30:00', fixedNow)).toBe('сегодня')
+      expect(formatRelativeDate('2026-10-19T00:00:00', fixedNow)).toBe('сегодня')
+    })
+
+    test('вчера, в том числе в конце дня', () => {
+      expect(formatRelativeDate('2026-10-18T23:59:00', fixedNow)).toBe('вчера')
+    })
+
+    test('более ранние даты - день и месяц в родительном падеже', () => {
+      expect(formatRelativeDate('2026-10-17T12:00:00', fixedNow)).toBe('17 октября')
+      expect(formatRelativeDate('2026-05-23T12:00:00', fixedNow)).toBe('23 мая')
+    })
+  })
+
+  describe('generateId', () => {
+    test('возвращает непустую строку', () => {
+      const id = generateId()
+      expect(typeof id).toBe('string')
+      expect(id.length).toBeGreaterThan(0)
+    })
+
+    test('два вызова дают разные значения', () => {
+      expect(generateId()).not.toBe(generateId())
+    })
+  })
+
+  describe('formatDate', () => {
+    test('форматирует дату по-русски: день, месяц, год', () => {
+      const result = formatDate('2026-05-23T12:00:00').replace(/\s/g, ' ')
+      expect(result).toBe('23 мая 2026 г.')
+    })
+
+    test('форматирует дату с однозначным днём', () => {
+      const result = formatDate('2026-01-02T12:00:00').replace(/\s/g, ' ')
+      expect(result).toBe('2 января 2026 г.')
+    })
+  })
+
+  describe('truncate', () => {
+    test('строка короче maxLength возвращается без изменений', () => {
+      expect(truncate('Короткая', 20)).toBe('Короткая')
+    })
+
+    test('строка ровно maxLength возвращается без изменений', () => {
+      expect(truncate('12345', 5)).toBe('12345')
+    })
+
+    test('строка длиннее maxLength обрезается и добавляет три точки', () => {
+      expect(truncate('Английский язык', 10)).toBe('Английский...')
+    })
+
+    test('пробел на месте обрезки убирается перед точками', () => {
+      expect(truncate('Английский язык', 11)).toBe('Английский...')
     })
   })
 })

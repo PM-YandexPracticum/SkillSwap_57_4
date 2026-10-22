@@ -11,6 +11,23 @@
   gap: var(--space-3xl);
 }
 
+.activeFilters {
+  margin-top: var(--space-sm);
+}
+
+.empty {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  color: var(--color-text-caption);
+  text-align: center;
+}
+
+.sentinel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .state {
   display: flex;
   flex: 1;

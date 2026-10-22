@@ -7,5 +7,7 @@ export interface UserCardProps {
   isLiked?: boolean
   onLikeToggle?: () => void
   onDetailsClick?: () => void
+  /** Обмен уже предложен: вместо "Подробнее" — "Обмен предложен", клик тоже открывает навык */
+  isExchangeProposed?: boolean
   className?: string
 }

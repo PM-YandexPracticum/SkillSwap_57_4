@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
+import { sortByNewest } from '../lib/sort-by-newest'
 
 export const selectUsers = (state: RootState) => state.users.items
 export const selectUsersStatus = (state: RootState) => state.users.status
@@ -13,6 +14,4 @@ export const selectUserBySkillId = (state: RootState, skillId: string) =>
 export const selectPopularUsers = createSelector([selectUsers], (users) =>
   [...users].sort((a, b) => b.likesCount - a.likesCount),
 )
-export const selectNewestUsers = createSelector([selectUsers], (users) =>
-  [...users].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
-)
+export const selectNewestUsers = createSelector([selectUsers], sortByNewest)

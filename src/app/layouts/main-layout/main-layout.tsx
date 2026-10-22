@@ -1,7 +1,9 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense, useCallback, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { loadUsers, selectUserById } from '@/entities/user'
 import { logout, selectUser } from '@/entities/session'
+import { seedNotifications } from '@/entities/notification'
+import { NotificationToaster } from '@/features/notifications'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Loader } from '@/shared/ui/loader'
@@ -21,6 +23,14 @@ export const MainLayout = () => {
     dispatch(loadUsers())
   }, [dispatch])
 
+  useEffect(() => {
+    if (authUser) {
+      dispatch(seedNotifications({ userId: authUser.id, now: new Date().toISOString() }))
+    }
+  }, [dispatch, authUser])
+
+  const handleToastNavigate = useCallback(() => navigate(ROUTES.PROFILE), [navigate])
+
   const handleLogout = () => {
     dispatch(logout())
     navigate(ROUTES.HOME)
@@ -38,6 +48,7 @@ export const MainLayout = () => {
         </Suspense>
       </main>
       <Footer />
+      <NotificationToaster onNavigate={handleToastNavigate} />
     </div>
   )
 }

@@ -5,4 +5,5 @@ export interface InputProps extends ComponentPropsWithoutRef<'input'> {
   hint?: string
   error?: string
   endAdornment?: ReactNode
+  invalid?: boolean
 }

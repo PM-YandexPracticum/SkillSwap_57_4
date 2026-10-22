@@ -1,10 +1,15 @@
-import { type KeyboardEvent, useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink, useMatch, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
 import { ROUTES, STUB_ROUTES } from '@/shared/lib/constants'
+import { findSubcategory } from '@/shared/lib/skills'
 import { ChevronDownIcon, ChevronUpIcon } from '@/shared/assets/icons'
 import { loadSkillCategories, selectSkillCategories } from '@/entities/skill'
+import { selectUser } from '@/entities/session'
+import { selectHasUnread } from '@/entities/notification'
+import { selectSearch, setSearch } from '@/features/catalog-search'
+import { selectSubcategory } from '@/features/catalog-filters'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useDismiss } from '@/shared/hooks/useDismiss'
@@ -12,7 +17,7 @@ import { useDismiss } from '@/shared/hooks/useDismiss'
 import { Logo } from '@/shared/ui/logo'
 import { Button } from '@/shared/ui/button'
 import { SearchInput } from '@/shared/ui/search-input'
-import { NotificationButton } from '@/features/notifications'
+import { NotificationButton, NotificationsPanel } from '@/features/notifications'
 import { ThemeToggleButton } from '@/features/theme-toggle'
 import { SkillsMenu } from '../skills-menu'
 import { FavoritesButton } from '../favorites-button'
@@ -24,15 +29,25 @@ import styles from './header.module.css'
 
 export const Header = ({ user, onLogout }: HeaderProps) => {
   const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const categories = useAppSelector(selectSkillCategories)
+  const authUser = useAppSelector(selectUser)
+  const hasUnread = useAppSelector((state) => selectHasUnread(state, authUser?.id))
+
+  const search = useAppSelector(selectSearch)
+  const isHome = Boolean(useMatch(ROUTES.HOME))
+  const isFavoritesActive = Boolean(useMatch(ROUTES.FAVORITES))
 
   const skillsRef = useRef<HTMLLIElement>(null)
   const skillsTriggerRef = useRef<HTMLButtonElement>(null)
   const skillsMenuId = useId()
+
+  const notificationsRef = useRef<HTMLDivElement>(null)
+  const notificationsTriggerRef = useRef<HTMLButtonElement>(null)
+  const notificationsPanelId = useId()
 
   useEffect(() => {
     dispatch(loadSkillCategories())
@@ -41,18 +56,46 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
   const toggleSkillsMenu = () => setIsSkillsMenuOpen((prev) => !prev)
   const closeSkillsMenu = () => setIsSkillsMenuOpen(false)
 
-  useDismiss({ ref: skillsRef, isActive: isSkillsMenuOpen, onDismiss: closeSkillsMenu })
+  useDismiss({
+    ref: skillsRef,
+    isActive: isSkillsMenuOpen,
+    onDismiss: closeSkillsMenu,
+    returnFocusRef: skillsTriggerRef,
+  })
 
-  const handleSkillsKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isSkillsMenuOpen) skillsTriggerRef.current?.focus()
+  const toggleNotifications = () => setIsNotificationsOpen((prev) => !prev)
+  const closeNotifications = () => setIsNotificationsOpen(false)
+
+  useDismiss({
+    ref: notificationsRef,
+    isActive: isNotificationsOpen,
+    onDismiss: closeNotifications,
+    returnFocusRef: notificationsTriggerRef,
+  })
+
+  const handleSearchChange = (value: string) => {
+    dispatch(setSearch(value))
+    if (value && !isHome && !isFavoritesActive) navigate(ROUTES.HOME)
+  }
+
+  const handleSkillSelect = (subcategoryId: string) => {
+    const found = findSubcategory(subcategoryId, categories)
+    if (found) dispatch(selectSubcategory({ categoryId: found.category.id, subcategoryId }))
+    dispatch(setSearch(''))
+    closeSkillsMenu()
+    skillsTriggerRef.current?.focus()
+    navigate(ROUTES.HOME)
   }
 
   const handleFavoritesClick = () => navigate(ROUTES.FAVORITES)
   const handleProfileClick = () => navigate(ROUTES.PROFILE)
+  const handleNotificationNavigate = () => {
+    closeNotifications()
+    navigate(ROUTES.PROFILE)
+  }
   const handleLoginClick = () => navigate(ROUTES.LOGIN)
   const handleRegisterClick = () => navigate(ROUTES.REGISTER)
 
-  const isFavoritesActive = Boolean(useMatch(ROUTES.FAVORITES))
   const SkillsArrowIcon = isSkillsMenuOpen ? ChevronUpIcon : ChevronDownIcon
 
   return (
@@ -66,7 +109,7 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
               О проекте
             </NavLink>
           </li>
-          <li ref={skillsRef} onKeyDown={handleSkillsKeyDown}>
+          <li ref={skillsRef}>
             <button
               type="button"
               className={clsx(styles.link, styles.skillsButton)}
@@ -84,20 +127,36 @@ export const Header = ({ user, onLogout }: HeaderProps) => {
                 id={skillsMenuId}
                 className={styles.skillsMenu}
                 categories={categories}
-                onSelect={closeSkillsMenu}
+                onSelect={handleSkillSelect}
               />
             )}
           </li>
         </ul>
       </nav>
 
-      <SearchInput value={searchValue} onChange={setSearchValue} />
+      <SearchInput value={search} onChange={handleSearchChange} />
 
       {user ? (
         <div className={styles.actions}>
           <div className={styles.icons}>
             <ThemeToggleButton />
-            <NotificationButton />
+            <div ref={notificationsRef} className={styles.notifications}>
+              <NotificationButton
+                ref={notificationsTriggerRef}
+                hasUnread={hasUnread}
+                aria-expanded={isNotificationsOpen}
+                aria-controls={notificationsPanelId}
+                onClick={toggleNotifications}
+              />
+
+              {isNotificationsOpen && (
+                <NotificationsPanel
+                  id={notificationsPanelId}
+                  className={styles.notificationsPanel}
+                  onNavigate={handleNotificationNavigate}
+                />
+              )}
+            </div>
             <FavoritesButton isActive={isFavoritesActive} onClick={handleFavoritesClick} />
           </div>
           <UserMenu

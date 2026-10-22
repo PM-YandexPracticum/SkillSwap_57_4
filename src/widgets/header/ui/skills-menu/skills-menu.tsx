@@ -7,6 +7,7 @@ import {
   LifestyleIcon,
   PaletteIcon,
 } from '@/shared/assets/icons'
+import { Dropdown } from '@/shared/ui/dropdown'
 import type { SkillCategoryId } from '@/shared/types'
 import type { SkillCategoryIcons, SkillsMenuColumnProps, SkillsMenuProps } from './types'
 
@@ -62,7 +63,7 @@ const SkillsMenuColumn = ({ categories, onSelect }: SkillsMenuColumnProps) => (
 
 export const SkillsMenu = ({ categories, onSelect, id, className }: SkillsMenuProps) => {
   return (
-    <div id={id} className={clsx(styles.menu, className)}>
+    <Dropdown id={id} className={clsx(styles.menu, className)}>
       {COLUMNS.map((columnIds) => (
         <SkillsMenuColumn
           key={columnIds[0]}
@@ -70,6 +71,6 @@ export const SkillsMenu = ({ categories, onSelect, id, className }: SkillsMenuPr
           onSelect={onSelect}
         />
       ))}
-    </div>
+    </Dropdown>
   )
 }

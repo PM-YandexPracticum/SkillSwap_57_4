@@ -1,6 +1,8 @@
-import { useState } from 'react'
 import { CheckboxItem } from '@/shared/ui/checkbox-item'
 import { ExpandButton } from '@/shared/ui/expand-button'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectShowAllCities } from '../../model/selectors'
+import { toggleShowAllCities } from '../../model/catalog-filters-slice'
 import type { CitiesFilterProps } from './types'
 import styles from './cities-filter.module.css'
 
@@ -10,7 +12,8 @@ export const CitiesFilter = ({
   onChange,
   visibleCount = 5,
 }: CitiesFilterProps) => {
-  const [showAll, setShowAll] = useState(false)
+  const dispatch = useAppDispatch()
+  const showAll = useAppSelector(selectShowAllCities)
 
   const visibleCities = showAll ? cities : cities.slice(0, visibleCount)
 
@@ -37,7 +40,7 @@ export const CitiesFilter = ({
         <ExpandButton
           label="Все города"
           opened={showAll}
-          onToggle={() => setShowAll((previous) => !previous)}
+          onToggle={() => dispatch(toggleShowAllCities())}
         />
       )}
     </div>
