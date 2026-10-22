@@ -1,8 +1,17 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest'
-import { fetchUsers } from '@/api/users'
-import type { User } from './types'
 import { setupStore } from '@/store'
-import { addUser } from './users-slice'
+import { fetchUsers } from '@/api/users'
+import { addUser, loadUsers, usersReducer } from './users-slice'
+import {
+  selectNewestUsers,
+  selectPopularUsers,
+  selectUserById,
+  selectUserBySkillId,
+  selectUsers,
+  selectUsersError,
+  selectUsersStatus,
+} from './selectors'
+import type { User } from './types'
 
 vi.mock('@/api/users', () => ({ fetchUsers: vi.fn() }))
 
@@ -40,6 +49,14 @@ describe('[usersSlice]', () => {
     vi.mocked(fetchUsers).mockReset()
   })
 
+  test('возвращает начальное состояние', () => {
+    expect(usersReducer(undefined, { type: 'unknown' })).toEqual({
+      items: [],
+      status: 'idle',
+      error: null,
+    })
+  })
+
   describe('addUser', () => {
     const loaded = () => setupStore({ users: { items: users, status: 'succeeded', error: null } })
 
@@ -58,6 +75,97 @@ describe('[usersSlice]', () => {
       store.dispatch(addUser({ ...users[0], name: 'Двойник' }))
 
       expect(store.getState().users.items).toEqual(users)
+    })
+  })
+
+  describe('loadUsers', () => {
+    test('загружает пользователей и обновляет состояние', async () => {
+      vi.mocked(fetchUsers).mockResolvedValue(users)
+      const store = setupStore()
+
+      await store.dispatch(loadUsers())
+
+      expect(store.getState().users.items).toEqual(users)
+      expect(selectUsersStatus(store.getState())).toBe('succeeded')
+      expect(selectUsersError(store.getState())).toBeNull()
+      expect(fetchUsers).toHaveBeenCalledTimes(1)
+    })
+
+    test('сохраняет ошибку при неудачной загрузке', async () => {
+      vi.mocked(fetchUsers).mockRejectedValue(new Error('Ошибка загрузки'))
+      const store = setupStore()
+
+      await store.dispatch(loadUsers())
+
+      expect(selectUsersStatus(store.getState())).toBe('failed')
+      expect(selectUsersError(store.getState())).toBe('Ошибка загрузки')
+      expect(selectUsers(store.getState())).toEqual([])
+    })
+
+    test('не загружает пользователей повторно после успешной загрузки', async () => {
+      vi.mocked(fetchUsers).mockResolvedValue(users)
+      const store = setupStore()
+
+      await store.dispatch(loadUsers())
+      await store.dispatch(loadUsers())
+
+      expect(fetchUsers).toHaveBeenCalledTimes(1)
+    })
+
+    test('позволяет повторить загрузку после ошибки', async () => {
+      vi.mocked(fetchUsers)
+        .mockRejectedValueOnce(new Error('Ошибка загрузки'))
+        .mockResolvedValueOnce(users)
+
+      const store = setupStore()
+
+      await store.dispatch(loadUsers())
+      expect(selectUsersStatus(store.getState())).toBe('failed')
+
+      await store.dispatch(loadUsers())
+
+      expect(selectUsersStatus(store.getState())).toBe('succeeded')
+      expect(selectUsers(store.getState())).toEqual(users)
+      expect(fetchUsers).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('selectors', () => {
+    const loaded = () => setupStore({ users: { items: users, status: 'succeeded', error: null } })
+
+    test('selectUsers возвращает список пользователей', () => {
+      const store = loaded()
+      expect(selectUsers(store.getState())).toEqual(users)
+    })
+
+    test('selectUserById находит пользователя по id', () => {
+      const store = loaded()
+      expect(selectUserById(store.getState(), 'b')).toEqual(users[1])
+    })
+
+    test('selectUserBySkillId находит пользователя по id навыка', () => {
+      const store = loaded()
+      expect(selectUserBySkillId(store.getState(), 'skill-b')).toEqual(users[1])
+    })
+
+    test('selectPopularUsers сортирует по количеству лайков по убыванию', () => {
+      const store = loaded()
+      expect(selectPopularUsers(store.getState()).map((user) => user.id)).toEqual(['b', 'c', 'a'])
+    })
+
+    test('selectNewestUsers сортирует по дате создания от новых к старым', () => {
+      const store = loaded()
+      expect(selectNewestUsers(store.getState()).map((user) => user.id)).toEqual(['a', 'c', 'b'])
+    })
+
+    test('селекторы сортировки не изменяют исходный массив', () => {
+      const store = loaded()
+      const originalUsers = [...users]
+
+      selectPopularUsers(store.getState())
+      selectNewestUsers(store.getState())
+
+      expect(store.getState().users.items).toEqual(originalUsers)
     })
   })
 })
