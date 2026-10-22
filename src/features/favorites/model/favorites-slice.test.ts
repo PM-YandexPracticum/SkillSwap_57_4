@@ -22,13 +22,11 @@ describe('favorites-slice', () => {
   test('списки разных пользователей не смешиваются', () => {
     const testStore = setupStore()
 
-    
     testStore.dispatch(toggleFavorite({ userId: 'user1', targetId: 'targetA' }))
     testStore.dispatch(toggleFavorite({ userId: 'user2', targetId: 'targetA' }))
-    
-   
+
     testStore.dispatch(toggleFavorite({ userId: 'user1', targetId: 'targetA' }))
-    
+
     expect(testStore.getState().favorites.byUser).toEqual({
       user1: [],
       user2: ['targetA'],
@@ -56,7 +54,7 @@ describe('favorites selectors', () => {
 
   test('selectFavoriteIds возвращает пустой массив для пользователя без избранного', () => {
     const testStore = setupStore({
-      session: { user: { id: 'user1' } as never }
+      session: { user: { id: 'user1' } as never },
     })
     expect(selectFavoriteIds(testStore.getState())).toEqual([])
   })
@@ -64,7 +62,7 @@ describe('favorites selectors', () => {
   test('selectFavoriteIds возвращает избранное для авторизованного пользователя', () => {
     const testStore = setupStore({
       session: { user: { id: 'user1' } as never },
-      favorites: { byUser: { user1: ['target1', 'target2'] } }
+      favorites: { byUser: { user1: ['target1', 'target2'] } },
     })
     expect(selectFavoriteIds(testStore.getState())).toEqual(['target1', 'target2'])
   })
@@ -72,14 +70,14 @@ describe('favorites selectors', () => {
   test('selectFavoriteIds возвращает один и тот же массив для гостя при разных состояниях', () => {
     const state1 = setupStore().getState()
     const state2 = setupStore().getState()
-    
+
     expect(selectFavoriteIds(state1)).toBe(selectFavoriteIds(state2))
   })
 
   test('selectFavoriteIds возвращает один и тот же массив для вошедшего без избранного', () => {
     const state1 = setupStore({ session: { user: { id: 'user1' } as never } }).getState()
     const state2 = setupStore({ session: { user: { id: 'user1' } as never } }).getState()
-    
+
     expect(selectFavoriteIds(state1)).toBe(selectFavoriteIds(state2))
   })
 })

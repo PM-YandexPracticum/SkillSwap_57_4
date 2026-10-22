@@ -46,7 +46,7 @@ describe('favorites-storage', () => {
       vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
         throw new Error('QuotaExceededError')
       })
-      
+
       expect(() => saveFavorites({ user1: ['target1'] })).not.toThrow()
     })
   })
