@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi, afterEach, test } from 'vitest'
+import { describe, expect, beforeEach, vi, afterEach, test } from 'vitest'
 import { loadFavorites, saveFavorites } from './favorites-storage'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
@@ -12,22 +12,22 @@ describe('favorites-storage', () => {
   })
 
   describe('loadFavorites', () => {
-    it('returns empty object when no data', () => {
+    test('возвращает пустой объект, если данных нет', () => {
       expect(loadFavorites()).toEqual({})
     })
 
     test.each([
-      ['not JSON', 'invalid json {'],
-      ['array instead of object', '["user1"]'],
+      ['не JSON', 'invalid json {'],
+      ['массив вместо объекта', JSON.stringify([['user-02']])],
       ['null', 'null'],
-      ['list of not strings', JSON.stringify({ user1: [1, 2, 3] })],
-      ['string instead of list', JSON.stringify({ user1: 'target' })],
-    ])('returns empty object when data is %s', (_: string, invalidData: string) => {
+      ['список не из строк', JSON.stringify({ user1: [1, 2, 3] })],
+      ['строка вместо списка', JSON.stringify({ user1: 'target' })],
+    ])('возвращает пустой объект, если данные %s', (_, invalidData) => {
       localStorage.setItem(LOCAL_STORAGE_KEYS.FAVORITES, invalidData)
       expect(loadFavorites()).toEqual({})
     })
 
-    it('reads valid data correctly', () => {
+    test('корректно читает валидные данные', () => {
       const data = { user1: ['target1', 'target2'] }
       localStorage.setItem(LOCAL_STORAGE_KEYS.FAVORITES, JSON.stringify(data))
       expect(loadFavorites()).toEqual(data)
@@ -35,13 +35,14 @@ describe('favorites-storage', () => {
   })
 
   describe('saveFavorites', () => {
-    it('saves data to localStorage and can be loaded back', () => {
+    test('сохраняет данные в localStorage по ключу LOCAL_STORAGE_KEYS.FAVORITES', () => {
       const data = { user1: ['target1'] }
       saveFavorites(data)
+      expect(localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES)).toEqual(JSON.stringify(data))
       expect(loadFavorites()).toEqual(data)
     })
 
-    it('does not crash if setting item throws an error', () => {
+    test('не падает, если при записи возникает ошибка', () => {
       vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
         throw new Error('QuotaExceededError')
       })
