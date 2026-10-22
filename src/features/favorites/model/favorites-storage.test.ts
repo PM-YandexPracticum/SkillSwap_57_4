@@ -38,7 +38,7 @@ describe('favorites-storage', () => {
     test('сохраняет данные в localStorage по ключу LOCAL_STORAGE_KEYS.FAVORITES', () => {
       const data = { user1: ['target1'] }
       saveFavorites(data)
-      expect(localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES)).toEqual(JSON.stringify(data))
+      expect(localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES)).toBe(JSON.stringify(data))
       expect(loadFavorites()).toEqual(data)
     })
 

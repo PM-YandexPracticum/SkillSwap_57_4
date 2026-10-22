@@ -3,6 +3,14 @@ import { setupStore, store } from '@/store'
 import { toggleFavorite } from './favorites-slice'
 import { selectFavoriteIds } from './selectors'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import type { AuthUser } from '@/shared/types'
+
+const AUTH_USER: AuthUser = {
+  id: 'user1',
+  name: 'Иван',
+  email: 'user1@skillswap.com',
+  token: 'mock_token_user1',
+}
 
 describe('favorites-slice', () => {
   beforeEach(() => {
@@ -54,14 +62,14 @@ describe('favorites selectors', () => {
 
   test('selectFavoriteIds возвращает пустой массив для пользователя без избранного', () => {
     const testStore = setupStore({
-      session: { user: { id: 'user1' } as never },
+      session: { user: AUTH_USER },
     })
     expect(selectFavoriteIds(testStore.getState())).toEqual([])
   })
 
   test('selectFavoriteIds возвращает избранное для авторизованного пользователя', () => {
     const testStore = setupStore({
-      session: { user: { id: 'user1' } as never },
+      session: { user: AUTH_USER },
       favorites: { byUser: { user1: ['target1', 'target2'] } },
     })
     expect(selectFavoriteIds(testStore.getState())).toEqual(['target1', 'target2'])
@@ -75,8 +83,8 @@ describe('favorites selectors', () => {
   })
 
   test('selectFavoriteIds возвращает один и тот же массив для вошедшего без избранного', () => {
-    const state1 = setupStore({ session: { user: { id: 'user1' } as never } }).getState()
-    const state2 = setupStore({ session: { user: { id: 'user1' } as never } }).getState()
+    const state1 = setupStore({ session: { user: AUTH_USER } }).getState()
+    const state2 = setupStore({ session: { user: AUTH_USER } }).getState()
 
     expect(selectFavoriteIds(state1)).toBe(selectFavoriteIds(state2))
   })
