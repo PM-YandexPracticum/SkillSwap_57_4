@@ -36,8 +36,8 @@ export const SkillOffer = ({
     <article className={clsx(styles.skillOffer, className)}>
       <div className={styles.controls}>
         <LikeButton count={likesCount} isLiked={isLiked} onClick={onLikeToggle} />
-        <IconButton icon={<ShareIcon />} aria-label="Поделиться" />
-        <IconButton icon={<MoreSquareIcon />} aria-label="Ещё" />
+        <IconButton icon={<ShareIcon />} aria-label="Поделиться" aria-disabled="true" />
+        <IconButton icon={<MoreSquareIcon />} aria-label="Ещё" aria-disabled="true" />
       </div>
 
       <SkillDetails

@@ -1,4 +1,4 @@
-import { Children, type SVGProps } from 'react'
+import { Children, useEffect, useRef, type SVGProps } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import clsx from 'clsx'
 
@@ -17,21 +17,43 @@ export const Carousel = ({ children, className }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' })
   const { canScrollPrev, canScrollNext } = useCarouselState(emblaApi)
 
-  const handleNextClick = () => emblaApi?.scrollNext()
-  const handlePrevClick = () => emblaApi?.scrollPrev()
+  const prevRef = useRef<HTMLButtonElement>(null)
+  const nextRef = useRef<HTMLButtonElement>(null)
+  const focusTargetRef = useRef<'prev' | 'next' | null>(null)
+
+  useEffect(() => {
+    if (focusTargetRef.current === 'prev') prevRef.current?.focus()
+    if (focusTargetRef.current === 'next') nextRef.current?.focus()
+    focusTargetRef.current = null
+  }, [canScrollPrev, canScrollNext])
+
+  const handleNextClick = () => {
+    if (!emblaApi) return
+
+    emblaApi.scrollNext()
+    if (!emblaApi.canScrollNext()) focusTargetRef.current = 'prev'
+  }
+
+  const handlePrevClick = () => {
+    if (!emblaApi) return
+
+    emblaApi.scrollPrev()
+    if (!emblaApi.canScrollPrev()) focusTargetRef.current = 'next'
+  }
 
   return (
     <div className={clsx(styles.carousel, className)}>
       <div className={styles.viewport} ref={emblaRef}>
-        <div className={styles.container}>
+        <ul className={styles.container}>
           {Children.map(children, (child) => (
-            <div className={styles.slide}>{child}</div>
+            <li className={styles.slide}>{child}</li>
           ))}
-        </div>
+        </ul>
       </div>
 
       {canScrollPrev && (
         <IconButton
+          ref={prevRef}
           className={clsx(styles.arrow, styles.prev)}
           icon={<ChevronLeftIcon />}
           aria-label="Пролистать назад"
@@ -41,6 +63,7 @@ export const Carousel = ({ children, className }: CarouselProps) => {
 
       {canScrollNext && (
         <IconButton
+          ref={nextRef}
           className={clsx(styles.arrow, styles.next)}
           icon={<ChevronRightIcon />}
           aria-label="Пролистать вперёд"

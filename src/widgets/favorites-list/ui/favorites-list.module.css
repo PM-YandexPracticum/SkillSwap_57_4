@@ -4,6 +4,15 @@
   gap: var(--space-xl);
 }
 
+.item {
+  display: flex;
+}
+
+.item > * {
+  flex: 1;
+  min-width: 0;
+}
+
 .state {
   display: flex;
   flex-direction: column;

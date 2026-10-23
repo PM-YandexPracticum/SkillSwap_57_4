@@ -17,6 +17,8 @@ export const Avatar = ({ src, alt, size = 'm', className }: AvatarProps) => {
           src={src ?? undefined}
           alt={alt}
           className={styles.image}
+          loading="lazy"
+          decoding="async"
           onError={() => setFailedSrc(src ?? null)}
         />
       ) : (

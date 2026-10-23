@@ -7,5 +7,12 @@ export const ThemeToggleButton = ({ theme = 'light', onToggle }: ThemeToggleButt
   const Icon = isDark ? SunIcon : MoonIcon
   const label = isDark ? 'Включить светлую тему' : 'Включить тёмную тему'
 
-  return <IconButton icon={<Icon />} aria-label={label} onClick={onToggle} />
+  return (
+    <IconButton
+      icon={<Icon />}
+      aria-label={label}
+      aria-disabled={onToggle ? undefined : 'true'}
+      onClick={onToggle}
+    />
+  )
 }

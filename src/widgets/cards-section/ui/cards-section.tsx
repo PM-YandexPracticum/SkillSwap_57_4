@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { Children, useId } from 'react'
 import { Carousel } from '@/shared/ui/carousel'
 import type { CardsSectionProps } from './types'
 
@@ -25,7 +25,11 @@ export const CardsSection = ({
       {carousel ? (
         <Carousel className={styles.carousel}>{children}</Carousel>
       ) : (
-        <div className={styles.grid}>{children}</div>
+        <ul className={styles.grid}>
+          {Children.map(children, (child) => (
+            <li className={styles.item}>{child}</li>
+          ))}
+        </ul>
       )}
     </section>
   )

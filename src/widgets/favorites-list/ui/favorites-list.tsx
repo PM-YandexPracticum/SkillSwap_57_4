@@ -125,5 +125,13 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
     />
   )
 
-  return <div className={clsx(styles.grid, className)}>{cards.map(renderCard)}</div>
+  return (
+    <ul className={clsx(styles.grid, className)}>
+      {cards.map((card) => (
+        <li key={card.id} className={styles.item}>
+          {renderCard(card)}
+        </li>
+      ))}
+    </ul>
+  )
 }

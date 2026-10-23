@@ -61,6 +61,7 @@ export const SkillDetails = ({
                     className={styles.slide}
                     src={src}
                     alt={`${title}, фото ${index + 1}`}
+                    loading={index === 0 ? 'eager' : 'lazy'}
                   />
                 ))}
               </div>
@@ -105,7 +106,7 @@ export const SkillDetails = ({
                           aria-current={isSelected}
                           onClick={() => handleThumbnailClick(index)}
                         >
-                          <img className={styles.thumbnailImage} src={src} alt="" />
+                          <img className={styles.thumbnailImage} src={src} alt="" loading="lazy" />
                         </button>
                       </li>
                     )

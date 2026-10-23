@@ -19,3 +19,12 @@
 .carousel {
   margin-top: var(--space-2xl);
 }
+
+.item {
+  display: flex;
+}
+
+.item > * {
+  flex: 1;
+  min-width: 0;
+}
