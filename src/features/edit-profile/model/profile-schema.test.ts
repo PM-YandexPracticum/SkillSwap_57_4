@@ -12,8 +12,24 @@ const VALUES = {
 }
 
 describe('[profileSchema]', () => {
-  test('верные данны проходят', async () => {
-    await expect(profileSchema.validate(VALUES)).resolves.toEqual(VALUES)
+  test('верные данные проходят, пробелы по краям "О себе" обрезаются', async () => {
+    await expect(
+      profileSchema.validate({ ...VALUES, about: '  Люблю путешествовать  ' }),
+    ).resolves.toEqual(VALUES)
+  })
+
+  test('без фото и "О себе" проходит: фото - null, "О себе" - пустая строка', async () => {
+    await expect(
+      profileSchema.validate({ ...VALUES, avatarUrl: undefined, about: undefined }),
+    ).resolves.toEqual({ ...VALUES, avatarUrl: null, about: '' })
+  })
+
+  test('"О себе" ровно максимум символов проходит', async () => {
+    const longest = 'a'.repeat(ABOUT_MAX_LENGTH)
+
+    await expect(profileSchema.validateAt('about', { ...VALUES, about: longest })).resolves.toBe(
+      longest,
+    )
   })
 
   test('"О себе" длиннее максимума - ошибка', async () => {
@@ -22,12 +38,15 @@ describe('[profileSchema]', () => {
     ).rejects.toThrow(`Не больше ${ABOUT_MAX_LENGTH} символов`)
   })
 
-  test('общие правила полей подключены', async () => {
-    await expect(profileSchema.validateAt('name', { ...VALUES, name: '' })).rejects.toThrow(
-      'Введите имя',
-    )
-    await expect(profileSchema.validateAt('email', { ...VALUES, email: 'anna' })).rejects.toThrow(
-      'Введите корректный email',
+  test.each([
+    ['name', '', 'Введите имя'],
+    ['email', 'anna', 'Введите корректный email'],
+    ['birthDate', '', 'Укажите дату рождения'],
+    ['gender', '', 'Укажите пол'],
+    ['cityId', '', 'Выберите город'],
+  ])('общие правила подключены: %s = %j - "%s"', async (field, value, message) => {
+    await expect(profileSchema.validateAt(field, { ...VALUES, [field]: value })).rejects.toThrow(
+      message,
     )
   })
 })

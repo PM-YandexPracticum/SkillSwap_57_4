@@ -64,7 +64,10 @@ const PersonalDataFields = ({ user, className }: FieldsProps) => {
   }
 
   const onSubmit = async (values: ProfileFormValues) => {
-    if (values.email !== user.email && (await isEmailTaken(values.email))) {
+    if (
+      values.email.toLowerCase() !== user.email.toLowerCase() &&
+      (await isEmailTaken(values.email))
+    ) {
       setError('email', { message: EMAIL_TAKEN_ERROR }, { shouldFocus: true })
       return
     }
