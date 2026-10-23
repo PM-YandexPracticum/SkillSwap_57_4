@@ -3,7 +3,6 @@ import { describe, expect, test } from 'vitest'
 
 import {
   catalogFiltersReducer,
-  resetFilters,
   selectSubcategory,
   setFilters,
   toggleCategoryOpened,
@@ -59,15 +58,6 @@ describe('[catalogFiltersSlice]', () => {
     test('фильтры по умолчанию снимают весь выбор, раскрытое остаётся', () => {
       const opened = withOpenedSidebar()
       const state = catalogFiltersReducer(opened, setFilters(DEFAULT_FILTERS))
-
-      expect(state).toEqual({ ...opened, filters: DEFAULT_FILTERS })
-    })
-  })
-
-  describe('resetFilters', () => {
-    test('возвращает DEFAULT_FILTERS и не сворачивает раскрытое', () => {
-      const opened = withOpenedSidebar()
-      const state = catalogFiltersReducer(opened, resetFilters())
 
       expect(state).toEqual({ ...opened, filters: DEFAULT_FILTERS })
     })

@@ -6,7 +6,6 @@ export const ROUTES = {
   PROFILE_EXCHANGES: '/profile/exchanges',
   PROFILE_SKILLS: '/profile/skills',
   FAVORITES: '/favorites',
-  CREATE: '/create',
   LOGIN: '/login',
   REGISTER: '/register',
   REGISTER_ACCOUNT: '/register/account',
@@ -22,18 +21,6 @@ export const STUB_ROUTES = {
   PRIVACY: '/privacy',
   TERMS: '/terms',
 } as const
-
-export const SKILL_CATEGORIES = [
-  'Программирование',
-  'Дизайн',
-  'Языки',
-  'Музыка',
-  'Спорт',
-  'Кулинария',
-  'Фото и видео',
-  'Бизнес',
-  'Другое',
-] as const
 
 export const LOCAL_STORAGE_KEYS = {
   AUTH_USER: 'skillswap_auth_user',

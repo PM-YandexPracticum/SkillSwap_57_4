@@ -23,9 +23,6 @@ const catalogFiltersSlice = createSlice({
     setFilters: (state, action: PayloadAction<CatalogFilters>) => {
       state.filters = action.payload
     },
-    resetFilters: (state) => {
-      state.filters = DEFAULT_FILTERS
-    },
     toggleCategoryOpened: (state, action: PayloadAction<SkillCategoryId>) => {
       const id = action.payload
       state.openedCategoryIds = state.openedCategoryIds.includes(id)
@@ -51,7 +48,6 @@ const catalogFiltersSlice = createSlice({
 
 export const {
   setFilters,
-  resetFilters,
   toggleCategoryOpened,
   toggleShowAllCategories,
   toggleShowAllCities,

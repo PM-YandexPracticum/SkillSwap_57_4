@@ -9,8 +9,3 @@ export async function fetchUsers(): Promise<User[]> {
   const users = (await response.json()) as User[]
   return [...users, ...getRegisteredUsers()]
 }
-
-export async function fetchUserById(id: string): Promise<User | undefined> {
-  const users = await fetchUsers()
-  return users.find((user) => user.id === id)
-}

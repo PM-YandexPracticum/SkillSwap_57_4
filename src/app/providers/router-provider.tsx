@@ -12,7 +12,6 @@ const CatalogPage = lazy(() => import('@/pages/catalog-page'))
 const SkillPage = lazy(() => import('@/pages/skill-page'))
 const ProfilePage = lazy(() => import('@/pages/profile-page'))
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'))
-const CreateSkillPage = lazy(() => import('@/pages/create-skill-page'))
 const LoginPage = lazy(() => import('@/pages/login-page'))
 const RegisterPage = lazy(() => import('@/pages/register-page'))
 const NotFoundPage = lazy(() => import('@/pages/not-found-page'))
@@ -61,14 +60,6 @@ export function AppRouter() {
               <Route path={ROUTES.PROFILE_EXCHANGES} element={<SectionStub />} />
               <Route path={ROUTES.PROFILE_SKILLS} element={<SectionStub />} />
             </Route>
-            <Route
-              path={ROUTES.CREATE}
-              element={
-                <ProtectedRoute>
-                  <CreateSkillPage />
-                </ProtectedRoute>
-              }
-            />
 
             <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
             <Route path="*" element={<NotFoundPage />} />
