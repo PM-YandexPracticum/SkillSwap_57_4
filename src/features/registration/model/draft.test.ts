@@ -4,7 +4,9 @@ import {
   clearDraft,
   getFirstIncompleteStep,
   loadDraft,
+  loadDraftImages,
   saveDraft,
+  saveDraftImages,
   type RegistrationDraft,
 } from './draft'
 
@@ -19,9 +21,20 @@ const USER_STEP: RegistrationDraft = {
   learnSkills: ['english'],
 }
 
+const SKILL: RegistrationDraft['skill'] = {
+  title: 'Игра на гитаре',
+  categoryId: 'creativity',
+  subcategoryId: 'music-sound',
+  description: 'Научу играть аккордами',
+}
+
+const PHOTO = new File(['x'], 'photo.png', { type: 'image/png' })
+const SECOND_PHOTO = new File(['y'], 'second.png', { type: 'image/png' })
+
 describe('[draft]', () => {
   beforeEach(() => {
     sessionStorage.clear()
+    clearDraft()
   })
 
   test('без сохранённого черновика возвращает пустой объект', () => {
@@ -60,6 +73,44 @@ describe('[draft]', () => {
 
     expect(sessionStorage.getItem(SESSION_STORAGE_KEYS.REGISTRATION_DRAFT)).toBeNull()
     expect(loadDraft()).toEqual({})
+  })
+
+  test('поля навыка сохраняются рядом с полями шагов 1 и 2', () => {
+    saveDraft({ ...ACCOUNT_STEP, ...USER_STEP })
+    saveDraft({ skill: SKILL })
+
+    expect(loadDraft()).toEqual({ ...ACCOUNT_STEP, ...USER_STEP, skill: SKILL })
+  })
+
+  describe('фото навыка', () => {
+    test('без сохранённых фото - пустой список', () => {
+      expect(loadDraftImages()).toEqual([])
+    })
+
+    test('saveDraftImages сохраняет фото, loadDraftImages возвращает те же файлы', () => {
+      saveDraftImages([PHOTO, SECOND_PHOTO])
+      const images = loadDraftImages()
+
+      expect(images).toHaveLength(2)
+      expect(images[0]).toBe(PHOTO)
+      expect(images[1]).toBe(SECOND_PHOTO)
+    })
+
+    test('saveDraftImages заменяет прежние фото: удалённое не возвращается', () => {
+      saveDraftImages([PHOTO, SECOND_PHOTO])
+      saveDraftImages([SECOND_PHOTO])
+      const images = loadDraftImages()
+
+      expect(images).toHaveLength(1)
+      expect(images[0]).toBe(SECOND_PHOTO)
+    })
+
+    test('clearDraft удаляет и фото', () => {
+      saveDraftImages([PHOTO])
+      clearDraft()
+
+      expect(loadDraftImages()).toEqual([])
+    })
   })
 
   describe('getFirstIncompleteStep', () => {

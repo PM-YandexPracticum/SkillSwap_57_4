@@ -1,7 +1,9 @@
 import { SESSION_STORAGE_KEYS } from '@/shared/lib/constants'
 import type { Gender } from '@/shared/types'
+import type { SkillFormValues } from './skill-schema'
 
 export type RegistrationStep = 'account' | 'user' | 'skill'
+export type SkillDraft = Partial<Omit<SkillFormValues, 'images'>>
 
 export interface RegistrationDraft {
   email?: string
@@ -13,7 +15,10 @@ export interface RegistrationDraft {
   avatarUrl?: string | null
   learnCategories?: string[]
   learnSkills?: string[]
+  skill?: SkillDraft
 }
+
+let draftImages: File[] = []
 
 export const loadDraft = (): RegistrationDraft => {
   try {
@@ -31,6 +36,13 @@ export const saveDraft = (part: Partial<RegistrationDraft>): void => {
 
 export const clearDraft = (): void => {
   sessionStorage.removeItem(SESSION_STORAGE_KEYS.REGISTRATION_DRAFT)
+  draftImages = []
+}
+
+export const loadDraftImages = (): File[] => draftImages
+
+export const saveDraftImages = (images: File[]): void => {
+  draftImages = images
 }
 
 export const getFirstIncompleteStep = (draft: RegistrationDraft): RegistrationStep => {
