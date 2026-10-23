@@ -32,6 +32,11 @@ const usersSlice = createSlice({
         state.items.push(action.payload)
       }
     },
+    updateUser: (state, action: PayloadAction<User>) => {
+      state.items = state.items.map((user) =>
+        user.id === action.payload.id ? action.payload : user,
+      )
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -50,5 +55,5 @@ const usersSlice = createSlice({
   },
 })
 
-export const { addUser } = usersSlice.actions
+export const { addUser, updateUser } = usersSlice.actions
 export const usersReducer = usersSlice.reducer

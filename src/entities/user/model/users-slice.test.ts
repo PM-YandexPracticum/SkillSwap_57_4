@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { setupStore } from '@/store'
 import { fetchUsers } from '@/api/users'
-import { addUser, loadUsers, usersReducer } from './users-slice'
+import { addUser, loadUsers, updateUser, usersReducer } from './users-slice'
 import {
   selectNewestUsers,
   selectPopularUsers,
@@ -73,6 +73,27 @@ describe('[usersSlice]', () => {
       const store = loaded()
 
       store.dispatch(addUser({ ...users[0], name: 'Двойник' }))
+
+      expect(store.getState().users.items).toEqual(users)
+    })
+  })
+
+  describe('updateUser', () => {
+    const loaded = () => setupStore({ users: { items: users, status: 'succeeded', error: null } })
+
+    test('заменяет пользователя с тем же id, остальные не меняются', () => {
+      const store = loaded()
+      const updated = { ...users[1], name: 'Борис', about: 'Новое о себе' }
+
+      store.dispatch(updateUser(updated))
+
+      expect(store.getState().users.items).toEqual([users[0], updated, users[2]])
+    })
+
+    test('неизвестный id ничего не меняет', () => {
+      const store = loaded()
+
+      store.dispatch(updateUser(makeUser('x', 0, '2026-10-21T00:00:00.000Z')))
 
       expect(store.getState().users.items).toEqual(users)
     })

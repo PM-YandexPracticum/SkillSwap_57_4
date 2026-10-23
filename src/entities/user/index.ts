@@ -1,6 +1,6 @@
 // ─── Model ───────────────────────────────────────────────
 export * from './model/types'
-export { addUser, loadUsers, usersReducer } from './model/users-slice'
+export { addUser, loadUsers, updateUser, usersReducer } from './model/users-slice'
 export {
   selectUsers,
   selectUsersStatus,
