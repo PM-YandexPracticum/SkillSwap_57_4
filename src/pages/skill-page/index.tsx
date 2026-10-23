@@ -23,7 +23,7 @@ import {
 import { selectUser } from '@/entities/session'
 import { addRequest, selectProposedSkillIds } from '@/entities/request'
 import { addNotification } from '@/entities/notification'
-import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
+import { selectFavoriteIds, selectLocalLikes, useToggleFavorite } from '@/features/favorites'
 import { ErrorState } from '@/widgets/error-state'
 import { SkillOffer } from '@/widgets/skill-offer'
 import { CardsSection } from '@/widgets/cards-section'
@@ -53,6 +53,7 @@ export default function SkillPage() {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+  const localLikes = useAppSelector(selectLocalLikes)
 
   const usersStatus = useAppSelector(selectUsersStatus)
   const categoriesStatus = useAppSelector(selectSkillCategoriesStatus)
@@ -125,6 +126,15 @@ export default function SkillPage() {
         title: `Вы предложили обмен ${author.name}`,
       }),
     )
+    const sender = users.find((user) => user.id === authUser.id)
+    dispatch(
+      addNotification({
+        userId: author.id,
+        kind: 'incoming',
+        title: `${authUser.name} ${sender?.gender === 'female' ? 'предложила' : 'предложил'} вам обмен`,
+        description: 'Примите обмен, чтобы обсудить детали',
+      }),
+    )
     setIsProposalSent(true)
   }
 
@@ -136,7 +146,7 @@ export default function SkillPage() {
     return (
       <UserCard
         key={card.id}
-        data={{ ...card, likesCount: card.likesCount + (isLiked ? 1 : 0) }}
+        data={{ ...card, likesCount: card.likesCount + (localLikes[card.id] ?? 0) }}
         titleAs="h3"
         isLiked={isLiked}
         isExchangeProposed={proposedSkillIds.includes(card.skillId)}
@@ -157,7 +167,7 @@ export default function SkillPage() {
           categoryName={found?.category.name ?? ''}
           subcategoryName={found?.subcategory.name ?? ''}
           images={skill.images}
-          likesCount={author.likesCount + (isAuthorLiked ? 1 : 0)}
+          likesCount={author.likesCount + (localLikes[author.id] ?? 0)}
           isLiked={isAuthorLiked}
           onLikeToggle={() => toggleLike(author.id)}
           isExchangeProposed={proposedSkillIds.includes(skill.id)}

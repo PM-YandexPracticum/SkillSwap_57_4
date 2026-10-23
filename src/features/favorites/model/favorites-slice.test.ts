@@ -1,7 +1,7 @@
 import { describe, expect, beforeEach, test } from 'vitest'
 import { setupStore, store } from '@/store'
 import { toggleFavorite } from './favorites-slice'
-import { selectFavoriteIds } from './selectors'
+import { selectFavoriteIds, selectLocalLikes } from './selectors'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import type { AuthUser } from '@/shared/types'
 
@@ -87,5 +87,20 @@ describe('favorites selectors', () => {
     const state2 = setupStore({ session: { user: AUTH_USER } }).getState()
 
     expect(selectFavoriteIds(state1)).toBe(selectFavoriteIds(state2))
+  })
+
+  test('selectLocalLikes считает лайки всех аккаунтов браузера, не только вошедшего', () => {
+    const state = setupStore({
+      session: { user: AUTH_USER },
+      favorites: { byUser: { user1: ['target1', 'target2'], user2: ['target1'], user3: [] } },
+    }).getState()
+
+    expect(selectLocalLikes(state)).toEqual({ target1: 2, target2: 1 })
+  })
+
+  test('selectLocalLikes без лайков - пустой объект', () => {
+    const state = setupStore({ favorites: { byUser: {} } }).getState()
+
+    expect(selectLocalLikes(state)).toEqual({})
   })
 })

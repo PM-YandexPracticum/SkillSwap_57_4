@@ -1,5 +1,6 @@
 import type { Gender, SkillType } from '@/shared/types'
 import type { RadioGroupOption } from '@/shared/ui/radio-group'
+import { GENDER_OPTIONS } from '@/entities/user'
 
 export type FilterMode = SkillType | 'all'
 export type FilterGender = Gender | 'any'
@@ -26,8 +27,7 @@ export const FILTER_MODE_OPTIONS: RadioGroupOption<FilterMode>[] = [
 
 export const FILTER_GENDER_OPTIONS: RadioGroupOption<FilterGender>[] = [
   { value: 'any', label: 'Не имеет значения' },
-  { value: 'male', label: 'Мужской' },
-  { value: 'female', label: 'Женский' },
+  ...GENDER_OPTIONS,
 ]
 
 /**

@@ -4,6 +4,7 @@ import { Controller, useForm, useWatch, type SubmitHandler } from 'react-hook-fo
 import { yupResolver } from '@hookform/resolvers/yup'
 import { loadCities, selectCities } from '@/entities/city'
 import { loadSkillCategories, selectSkillCategories } from '@/entities/skill'
+import { GENDER_OPTIONS } from '@/entities/user'
 import { ROUTES } from '@/shared/lib/constants'
 import { readFileAsDataUrl } from '@/shared/lib/files'
 import { AvatarInput } from '@/shared/ui/avatar-input'
@@ -21,11 +22,6 @@ import {
 import { loadDraft, saveDraft } from '../../model/draft'
 import { userSchema, type UserFormValues } from '../../model/user-schema'
 import styles from './user-step.module.css'
-
-const GENDER_OPTIONS = [
-  { value: 'male', label: 'Мужской' },
-  { value: 'female', label: 'Женский' },
-]
 
 export const UserStep = () => {
   const dispatch = useAppDispatch()

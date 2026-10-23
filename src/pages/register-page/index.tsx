@@ -1,5 +1,11 @@
+import { useEffect } from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { getFirstIncompleteStep, loadDraft, type RegistrationStep } from '@/features/registration'
+import {
+  clearDraft,
+  getFirstIncompleteStep,
+  loadDraft,
+  type RegistrationStep,
+} from '@/features/registration'
 import { ROUTES } from '@/shared/lib/constants'
 import { LightBulbIcon, SchoolBoardIcon, UserInfoIcon } from '@/shared/assets/icons'
 import { RegistrationSteps } from '@/widgets/registration-steps'
@@ -38,6 +44,13 @@ const STEPS: {
 
 export default function RegisterPage() {
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    return () => {
+      if (!window.location.pathname.startsWith(ROUTES.REGISTER)) clearDraft()
+    }
+  }, [])
+
   const currentIndex = STEPS.findIndex((item) => item.path === pathname)
   const firstIncomplete = getFirstIncompleteStep(loadDraft())
   const allowedIndex = STEPS.findIndex((item) => item.step === firstIncomplete)

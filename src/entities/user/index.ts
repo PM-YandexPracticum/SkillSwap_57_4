@@ -19,6 +19,7 @@ export {
   cityIdRule,
   PASSWORD_MIN_LENGTH,
 } from './model/user-field-rules'
+export { GENDER_OPTIONS } from './model/gender-options'
 
 // ─── Lib ─────────────────────────────────────────────────
 export { toUserCardData } from './lib/to-user-card-data'

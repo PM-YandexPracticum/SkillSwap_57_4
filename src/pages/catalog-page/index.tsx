@@ -33,7 +33,7 @@ import {
   setFilters,
   type CatalogFilters,
 } from '@/features/catalog-filters'
-import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
+import { selectFavoriteIds, selectLocalLikes, useToggleFavorite } from '@/features/favorites'
 import { selectSearch } from '@/features/catalog-search'
 
 import { Button } from '@/shared/ui/button'
@@ -95,6 +95,7 @@ export default function CatalogPage() {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+  const localLikes = useAppSelector(selectLocalLikes)
   const authUser = useAppSelector(selectUser)
   const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
@@ -195,7 +196,7 @@ export default function CatalogPage() {
     return (
       <UserCard
         key={card.id}
-        data={{ ...card, likesCount: card.likesCount + (isLiked ? 1 : 0) }}
+        data={{ ...card, likesCount: card.likesCount + (localLikes[card.id] ?? 0) }}
         isLiked={isLiked}
         isExchangeProposed={proposedSkillIds.includes(card.skillId)}
         onLikeToggle={() => toggleLike(card.id)}

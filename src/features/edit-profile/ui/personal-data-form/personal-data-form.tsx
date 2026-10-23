@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { EMAIL_TAKEN_ERROR, isEmailTaken, updateAccountUser } from '@/api/accounts'
 import { loadCities, selectCities } from '@/entities/city'
 import { login, selectUser } from '@/entities/session'
-import { loadUsers, selectUserById, updateUser } from '@/entities/user'
+import { GENDER_OPTIONS, loadUsers, selectUserById, updateUser } from '@/entities/user'
 import { EditIcon } from '@/shared/assets/icons'
 import { readFileAsDataUrl } from '@/shared/lib/files'
 import type { User } from '@/shared/types'
@@ -20,11 +20,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { ABOUT_MAX_LENGTH, profileSchema, type ProfileFormValues } from '../../model/profile-schema'
 import type { PersonalDataFormProps } from './types'
 import styles from './personal-data-form.module.css'
-
-const GENDER_OPTIONS = [
-  { value: 'male', label: 'Мужской' },
-  { value: 'female', label: 'Женский' },
-]
 
 const toFormValues = (user: User): ProfileFormValues => ({
   avatarUrl: user.avatarUrl,

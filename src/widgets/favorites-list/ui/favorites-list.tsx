@@ -21,7 +21,7 @@ import { loadCities, selectCities, selectCitiesStatus } from '@/entities/city'
 import { selectUser } from '@/entities/session'
 import { selectProposedSkillIds } from '@/entities/request'
 
-import { selectFavoriteIds, useToggleFavorite } from '@/features/favorites'
+import { selectFavoriteIds, selectLocalLikes, useToggleFavorite } from '@/features/favorites'
 import { filterUsers } from '@/features/catalog-filters'
 import { selectSearch } from '@/features/catalog-search'
 
@@ -43,6 +43,7 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
   const categories = useAppSelector(selectSkillCategories)
   const cities = useAppSelector(selectCities)
   const favoriteIds = useAppSelector(selectFavoriteIds)
+  const localLikes = useAppSelector(selectLocalLikes)
   const authUser = useAppSelector(selectUser)
   const proposedSkillIds = useAppSelector((state) => selectProposedSkillIds(state, authUser?.id))
 
@@ -115,8 +116,7 @@ export const FavoritesList = ({ filters, className }: FavoritesListProps) => {
 
   const renderCard = (card: UserCardData) => (
     <UserCard
-      key={card.id}
-      data={{ ...card, likesCount: card.likesCount + 1 }}
+      data={{ ...card, likesCount: card.likesCount + (localLikes[card.id] ?? 0) }}
       titleAs="h2"
       isLiked
       isExchangeProposed={proposedSkillIds.includes(card.skillId)}
