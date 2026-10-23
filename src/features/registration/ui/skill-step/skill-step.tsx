@@ -25,7 +25,13 @@ import {
   TITLE_MAX_LENGTH,
 } from '../../model/skill-schema'
 import { getSubcategoryOptions } from '../../model/learn-skills'
-import { clearDraft, loadDraft } from '../../model/draft'
+import {
+  clearDraft,
+  loadDraft,
+  loadDraftImages,
+  saveDraft,
+  saveDraftImages,
+} from '../../model/draft'
 import { buildRegisteredUser } from '../../model/build-registered-user'
 import styles from './skill-step.module.css'
 
@@ -35,6 +41,7 @@ export const SkillStep = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const categories = useAppSelector(selectSkillCategories)
+  const [draft] = useState(loadDraft)
 
   const [preview, setPreview] = useState<SkillFormValues | null>(null)
   const previewImages = useFilePreviews(preview?.images ?? NO_FILES)
@@ -51,7 +58,13 @@ export const SkillStep = () => {
     formState: { errors, isSubmitted },
   } = useForm<SkillFormValues>({
     resolver: yupResolver(skillSchema),
-    defaultValues: { title: '', subcategoryId: '', description: '', images: [] },
+    defaultValues: {
+      title: draft.skill?.title ?? '',
+      categoryId: draft.skill?.categoryId,
+      subcategoryId: draft.skill?.subcategoryId ?? '',
+      description: draft.skill?.description ?? '',
+      images: loadDraftImages(),
+    },
   })
 
   const categoryId = useWatch({ control, name: 'categoryId' })
@@ -79,8 +92,20 @@ export const SkillStep = () => {
     setValue('categoryId', found.category.id, { shouldValidate: isSubmitted })
   }
 
+  const saveSkillDraft = (values: SkillFormValues) => {
+    const { title, categoryId, subcategoryId, description, images } = values
+    saveDraft({ skill: { title, categoryId, subcategoryId, description } })
+    saveDraftImages(images)
+  }
+
   const handleBack = () => {
+    saveSkillDraft(getValues())
     navigate(ROUTES.REGISTER_USER, { replace: true })
+  }
+
+  const handlePreviewOpen = (values: SkillFormValues) => {
+    saveSkillDraft(values)
+    setPreview(values)
   }
 
   const handlePreviewClose = () => {
@@ -89,7 +114,6 @@ export const SkillStep = () => {
   }
 
   const handleDone = async (skill: SkillFormValues) => {
-    const draft = loadDraft()
     setDoneError(null)
     setIsSaving(true)
 
@@ -114,7 +138,7 @@ export const SkillStep = () => {
 
   return (
     <>
-      <form className={styles.form} onSubmit={handleSubmit(setPreview)} noValidate>
+      <form className={styles.form} onSubmit={handleSubmit(handlePreviewOpen)} noValidate>
         <Input
           label="Название навыка"
           placeholder="Введите название вашего навыка"
